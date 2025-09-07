@@ -82,3 +82,8 @@ a:hover {
       var(--text-color-muted)
     );
 }
+
+input:disabled {
+  background-color: transparent;
+  border: none;
+}

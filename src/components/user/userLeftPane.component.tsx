@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import type { User } from "../../types/user";
 import BBImage from "../common/bbImage.component";
 import BBLink from "../common/bbLink.component";
+import { MutedText } from "../common/layout/text";
 
 interface UserLeftPaneProps {
   user: User;
@@ -52,15 +53,15 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({ user }) => {
 
       <div className="p-3 space-y-2 text-sm flex-1">
         <div className="flex justify-between">
-          <span className="text-muted">Posts:</span>
+          <MutedText>Posts:</MutedText>
           <span></span>
         </div>
         <div className="flex justify-between">
-          <span className="text-muted">Joined:</span>
+          <MutedText>Joined:</MutedText>
           <span></span>
         </div>
         <div className="flex justify-between">
-          <span className="text-muted">Status:</span>
+          <MutedText>Status:</MutedText>
           <span></span>
         </div>
       </div>

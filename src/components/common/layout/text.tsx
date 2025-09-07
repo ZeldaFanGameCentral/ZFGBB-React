@@ -1,0 +1,1 @@
+export const MutedText = ({children}) => (<span className="text-muted">{children}</span>);
