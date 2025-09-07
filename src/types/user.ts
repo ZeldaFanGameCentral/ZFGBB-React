@@ -41,4 +41,3 @@ export type EmailAddress = BaseBB & {
   emailAddress?: string;
   spammerFlag: boolean;
 };
-
