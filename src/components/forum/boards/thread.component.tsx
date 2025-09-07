@@ -144,12 +144,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                       <div
                         className={`w-28 md:w-34 lg:w-64 shrink-0 border-r ${isEven ? "bg-elevated" : "bg-muted"} border-default`}
                       >
-                        <UserLeftPane
-                          user={msg.createdUser}
-                          backgrounds={{
-                            profileInfoContainer: `${isEven ? "bg-elevated" : "bg-muted"}`,
-                          }}
-                        />
+                        <UserLeftPane user={msg.createdUser} />
                       </div>
 
                       <div className="flex-1 flex-col shrink min-w-0">
