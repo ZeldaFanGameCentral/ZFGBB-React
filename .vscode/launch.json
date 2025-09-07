@@ -1,47 +1,165 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch zfgc.com",
-      "request": "launch",
-      "runtimeExecutable": "yarn",
-      "runtimeArgs": ["dev"],
+      "name": "Dev Server: Local Environment",
       "type": "node",
-      "env": {
-        "NO_COLOR": "true"
-      },
-      "autoAttachChildProcesses": true,
+      "request": "launch",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "runtimeExecutable": "corepack",
+      "runtimeArgs": ["yarn", "dev", "--strictPort"],
+      "cascadeTerminateToConfigurations": [
+        "Browser Debug",
+        "Dev Server: Local Environment"
+      ],
+      // "serverReadyAction": {
+      //   "pattern": "Local:\\s+http://localhost:(\\d+)/",
+      //   "action": "debugWithChrome",
+      //   "uriFormat": "http://localhost:%s",
+      //   "webRoot": "${workspaceFolder}"
+      // },
       "smartStep": true,
-      "cascadeTerminateToConfigurations": ["Browser Debug"],
-      "internalConsoleOptions": "openOnSessionStart",
-      "serverReadyAction": {
-        "action": "debugWithChrome",
-        "pattern": "Local:   http://localhost:([0-9]+)/",
-        "uriFormat": "http://localhost:%s"
-      },
+      "autoAttachChildProcesses": true,
+      "sourceMaps": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**",
+        "**/.yarn/**",
+        "**/.pnpm-store/**"
+      ],
+      "presentation": {
+        "hidden": true,
+        "group": "dev-server"
+      }
+    },
+    {
+      "name": "Dev Server: Live Environment",
+      "type": "node",
+      "request": "launch",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "runtimeExecutable": "corepack",
+      "runtimeArgs": ["yarn", "dev", "--mode=production", "--strictPort"],
+      "cascadeTerminateToConfigurations": [
+        "Browser Debug",
+        "Dev Server: Live Environment"
+      ],
+      "smartStep": true,
+      "autoAttachChildProcesses": true,
+      "sourceMaps": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**",
+        "**/.yarn/**",
+        "**/.pnpm-store/**"
+      ],
+      "presentation": {
+        "hidden": true,
+        "group": "dev-server"
+      }
+    },
+
+    {
+      "name": "Preview Server (local)",
+      "type": "node",
+      "request": "launch",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "runtimeExecutable": "corepack",
+      "runtimeArgs": ["yarn", "preview:ssr", "--strictPort"],
+      "preLaunchTask": "yarn build",
+      "cascadeTerminateToConfigurations": [
+        "Browser Debug",
+        "Preview Server (local)"
+      ],
+      "smartStep": true,
+      "autoAttachChildProcesses": true,
+      "sourceMaps": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**",
+        "**/.yarn/**",
+        "**/.pnpm-store/**"
+      ],
+      "presentation": {
+        "hidden": true,
+        "group": "dev-server"
+      }
+    },
+    {
+      "name": "Preview Server (Production)",
+      "type": "node",
+      "request": "launch",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "runtimeExecutable": "corepack",
+      "runtimeArgs": ["yarn", "preview", "--strictPort", "--mode=production"],
+      "preLaunchTask": "yarn build --mode=production",
+      "cascadeTerminateToConfigurations": [
+        "Browser Debug",
+        "Preview Server (Production)"
+      ],
+      "smartStep": true,
+      "autoAttachChildProcesses": true,
+      "sourceMaps": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**",
+        "**/.yarn/**",
+        "**/.pnpm-store/**"
+      ],
+      "presentation": {
+        "hidden": true,
+        "group": "dev-server"
+      }
+    },
+    {
+      "name": "Browser Debug",
+      "type": "chrome",
+      "request": "launch",
+      "webRoot": "${workspaceFolder}",
+      "url": "http://localhost:5173",
+      "preLaunchTask": "wait-for-server",
+      "postDebugTask": "cleanup-server",
+      "smartStep": true,
+      "sourceMaps": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**",
+        "**/.yarn/**",
+        "**/.pnpm-store/**"
+      ],
+      "presentation": {
+        "hidden": true,
+        "group": "dev-server"
+      }
+    }
+  ],
+
+  "compounds": [
+    {
+      "name": "Debug zfgc.com (local/dev)",
+      "configurations": ["Dev Server: Local Environment", "Browser Debug"],
+      "stopAll": true,
       "preLaunchTask": "yarn install"
     },
     {
-      "name": "Launch zfgc.com (production)",
-      "request": "launch",
-      "runtimeExecutable": "yarn",
-      "runtimeArgs": ["dev", "--mode=production"],
-      "type": "node",
-      "env": {
-        "NO_COLOR": "true"
-      },
-      "autoAttachChildProcesses": true,
-      "smartStep": true,
-      "cascadeTerminateToConfigurations": ["Browser Debug"],
-      "internalConsoleOptions": "openOnSessionStart",
-      "serverReadyAction": {
-        "action": "debugWithChrome",
-        "pattern": "Local:   http://localhost:([0-9]+)/",
-        "uriFormat": "http://localhost:%s"
-      },
+      "name": "Debug zfgc.com (live/dev)",
+      "configurations": ["Dev Server: Live Environment", "Browser Debug"],
+      "stopAll": true,
+      "preLaunchTask": "yarn install"
+    },
+    {
+      "name": "Debug zfgc.com (local/production)",
+      "configurations": ["Preview Server (Production)", "Browser Debug"],
+      "stopAll": true,
+      "preLaunchTask": "yarn install"
+    },
+    {
+      "name": "Preview zfgc.com in SSR Mode (local/dev)",
+      "configurations": ["Preview Server (local)", "Browser Debug"],
+      "stopAll": true,
       "preLaunchTask": "yarn install"
     }
   ]

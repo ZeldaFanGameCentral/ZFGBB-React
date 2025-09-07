@@ -17,3 +17,14 @@ interface BBTableProps<T> {
   emptyMessage?: string;
   showHeader?: boolean;
 }
+
+type ThemeStandardBackgroundTypes =
+  | "default"
+  | "muted"
+  | "elevated"
+  | "accented"
+  | "transparent";
+
+type ThemeBackgroundClass =
+  | `bg-${ThemeStandardBackgroundTypes}`
+  | (`bg-${string}` & {});

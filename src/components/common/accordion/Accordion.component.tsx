@@ -14,7 +14,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
   return (
     <div className="m-8">
       <div className="bg-default border-2 border-default p-3">
-        <h3
+        <h5
           className="cursor-pointer "
           onClick={() => setExpanded((prev) => !prev)}
         >
@@ -23,7 +23,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
             className="mr-2"
           />
           {title}
-        </h3>
+        </h5>
       </div>
       {expanded && <div className="m-2">{children}</div>}
     </div>

@@ -12,3 +12,4 @@ dist
 build
 build.zip
 .env
+tsconfig.tsbuildinfo

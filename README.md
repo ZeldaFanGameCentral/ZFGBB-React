@@ -19,6 +19,7 @@ If you are looking for an old man with a sword, then you may want to check out <
   - [Contributing](#contributing)
   - [CI Status](#ci-status)
     - [Workflow - Frontend - CI](#workflow---frontend---ci)
+    - [Workflow - Frontend - CodeQL](#workflow---frontend---codeql)
     - [Workflow - Backend - CI](#workflow---backend---ci)
 
 ## Getting Started
@@ -43,6 +44,10 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 ### Workflow - Frontend - CI
 
 [![Workflow - Frontend - CI](https://github.com/ZFGCCP/ZFGCBB-React/actions/workflows/workflow-ci.yml/badge.svg)](https://github.com/ZFGCCP/ZFGCBB-React/actions/workflows/workflow-ci.yml)
+
+### Workflow - Frontend - CodeQL
+
+[![CodeQ - Analyze](https://github.com/ZFGCCP/ZFGCBB-React/actions/workflows/codeql.yml/badge.svg)](https://github.com/ZFGCCP/ZFGCBB-React/actions/workflows/codeql.yml)
 
 ### Workflow - Backend - CI
 

@@ -9,30 +9,40 @@ on:
     branches:
       - main
       - development
-
-permissions:
-  contents: read
-  security-events: write
+  schedule:
+    - cron: "0 5 * * 1"
 
 jobs:
   analyze:
-    name: Analyze code with CodeQL
+    name: Analyze
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      # Set up CodeQL analysis
-      - name: Set up CodeQL
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [javascript-typescript, actions]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: actions, javascript, typescript, javascript-typescript
+          languages: ${{ matrix.language }}
 
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
+          cache: npm
           # cache: yarn FIXME: uncomment when https://github.com/actions/setup-node/issues/531 is closed.
-      - run: corepack enable
+      - run: npm install -g corepack@latest && corepack enable
 
       - name: Use Node.js (yarn cache workaround) # FIXME: uncomment when https://github.com/actions/setup-node/issues/531 is closed.
         id: yarn-cache

@@ -11,9 +11,9 @@
 
     --border-color-accented: #5a59b3;
 
-    --ring-color-accented: #5a59b3;
+    --ring-color-accented: var(--text-color-highlighted);
 
-    --ring-offset-color-accented: #5a59b3;
+    --ring-offset-color-accented: #2a2959;
 
     --divide-color-accented: #5a59b3;
   }

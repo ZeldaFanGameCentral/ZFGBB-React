@@ -1,0 +1,16 @@
+name: Auto Merge Dependabot Security Updates
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches:
+      - dependabot/**
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  dependabutt:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    uses: ZFGCCP/github-workflows/.github/workflows/workflow-auto-merge-security-updates.yml@main

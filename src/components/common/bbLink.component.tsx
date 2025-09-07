@@ -1,10 +1,9 @@
-import type React from "react";
 import { Link, type LinkProps, type Register } from "react-router";
 
 /**
  * React-Router generates a type for the routes, so we alias {@link Register} to
  * make it easier to use.
- * @see {@link https://reactrouter.com/docs/en/v6/getting-started/overview#defining-routes}
+ * @see {@link https://reactrouter.com/7.6.3/start/framework/routing}
  */
 export type RouteParams = Register["pages"];
 
@@ -58,6 +57,4 @@ export type BBLinkProps = Omit<LinkProps, "to"> & {
  * @extends Link - Extends the {@link Link} component to add the `to` prop.
  * @see {@link BBLinkProps}
  */
-export default ({ className = "", ...props }: BBLinkProps) => (
-  <Link {...props} className={className} />
-);
+export default (props: BBLinkProps) => <Link {...props} />;

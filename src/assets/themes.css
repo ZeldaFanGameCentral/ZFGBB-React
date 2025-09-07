@@ -51,3 +51,44 @@
   --image-post-indicator: url("/src/assets/themes/midnight/images/post/xx.gif");
   --image-topic-normal: url("/src/assets/themes/midnight/images/topic/normal_post.gif");
 }
+
+@layer base {
+  /* BBCode styles */
+  .bb-code-b {
+    font-weight: bold;
+  }
+
+  .bb-code-quote .bb-code-quote-body {
+    border: 0.2rem solid black;
+    padding: 1rem;
+    @apply size-full overflow-auto;
+  }
+
+  /* Theme Image Classes */
+  .theme-board-status {
+    background-image: var(--image-board-status-off);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .theme-post-indicator {
+    background-image: var(--image-post-indicator);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .theme-topic-normal {
+    background-image: var(--image-topic-normal);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

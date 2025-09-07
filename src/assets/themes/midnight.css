@@ -8,12 +8,12 @@
     --background-color-elevated: #25334e;
     --background-color-accented: #132241;
 
-    --border-color-accented: #1e2b44;
+    --border-color-accented: #132241;
 
-    --ring-color-accented: #1e2b44;
+    --ring-color-accented: #4c83ff;
 
-    --ring-offset-color-accented: #1e2b44;
+    --ring-offset-color-accented: #0b1528;
 
-    --divide-color-accented: #1e2b44;
+    --divide-color-accented: #132241;
   }
 }

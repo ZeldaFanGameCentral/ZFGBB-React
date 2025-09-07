@@ -17,12 +17,16 @@
     "noImplicitAny": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "composite": true,
     "jsx": "react-jsx",
+    "baseUrl": ".",
+    "rootDirs": [".", "./.react-router/types"],
     "paths": {
       "@/*": ["./src/*"],
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "$/*": ["./.react-router/types/src/+types/*"]
     }
   },
-  "include": ["src", "build/types", ".react-router/types/+routes.ts"],
+  "include": ["src", "build/types", "./.react-router/types/**/*"],
   "exclude": ["node_modules", "build"]
 }

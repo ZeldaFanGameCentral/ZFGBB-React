@@ -8,54 +8,27 @@ body,
   width: 100vw;
   background-color: var(--background-color-default);
   color: var(--text-color-default);
-  font-family: sans-serif;
+  font-family: var(--font-sans);
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
   scrollbar-width: none;
+  accent-color: var(--ring-color-default);
 }
 
-/* BBCode styles */
-.bb-code-b {
-  font-weight: bold;
-}
-
-.bb-code-quote .bb-code-quote-body {
-  border: 0.2rem solid black;
-  padding: 1rem;
-}
-
-/* Theme Image Classes */
-.theme-board-status {
-  background-image: var(--image-board-status-off);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.theme-post-indicator {
-  background-image: var(--image-post-indicator);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 1rem;
-  height: 1rem;
-}
-
-.theme-topic-normal {
-  background-image: var(--image-topic-normal);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 1.5rem;
-  height: 1.5rem;
+button:focus-visible,
+a:focus-visible,
+link:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  @apply outline-none rounded-md ring-accented/75 ring-2;
 }
 
 /* Default hyperlink styling */
 a {
   text-decoration: underline;
+  @apply font-serif;
 }
 
 a:hover {
@@ -82,7 +55,6 @@ a:hover {
       var(--text-color-muted)
     );
 }
-
 input:disabled {
   background-color: transparent;
   border: none;

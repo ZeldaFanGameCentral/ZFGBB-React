@@ -27,11 +27,10 @@ concurrency:
 env:
   CI: 1
   GITHUB_PAGES: "true"
-  VITE_BASE: "/ZFGCBB-React/"
 
 jobs:
   build:
-    uses: ./.github/workflows/reusable-build.yml
+    uses: ZFGCCP/github-workflows/.github/workflows/workflow-reactjs-reusable-build.yml@main
     with:
       environment: ${{ github.event.inputs.environment }}
       deployment_target: "github-pages"

@@ -11,12 +11,7 @@ export default function Skeleton<
         inline-block w-full h-full rounded-lg animate-pulse bg-gradient-to-r from-muted to-elevated
         ${className}
       `}
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "block",
-        ...style,
-      }}
+      style={style}
     />
   );
 }

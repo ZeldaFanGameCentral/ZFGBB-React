@@ -15,6 +15,7 @@ export default () => {
                   className="max-w-full h-auto max-h-38 object-cover border-default rounded border"
                   src="images/potm/triforceSaga.png"
                   alt="Triforce Saga project screenshot"
+                  loading="eager"
                   fallback={<Skeleton className="size-full min-h-38" />}
                 />
               </section>

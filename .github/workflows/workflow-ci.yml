@@ -6,7 +6,7 @@ on:
       - "package.json"
       - "yarn.lock"
       - ".nvmrc"
-      - ".github/workflows/*.yml"
+      - ".github/workflows/workflow-ci.yml"
       - "src/**/*"
 
 permissions:
@@ -21,6 +21,6 @@ concurrency:
 
 jobs:
   build:
-    uses: ./.github/workflows/reusable-build.yml
+    uses: ZFGCCP/github-workflows/.github/workflows/workflow-reactjs-reusable-build.yml@main
     with:
       environment: ${{ github.head_ref }}

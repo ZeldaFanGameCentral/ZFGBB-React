@@ -2,18 +2,106 @@
   "version": "2.0.0",
   "tasks": [
     {
-      // This will run yarn install
-      "label": "yarn install",
+      "label": "wait-for-server",
       "type": "shell",
-      "command": "corepack enable && yarn install",
-      "problemMatcher": ["$tsc"],
-      "group": {
-        "kind": "build"
+      "command": "corepack yarn dlx wait-on tcp:5173",
+      "problemMatcher": [],
+      "group": { "kind": "build" },
+      "icon": {
+        "color": "terminal.ansiBlue",
+        "id": "squirrel"
       },
       "presentation": {
         "close": true,
         "group": "build",
-        "reveal": "never"
+        "reveal": "never",
+        "clear": true,
+        "showReuseMessage": false
+      }
+    },
+    {
+      "label": "cleanup-server",
+      "type": "shell",
+      "command": "(corepack yarn dlx wait-on tcp:5173 -t 250ms; corepack yarn dlx kill-port-process 5173) > /dev/null 2>&1 || true",
+      "windows": {
+        "command": "cmd",
+        "args": [
+          "/c",
+          "corepack yarn dlx wait-on tcp:5173 -t 250ms && corepack yarn dlx kill-port-process 5173 > NUL 2>&1 || exit 0"
+        ]
+      },
+      "problemMatcher": [],
+      "group": { "kind": "build" },
+      "icon": {
+        "color": "terminal.ansiBlue",
+        "id": "squirrel"
+      },
+      "presentation": {
+        "close": true,
+        "group": "build",
+        "reveal": "never",
+        "clear": true,
+        "showReuseMessage": false
+      }
+    },
+    {
+      "label": "yarn install",
+      "type": "shell",
+      "command": "corepack enable && corepack yarn install",
+      "problemMatcher": [],
+      "group": { "kind": "build" },
+      "icon": {
+        "color": "terminal.ansiBlue",
+        "id": "squirrel"
+      },
+      "presentation": {
+        "close": true,
+        "group": "build",
+        "reveal": "never",
+        "clear": true,
+        "showReuseMessage": false
+      }
+    },
+    {
+      "label": "yarn build",
+      "type": "shell",
+      "command": "corepack yarn build",
+      "problemMatcher": [],
+      "dependsOn": ["yarn install"],
+      "group": {
+        "kind": "build"
+      },
+      "icon": {
+        "color": "terminal.ansiBlue",
+        "id": "squirrel"
+      },
+      "presentation": {
+        "clear": true,
+        "reveal": "never",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": true
+      }
+    },
+    {
+      "label": "yarn build --mode=production",
+      "type": "shell",
+      "command": "corepack yarn build --mode=production",
+      "problemMatcher": [],
+      "dependsOn": ["yarn install"],
+      "group": {
+        "kind": "build"
+      },
+      "icon": {
+        "color": "terminal.ansiBlue",
+        "id": "squirrel"
+      },
+      "presentation": {
+        "clear": true,
+        "reveal": "never",
+        "panel": "shared",
+        "showReuseMessage": false,
+        "close": true
       }
     }
   ]
