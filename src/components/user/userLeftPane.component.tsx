@@ -3,22 +3,13 @@ import { useMemo } from "react";
 import type { User } from "../../types/user";
 import BBImage from "../common/bbImage.component";
 import BBLink from "../common/bbLink.component";
+import { MutedText } from "../common/layout/text";
 
 interface UserLeftPaneProps {
   user: User;
-  backgrounds?: {
-    avatarContainer?: ThemeBackgroundClass;
-    profileInfoContainer?: ThemeBackgroundClass;
-  };
 }
 
-const UserLeftPane: React.FC<UserLeftPaneProps> = ({
-  user,
-  backgrounds = {
-    profileInfoContainer: "bg-muted",
-    avatarContainer: "bg-muted",
-  },
-}) => {
+const UserLeftPane: React.FC<UserLeftPaneProps> = ({ user }) => {
   const avatarSrc = useMemo(() => {
     if (user.bioInfo?.avatar) {
       return user.bioInfo?.avatar?.url && user.bioInfo?.avatar?.url?.trim()
@@ -30,13 +21,9 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
   }, [user]);
 
   return (
-    <div
-      className={`flex-1 flex-col shrink ${backgrounds.avatarContainer} h-full`}
-    >
-      <div
-        className={`p-3 border-b border-default shrink-0 min-h-[76px] flex items-start ${backgrounds.profileInfoContainer}`}
-      >
-        <div className="space-y-0.5 leading-tight font-medium truncate max-w-[160px]">
+    <div className="flex-1 flex-col shrink bg-muted h-full">
+      <div className="p-3 bg-muted border-b border-default shrink-0 min-h-[76px] flex items-start">
+        <div className="space-y-0.5 leading-tight font-medium truncate block max-w-[160px]">
           {user.id > 0 ? (
             <BBLink
               to={`/user/profile/${user.id}`}
@@ -66,15 +53,15 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
 
       <div className="p-3 space-y-2 text-sm flex-1">
         <div className="flex justify-between">
-          <span className="text-muted">Posts:</span>
+          <MutedText>Posts:</MutedText>
           <span></span>
         </div>
         <div className="flex justify-between">
-          <span className="text-muted">Joined:</span>
+          <MutedText>Joined:</MutedText>
           <span></span>
         </div>
         <div className="flex justify-between">
-          <span className="text-muted">Status:</span>
+          <MutedText>Status:</MutedText>
           <span></span>
         </div>
       </div>
