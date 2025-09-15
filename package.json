@@ -33,7 +33,7 @@
   "devDependencies": {
     "@prettier/plugin-oxc": "^0.0.4",
     "@react-router/dev": "^7.8.2",
-    "@react-router/fs-routes": "^7.8.2",
+    "@react-router/fs-routes": "^7.9.1",
     "@tailwindcss/vite": "^4.1.13",
     "@tanstack/react-query-devtools": "^5.87.3",
     "@types/node": "^24.3.1",
