@@ -30,7 +30,7 @@ env:
 
 jobs:
   build:
-    uses: ZFGCCP/.github/.github/workflows/workflow-reactjs-reusable-build.yml@v0.0.0
+    uses: ZFGCCP/.github/.github/workflows/workflow-reactjs-reusable-build.yml@v0.0.1
     with:
       environment: ${{ github.event.inputs.environment }}
       deployment_target: "github-pages"

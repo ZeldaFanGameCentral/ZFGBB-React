@@ -13,4 +13,4 @@ permissions:
 jobs:
   dependabutt:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    uses: ZFGCCP/.github/.github/workflows/workflow-auto-merge-security-updates.yml@v0.0.0
+    uses: ZFGCCP/.github/.github/actions/auto-approve-dependabot/action.yml@v0.0.1

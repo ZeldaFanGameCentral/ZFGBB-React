@@ -21,6 +21,6 @@ concurrency:
 
 jobs:
   build:
-    uses: ZFGCCP/.github/.github/workflows/workflow-reactjs-reusable-build.yml@v0.0.0
+    uses: ZFGCCP/.github/.github/workflows/workflow-reactjs-reusable-build.yml@v0.0.1
     with:
       environment: ${{ github.head_ref }}
