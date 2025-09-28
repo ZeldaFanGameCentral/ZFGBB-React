@@ -4,6 +4,7 @@ import type { User } from "../types/user";
 import UserLeftPane from "../components/user/userLeftPane.component";
 import Accordion from "../components/common/accordion/Accordion.component";
 import { useParams } from "react-router";
+import parse from "html-react-parser/lib/index";
 import BBInput from "../components/common/forms/BBInput.component";
 
 const UserProfileMaster: React.FC = () => {
@@ -65,6 +66,13 @@ const UserProfileMaster: React.FC = () => {
                 <option value="3">Non-binary/Other</option>
                 <option value="4">Prefer not to say</option>
               </select>
+            </div>
+
+            <div className="flex flex-col">
+              <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">Signature</label>
+              <div>
+                {user?.bioInfo?.signatureParsed && parse(user?.bioInfo?.signatureParsed)}
+              </div>
             </div>
           </form>
         </Accordion>

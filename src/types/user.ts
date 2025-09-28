@@ -15,7 +15,10 @@ export type UserBioInfo = BaseBB & {
   customTitle?: string;
   userId: number;
   signature?: string;
+  signatureParsed?: string;
   avatar?: Avatar;
+  birthDate?: string;
+  genderId?: number;
 };
 
 export type Avatar = BaseBB & {

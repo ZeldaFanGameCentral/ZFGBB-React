@@ -98,3 +98,8 @@ export type BBPermissionLabel = {
   callback: () => void;
   permissions: BBPermission[];
 };
+
+export type BBLookup = {
+  label: string;
+  value: number;
+};
