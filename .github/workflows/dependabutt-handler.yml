@@ -13,4 +13,4 @@ permissions:
 jobs:
   dependabutt:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    uses: ZFGCCP/.github/.github/actions/auto-approve-dependabot/action.yml@main
+    uses: ZFGCCP/.github/.github/workflows/dependabutt-handler.yml@main
