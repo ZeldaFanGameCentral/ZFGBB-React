@@ -6,7 +6,7 @@ on:
       - "package.json"
       - "yarn.lock"
       - ".nvmrc"
-      - ".github/workflows/workflow-ci.yml"
+      - ".github/**/*"
       - "src/**/*"
 
 permissions:
