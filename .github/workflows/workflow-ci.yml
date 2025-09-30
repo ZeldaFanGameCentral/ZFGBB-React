@@ -8,13 +8,6 @@ on:
       - ".nvmrc"
       - ".github/**/*"
       - "src/**/*"
-  push:
-    paths:
-      - "package.json"
-      - "yarn.lock"
-      - ".nvmrc"
-      - ".github/**/*"
-      - "src/**/*"
 
 permissions:
   contents: read
