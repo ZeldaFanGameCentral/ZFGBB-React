@@ -1039,19 +1039,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-router/express@npm:7.8.2":
-  version: 7.8.2
-  resolution: "@react-router/express@npm:7.8.2"
+"@react-router/express@npm:7.9.3":
+  version: 7.9.3
+  resolution: "@react-router/express@npm:7.9.3"
   dependencies:
-    "@react-router/node": "npm:7.8.2"
+    "@react-router/node": "npm:7.9.3"
   peerDependencies:
     express: ^4.17.1 || ^5
-    react-router: 7.8.2
+    react-router: 7.9.3
     typescript: ^5.1.0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/104b1b0cbd6ae00eb65bad3310b1fe8a920b940fb4abb743599ec35964b34bd321babc97954b68f25da44b295af85c7ce3b4d0d1aed020bf046c64cd54a67f74
+  checksum: 10c0/e2358746dc0d048c5e1a851a463b125f7b1b9846a2abe0d80707750433774129f6780a91af1642daa51d062f72f9b4ec6bcd9c2b2668292782e7d5b6ac879973
   languageName: node
   linkType: hard
 
@@ -1070,7 +1070,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-router/node@npm:7.8.2, @react-router/node@npm:^7.8.2":
+"@react-router/node@npm:7.8.2":
   version: 7.8.2
   resolution: "@react-router/node@npm:7.8.2"
   dependencies:
@@ -1085,22 +1085,38 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-router/serve@npm:^7.8.2":
-  version: 7.8.2
-  resolution: "@react-router/serve@npm:7.8.2"
+"@react-router/node@npm:7.9.3, @react-router/node@npm:^7.9.3":
+  version: 7.9.3
+  resolution: "@react-router/node@npm:7.9.3"
   dependencies:
-    "@react-router/express": "npm:7.8.2"
-    "@react-router/node": "npm:7.8.2"
+    "@mjackson/node-fetch-server": "npm:^0.2.0"
+  peerDependencies:
+    react-router: 7.9.3
+    typescript: ^5.1.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/8324c0c5e9255f4552885d7bf1697c8da74c2b5b8d5a5e43a31ef961e4f15440ef4e460d3a28fe47b8773519483fd3e0bf5fe9ebe1f8500f8f4193cd5b232aad
+  languageName: node
+  linkType: hard
+
+"@react-router/serve@npm:^7.9.3":
+  version: 7.9.3
+  resolution: "@react-router/serve@npm:7.9.3"
+  dependencies:
+    "@mjackson/node-fetch-server": "npm:^0.2.0"
+    "@react-router/express": "npm:7.9.3"
+    "@react-router/node": "npm:7.9.3"
     compression: "npm:^1.7.4"
     express: "npm:^4.19.2"
     get-port: "npm:5.1.1"
     morgan: "npm:^1.10.0"
     source-map-support: "npm:^0.5.21"
   peerDependencies:
-    react-router: 7.8.2
+    react-router: 7.9.3
   bin:
     react-router-serve: bin.js
-  checksum: 10c0/81275129db061fb67d4b61e5c96b349668c48e67941764378b7f5260af9cc9b59496e894cd4e1560b6dea9683b8e674d0842370a03bdd6051caaa5427d6f41f9
+  checksum: 10c0/2dd49096d483130902d813228e58ca2f54434977e5c85f1698222e9bc4d50700e7a92e0d2258676a3f1c0a3c3dc201688c5958a062fbc767a7b2a162cc1371c3
   languageName: node
   linkType: hard
 
@@ -1557,10 +1573,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.87.1":
-  version: 5.87.1
-  resolution: "@tanstack/query-core@npm:5.87.1"
-  checksum: 10c0/12c83ca67d778c1065836d0215987b4b04369c8195a32b2b3bd73ed873ff72d20027b72175ee9120b98278c299bdf5161a92f7ba629ab4ee687cb4085e91568a
+"@tanstack/query-core@npm:5.90.2":
+  version: 5.90.2
+  resolution: "@tanstack/query-core@npm:5.90.2"
+  checksum: 10c0/695a7450b0bb9f6dd21bebeacfc962dfc886631a3b3a13c33a842ef719b4c3dd30c15febe8c1ade6902a85e0f387c51a97570f430cc8f5c7032ff737d6410597
   languageName: node
   linkType: hard
 
@@ -1583,14 +1599,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.87.1":
-  version: 5.87.1
-  resolution: "@tanstack/react-query@npm:5.87.1"
+"@tanstack/react-query@npm:^5.90.2":
+  version: 5.90.2
+  resolution: "@tanstack/react-query@npm:5.90.2"
   dependencies:
-    "@tanstack/query-core": "npm:5.87.1"
+    "@tanstack/query-core": "npm:5.90.2"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10c0/12b224d6e0a5b1f033c3475d475d79ca8a5693720b5cd35c3a872a67690ff3993576d2af96d3a82c054f2fe985738044ef5ef9824f8c476bc959f188f10defe8
+  checksum: 10c0/22e76626a59890409858521b0e42b49219126a4ea5ed79eaa48a267959175dfdd28b30b9b03a415dccf703d95c18100a9d8917679818f6d2adc26d6c5f96a4d6
   languageName: node
   linkType: hard
 
@@ -1666,20 +1682,20 @@ __metadata:
     "@prettier/plugin-oxc": "npm:^0.0.4"
     "@react-router/dev": "npm:^7.8.2"
     "@react-router/fs-routes": "npm:^7.8.2"
-    "@react-router/node": "npm:^7.8.2"
-    "@react-router/serve": "npm:^7.8.2"
+    "@react-router/node": "npm:^7.9.3"
+    "@react-router/serve": "npm:^7.9.3"
     "@tailwindcss/vite": "npm:^4.1.13"
-    "@tanstack/react-query": "npm:^5.87.1"
+    "@tanstack/react-query": "npm:^5.90.2"
     "@tanstack/react-query-devtools": "npm:^5.87.3"
     "@types/node": "npm:^24.3.1"
     "@types/react": "npm:^19.1.12"
     "@types/react-dom": "npm:^19.1.9"
     html-react-parser: "npm:^5.2.6"
-    isbot: "npm:^5.1.30"
+    isbot: "npm:^5.1.31"
     prettier: "npm:^3.6.2"
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
-    react-router: "npm:^7.8.2"
+    react-router: "npm:^7.9.3"
     tailwindcss: "npm:^4.1.13"
     typescript: "npm:^5.9.2"
     vite: "npm:^7.1.6"
@@ -2768,10 +2784,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"isbot@npm:^5.1.11, isbot@npm:^5.1.30":
+"isbot@npm:^5.1.11":
   version: 5.1.30
   resolution: "isbot@npm:5.1.30"
   checksum: 10c0/00a34842c0573669830ef17fc8b0ce8e3a947835179c13e10da737899310b33d1644fbab8042a8963d581010cce6ae46cd6ee947bd5e79465e29b9cbead44113
+  languageName: node
+  linkType: hard
+
+"isbot@npm:^5.1.31":
+  version: 5.1.31
+  resolution: "isbot@npm:5.1.31"
+  checksum: 10c0/e78d3d50a90443e1870cb0ec44e34443d5f2beedc32301fe85cba310252e69d6105ac802e6109a1878c5a489a0a632d35bc2c6d31c1f4f4d639f8017064adea2
   languageName: node
   linkType: hard
 
@@ -3629,9 +3652,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:^7.8.2":
-  version: 7.8.2
-  resolution: "react-router@npm:7.8.2"
+"react-router@npm:^7.9.3":
+  version: 7.9.3
+  resolution: "react-router@npm:7.9.3"
   dependencies:
     cookie: "npm:^1.0.1"
     set-cookie-parser: "npm:^2.6.0"
@@ -3641,7 +3664,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 10c0/e3122c2949bcad5e9c990cfb88e9cbd139e5a2a5c1d29664732623907a488634c0ddbf673d07af8f113d418f66270c174f014de8b885996722f431d09f5734be
+  checksum: 10c0/ad77654d53df38b66415d158dfeb42d589e732691da6cb3ce77e8e31cb295a809f2a280e2ea203119d2b9e944992ca87f309db5c6524649cba6fa6539f6c4a83
   languageName: node
   linkType: hard
 
