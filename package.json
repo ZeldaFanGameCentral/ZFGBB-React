@@ -17,31 +17,31 @@
     "prepare:prod": "yarn build --mode=production && yarn workspaces focus --production"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.0.1",
-    "@fortawesome/free-solid-svg-icons": "^7.0.1",
-    "@fortawesome/react-fontawesome": "^3.0.2",
-    "@react-router/node": "^7.8.2",
-    "@react-router/serve": "^7.8.2",
-    "@tanstack/react-query": "^5.87.1",
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.0",
+    "@react-router/node": "^7.9.3",
+    "@react-router/serve": "^7.9.3",
+    "@tanstack/react-query": "^5.90.2",
     "html-react-parser": "^5.2.6",
-    "isbot": "^5.1.30",
-    "react": "19.1.1",
-    "react-dom": "19.1.1",
-    "react-router": "^7.8.2",
-    "tailwindcss": "^4.1.13"
+    "isbot": "^5.1.31",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-router": "^7.9.3",
+    "tailwindcss": "^4.1.14"
   },
   "devDependencies": {
     "@prettier/plugin-oxc": "^0.0.4",
-    "@react-router/dev": "^7.8.2",
-    "@react-router/fs-routes": "^7.8.2",
-    "@tailwindcss/vite": "^4.1.13",
-    "@tanstack/react-query-devtools": "^5.87.3",
-    "@types/node": "^24.3.1",
-    "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.9",
+    "@react-router/dev": "^7.9.3",
+    "@react-router/fs-routes": "^7.9.3",
+    "@tailwindcss/vite": "^4.1.14",
+    "@tanstack/react-query-devtools": "^5.90.2",
+    "@types/node": "^24.6.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
     "prettier": "^3.6.2",
-    "typescript": "^5.9.2",
-    "vite": "^7.1.6"
+    "typescript": "^5.9.3",
+    "vite": "^7.1.9"
   },
-  "packageManager": "yarn@4.9.4+sha512.7b1cb0b62abba6a537b3a2ce00811a843bea02bcf53138581a6ae5b1bf563f734872bd47de49ce32a9ca9dcaff995aa789577ffb16811da7c603dcf69e73750b"
+  "packageManager": "yarn@4.10.3+sha512.c38cafb5c7bb273f3926d04e55e1d8c9dfa7d9c3ea1f36a4868fa028b9e5f72298f0b7f401ad5eb921749eb012eb1c3bb74bf7503df3ee43fd600d14a018266f"
 }

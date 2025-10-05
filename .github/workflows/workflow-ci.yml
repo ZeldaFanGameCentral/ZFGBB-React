@@ -16,12 +16,12 @@ env:
   CI: 1
 
 concurrency:
-  group: "ci-${{ github.head_ref }}"
+  group: "${{github.workflow}}-${{ github.head_ref }}"
   cancel-in-progress: true
 
 jobs:
   build:
-    uses: ZFGCCP/.github/.github/workflows/workflow-reactjs-reusable-build.yml@main
+    uses: ZFGCCP/github-common/.github/workflows/workflow-reactjs-reusable-build.yml@main
     with:
       environment: ${{ github.head_ref }}
 
@@ -33,4 +33,4 @@ jobs:
       pull-requests: write
     steps:
       - name: Check if run is triggered by dependabot
-        uses: ZFGCCP/.github/.github/actions/auto-approve-dependabot@main
+        uses: ZFGCCP/github-common/actions/auto-approve-dependabot@main
