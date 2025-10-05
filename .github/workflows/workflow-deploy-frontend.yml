@@ -32,12 +32,12 @@ jobs:
   build:
     uses: ZFGCCP/github-common/.github/workflows/workflow-reactjs-reusable-build.yml@main
     with:
-      environment: ${{ github.event.inputs.environment }}
+      environment: ${{ github.event.inputs.environment || github.ref_name }}
       deployment_target: "github-pages"
 
   deploy:
     needs: build
     uses: ./.github/workflows/reusable-deploy.yml
     with:
-      environment: ${{ github.event.inputs.environment }}
+      environment: ${{ github.event.inputs.environment || github.ref_name }}
       artifact_name: ${{ needs.build.outputs.artifact_name }}
