@@ -7,9 +7,21 @@ import { MutedText } from "../common/layout/text";
 
 interface UserLeftPaneProps {
   user: User;
+  backgrounds?: {
+    avatarContainer?: ThemeBackgroundClass;
+    profileInfoContainer?: ThemeBackgroundClass;
+  };
 }
 
-const UserLeftPane: React.FC<UserLeftPaneProps> = ({ user }) => {
+
+
+const UserLeftPane: React.FC<UserLeftPaneProps> = ({
+  user,
+  backgrounds = {
+    profileInfoContainer: "bg-muted",
+    avatarContainer: "bg-muted",
+  },
+}) => {
   const avatarSrc = useMemo(() => {
     if (user.bioInfo?.avatar) {
       return user.bioInfo?.avatar?.url && user.bioInfo?.avatar?.url?.trim()
@@ -22,10 +34,10 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({ user }) => {
 
   return (
     <div
-      className={`flex-1 flex-col shrink bg-muted h-full`}
+      className={`flex-1 flex-col shrink ${backgrounds.avatarContainer} bg-muted h-full`}
     >
       <div
-        className={`p-3 border-b border-default shrink-0 min-h-[76px] flex items-start`}
+        className={`p-3 ${backgrounds.profileInfoContainer} border-b border-default shrink-0 min-h-[76px] flex items-start`}
       >
         <div className="space-y-0.5 leading-tight font-medium truncate block max-w-[160px]">
           {user.id > 0 ? (
