@@ -6,10 +6,11 @@ import { faPlusSquare, faMinusSquare } from "@fortawesome/free-solid-svg-icons";
 interface AccordionProps {
   title: string;
   children: React.ReactNode;
+  startExpanded?: boolean;
 }
 
-const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
-  const [expanded, setExpanded] = useState(false);
+const Accordion: React.FC<AccordionProps> = ({ title, children, startExpanded }) => {
+  const [expanded, setExpanded] = useState(startExpanded !== undefined ? startExpanded : false);
 
   return (
     <div className="m-8">

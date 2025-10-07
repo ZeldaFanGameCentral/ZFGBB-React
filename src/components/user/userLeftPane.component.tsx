@@ -43,22 +43,22 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({ user }) => {
         </div>
       </div>
 
-      <div className="p-4 flex justify-center shrink-0">
+      <div className="p-4 flex-col justify-center shrink-0">
         <BBImage
           src={avatarSrc}
           alt="User avatar"
           className="w-24 h-24 rounded border border-default object-cover"
         />
+        <div>{user?.bioInfo?.personalText}</div>
+        <div>(+{user?.bioInfo?.karmaGood}/-{user?.bioInfo?.karmaBad})</div>
       </div>
 
       <div className="p-3 space-y-2 text-sm flex-1">
         <div className="flex justify-between">
-          <MutedText>Posts:</MutedText>
-          <span></span>
+          <MutedText>Posts: {user?.bioInfo?.postCount}</MutedText>
         </div>
         <div className="flex justify-between">
-          <MutedText>Joined:</MutedText>
-          <span></span>
+          <MutedText>Joined: {user?.bioInfo?.dateRegistered}</MutedText>
         </div>
         <div className="flex justify-between">
           <MutedText>Status:</MutedText>

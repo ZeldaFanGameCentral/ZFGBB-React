@@ -19,6 +19,11 @@ export type UserBioInfo = BaseBB & {
   avatar?: Avatar;
   birthDate?: string;
   genderId?: number;
+  karmaGood?: number;
+  karmaBad?: number;
+  dateRegistered?: string;
+  hideEmailFlag?: boolean;
+  postCount?: number;
 };
 
 export type Avatar = BaseBB & {
