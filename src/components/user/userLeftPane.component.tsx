@@ -21,8 +21,12 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({ user }) => {
   }, [user]);
 
   return (
-    <div className="flex-1 flex-col shrink bg-muted h-full">
-      <div className="p-3 bg-muted border-b border-default shrink-0 min-h-[76px] flex items-start">
+    <div
+      className={`flex-1 flex-col shrink bg-muted h-full`}
+    >
+      <div
+        className={`p-3 border-b border-default shrink-0 min-h-[76px] flex items-start`}
+      >
         <div className="space-y-0.5 leading-tight font-medium truncate block max-w-[160px]">
           {user.id > 0 ? (
             <BBLink

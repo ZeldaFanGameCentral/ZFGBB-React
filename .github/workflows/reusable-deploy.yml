@@ -85,7 +85,7 @@ jobs:
 
       - name: Download artifact
         if: ${{ inputs.environment == 'main' }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: ${{ inputs.artifact_name != '' && inputs.artifact_name || format('{0}-build', inputs.environment) }}
           path: build/artifact
