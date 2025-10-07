@@ -26,10 +26,7 @@ const UserProfileMaster: React.FC = () => {
                 Display Name
               </label>
               <span className="flex-1/2">
-              <BBInput
-                value={user?.displayName || ""}
-                disabled={true}
-              />
+                <BBInput value={user?.displayName || ""} disabled={true} />
               </span>
             </div>
 
@@ -38,10 +35,10 @@ const UserProfileMaster: React.FC = () => {
                 Personal Text
               </label>
               <span className="flex-1/2">
-              <BBInput
-                value={user?.bioInfo?.personalText || ""}
-                disabled={true}
-              />
+                <BBInput
+                  value={user?.bioInfo?.personalText || ""}
+                  disabled={true}
+                />
               </span>
             </div>
 
@@ -50,10 +47,10 @@ const UserProfileMaster: React.FC = () => {
                 Custom Title
               </label>
               <span className="flex-1/2">
-              <BBInput
-                value={user?.bioInfo?.customTitle || ""}
-                disabled={true}
-              />
+                <BBInput
+                  value={user?.bioInfo?.customTitle || ""}
+                  disabled={true}
+                />
               </span>
             </div>
 
@@ -62,16 +59,18 @@ const UserProfileMaster: React.FC = () => {
                 Date of Birth
               </label>
               <span className="flex-1/2">
-              <BBInput
-                placeholder="MM/dd/YYYY"
-                disabled={true}
-                value={user?.bioInfo?.birthDate || ""}
-              />
+                <BBInput
+                  placeholder="MM/dd/YYYY"
+                  disabled={true}
+                  value={user?.bioInfo?.birthDate || ""}
+                />
               </span>
             </div>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center">
-              <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">Gender</label>
+              <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
+                Gender
+              </label>
               <select className="w-full p-2 bg-default border border-default flex-1/2">
                 <option value="1">Male</option>
                 <option value="2">Female</option>
@@ -81,9 +80,12 @@ const UserProfileMaster: React.FC = () => {
             </div>
 
             <div className="flex flex-col">
-              <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">Signature</label>
+              <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
+                Signature
+              </label>
               <div>
-                {user?.bioInfo?.signatureParsed && parse(user?.bioInfo?.signatureParsed)}
+                {user?.bioInfo?.signatureParsed &&
+                  parse(user?.bioInfo?.signatureParsed)}
               </div>
             </div>
           </form>
@@ -91,25 +93,26 @@ const UserProfileMaster: React.FC = () => {
 
         <Accordion title="Contact Information">
           <form className="space-y-4">
-            {user?.bioInfo?.hideEmailFlag === true && (<div className="flex flex-col sm:flex-row items-start sm:items-center">
-              <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
-                Email Address
-              </label>
-              <span className="flex-1/2">
-              <BBInput
-                value={user?.contactInfo?.emailAddress?.emailAddress || ""}
-                disabled={true}
-              />
-              </span>
-            </div>)}
+            {user?.bioInfo?.hideEmailFlag === true && (
+              <div className="flex flex-col sm:flex-row items-start sm:items-center">
+                <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
+                  Email Address
+                </label>
+                <span className="flex-1/2">
+                  <BBInput
+                    value={user?.contactInfo?.emailAddress?.emailAddress || ""}
+                    disabled={true}
+                  />
+                </span>
+              </div>
+            )}
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center">
-              <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">Discord</label>
+              <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
+                Discord
+              </label>
               <span className="flex-1/2">
-              <BBInput
-              value={""}
-              disabled={true}
-              />
+                <BBInput value={""} disabled={true} />
               </span>
             </div>
 
@@ -118,10 +121,7 @@ const UserProfileMaster: React.FC = () => {
                 Facebook
               </label>
               <span className="flex-1/2">
-              <BBInput
-                value={""}
-                disabled={true}
-              />
+                <BBInput value={""} disabled={true} />
               </span>
             </div>
 
@@ -130,30 +130,25 @@ const UserProfileMaster: React.FC = () => {
                 Instagram
               </label>
               <span className="flex-1/2">
-              <BBInput
-                value={""}
-                disabled={true}
-              />
+                <BBInput value={""} disabled={true} />
               </span>
             </div>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center">
-              <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">Threads</label>
+              <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
+                Threads
+              </label>
               <span className="flex-1/2">
-              <BBInput
-                value={""}
-                disabled={true}
-              />
+                <BBInput value={""} disabled={true} />
               </span>
             </div>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center">
-              <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">Twitter</label>
+              <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
+                Twitter
+              </label>
               <span className="flex-1/2">
-              <BBInput
-                value={""}
-                disabled={true}
-              />
+                <BBInput value={""} disabled={true} />
               </span>
             </div>
           </form>

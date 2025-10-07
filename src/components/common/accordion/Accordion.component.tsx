@@ -9,8 +9,14 @@ interface AccordionProps {
   startExpanded?: boolean;
 }
 
-const Accordion: React.FC<AccordionProps> = ({ title, children, startExpanded }) => {
-  const [expanded, setExpanded] = useState(startExpanded !== undefined ? startExpanded : false);
+const Accordion: React.FC<AccordionProps> = ({
+  title,
+  children,
+  startExpanded,
+}) => {
+  const [expanded, setExpanded] = useState(
+    startExpanded !== undefined ? startExpanded : false,
+  );
 
   return (
     <div className="m-8">
