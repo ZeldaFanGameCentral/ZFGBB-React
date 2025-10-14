@@ -1076,39 +1076,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-router/node@npm:7.9.3":
-  version: 7.9.3
-  resolution: "@react-router/node@npm:7.9.3"
-  dependencies:
-    "@mjackson/node-fetch-server": "npm:^0.2.0"
-  peerDependencies:
-    react-router: 7.9.3
-    typescript: ^5.1.0
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/8324c0c5e9255f4552885d7bf1697c8da74c2b5b8d5a5e43a31ef961e4f15440ef4e460d3a28fe47b8773519483fd3e0bf5fe9ebe1f8500f8f4193cd5b232aad
-  languageName: node
-  linkType: hard
-
-"@react-router/node@npm:7.9.4":
+"@react-router/node@npm:7.9.4, @react-router/node@npm:^7.9.4":
   version: 7.9.4
   resolution: "@react-router/node@npm:7.9.4"
-  dependencies:
-    "@mjackson/node-fetch-server": "npm:^0.2.0"
-  peerDependencies:
-    react-router: 7.9.4
-    typescript: ^5.1.0
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/df900b346c7eda2c506d8f6fb1ab9502e2a378e8b4617026cb7e4e047ff6301fa280cf1948de0f17c77be63c9ab5253b697eff9fd6529ed952fa77d19d006b41
-  languageName: node
-  linkType: hard
-
-"@react-router/serve@npm:^7.9.3":
-  version: 7.9.3
-  resolution: "@react-router/serve@npm:7.9.3"
   dependencies:
     "@mjackson/node-fetch-server": "npm:^0.2.0"
   peerDependencies:
@@ -1700,8 +1670,8 @@ __metadata:
     "@prettier/plugin-oxc": "npm:^0.0.4"
     "@react-router/dev": "npm:^7.9.4"
     "@react-router/fs-routes": "npm:^7.9.4"
-    "@react-router/node": "npm:^7.9.3"
-    "@react-router/serve": "npm:^7.9.3"
+    "@react-router/node": "npm:^7.9.4"
+    "@react-router/serve": "npm:^7.9.4"
     "@tailwindcss/vite": "npm:^4.1.14"
     "@tanstack/react-query": "npm:^5.90.2"
     "@tanstack/react-query-devtools": "npm:^5.90.2"
