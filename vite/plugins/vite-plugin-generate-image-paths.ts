@@ -4,8 +4,9 @@ import path from "node:path";
 
 interface ImagePathPluginOptions {
   assetsPath?: string;
-  outputDir?: string;
+  outputTypeDir?: string;
   outputClientDir?: string;
+  outputServerDir?: string;
   includeDirs?: string[];
   debug?: boolean;
 }
@@ -13,8 +14,9 @@ interface ImagePathPluginOptions {
 function defaultOptions(): Required<ImagePathPluginOptions> {
   return {
     assetsPath: "public",
-    outputDir: "build",
+    outputTypeDir: "build/types",
     outputClientDir: "build/client/assets",
+    outputServerDir: "build/server/assets",
     includeDirs: ["images", "themes"],
     debug: false,
   };
@@ -50,7 +52,7 @@ async function writeTypeFile(
 ) {
   const outputPath = path.resolve(
     process.cwd(),
-    `${options.outputDir}/types/image-paths.d.ts`,
+    `${options.outputTypeDir}/image-paths.d.ts`,
   );
   await fs.mkdir(path.dirname(outputPath), { recursive: true });
 
@@ -108,8 +110,9 @@ async function initFileCache(
  *
  * @param userOptions - Configuration options for the plugin @see {@link ImagePathPluginOptions}
  * @param userOptions.assetsPath - Root directory for assets (default: "public")
- * @param userOptions.outputDir - Base output directory (default: "build")
+ * @param userOptions.outputTypeDir - Tyoe output directory (default: "build")
  * @param userOptions.outputClientDir - Client assets output directory (default: "build/client/assets")
+ * @param userOptions.outputServerDir - Server assets output directory (default: "build/server/assets")
  * @param userOptions.includeDirs - Array of subdirectories to scan for generating types (default: ["images", "themes"])
  * @param userOptions.debug - Enable debug logging (default: false)
  *
@@ -123,13 +126,7 @@ async function initFileCache(
  *
  * export default defineConfig({
  *   plugins: [
- *     generateImagePaths({
- *       assetsPath: "public",
- *       outputDir: "build",
- *       outputClientDir: "build/client/assets",
- *       includeDirs: ["images", "themes"],
- *       debug: true,
- *     }),
+ *     generateImagePaths(),
  *   ],
  * });
  * ```
@@ -177,10 +174,12 @@ export function generateImagePaths(
       name: "vite-plugin-generate-image-paths",
       apply: "serve",
       async buildStart() {
+        fileCache.clear();
         fileCache = await initFileCache(options);
         await writeTypeFile(options, fileCache);
       },
       async configureServer(server: ViteDevServer) {
+        fileCache.clear();
         fileCache = await initFileCache(options);
         await writeTypeFile(options, fileCache);
 
@@ -190,20 +189,19 @@ export function generateImagePaths(
         server.watcher.add(watchDirs);
 
         server.watcher.on("add", (file) => {
-          if (file.startsWith(assetsAbsPath)) {
-            updateCache(file, true);
-            triggerRegeneration();
-          }
+          if (!file.startsWith(assetsAbsPath)) return;
+          updateCache(file, true);
+          triggerRegeneration();
         });
 
         server.watcher.on("unlink", (file) => {
-          if (file.startsWith(assetsAbsPath)) {
-            updateCache(file, false);
-            triggerRegeneration();
-          }
+          if (!file.startsWith(assetsAbsPath)) return;
+          updateCache(file, false);
+          triggerRegeneration();
         });
       },
       async closeBundle() {
+        fileCache.clear();
         fileCache = await initFileCache(options);
         await writeTypeFile(options, fileCache);
       },
