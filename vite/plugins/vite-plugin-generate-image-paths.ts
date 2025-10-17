@@ -1,4 +1,4 @@
-import { Plugin, ViteDevServer } from "vite";
+import type { Plugin, ViteDevServer } from "vite";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import type BBImage from "../../src/components/common/bbImage.component";
@@ -111,47 +111,49 @@ export {};
  */
 export function generateImagePaths(
   userOptions: ImagePathPluginOptions = {},
-): Plugin {
+): Plugin[] {
   const options = { ...defaultOptions(), ...userOptions };
 
-  return {
-    name: "vite-plugin-generate-image-paths",
-    apply: "serve", // Run in dev and build mode
-    async buildStart() {
-      // Generate the type file before build starts
-      await generateTypeFile(options);
-    },
-    async configureServer(server: ViteDevServer) {
-      // Generate type file for the first time when server is configured
-      await generateTypeFile(options);
+  return [
+    {
+      name: "vite-plugin-generate-image-paths",
+      apply: "serve", // Run in dev and build mode
+      async buildStart() {
+        // Generate the type file before build starts
+        await generateTypeFile(options);
+      },
+      async configureServer(server: ViteDevServer) {
+        // Generate type file for the first time when server is configured
+        await generateTypeFile(options);
 
-      const watchDirs = options.includeDirs.map((d) =>
-        path.resolve(process.cwd(), options.assetsPath, d),
-      );
+        const watchDirs = options.includeDirs.map((d) =>
+          path.resolve(process.cwd(), options.assetsPath, d),
+        );
 
-      for (const dir of watchDirs) {
-        server.watcher.add(dir);
-      }
-
-      const isWatchedPath = (filePath: string) =>
-        filePath.startsWith(path.resolve(process.cwd(), options.assetsPath));
-
-      // On file additions and deletions, regenerate type file
-      server.watcher.on("add", async (file) => {
-        if (isWatchedPath(file)) {
-          await generateTypeFile(options);
+        for (const dir of watchDirs) {
+          server.watcher.add(dir);
         }
-      });
 
-      server.watcher.on("unlink", async (file) => {
-        if (isWatchedPath(file)) {
-          await generateTypeFile(options);
-        }
-      });
+        const isWatchedPath = (filePath: string) =>
+          filePath.startsWith(path.resolve(process.cwd(), options.assetsPath));
+
+        // On file additions and deletions, regenerate type file
+        server.watcher.on("add", async (file) => {
+          if (isWatchedPath(file)) {
+            await generateTypeFile(options);
+          }
+        });
+
+        server.watcher.on("unlink", async (file) => {
+          if (isWatchedPath(file)) {
+            await generateTypeFile(options);
+          }
+        });
+      },
+      // Build hook to ensure the type file gets generated during production build
+      async closeBundle() {
+        await generateTypeFile(options);
+      },
     },
-    // Build hook to ensure the type file gets generated during production build
-    async closeBundle() {
-      await generateTypeFile(options);
-    },
-  };
+  ];
 }
