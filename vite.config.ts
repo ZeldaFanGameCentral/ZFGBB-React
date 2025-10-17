@@ -62,7 +62,6 @@ export default defineConfig(({ mode, isSsrBuild }) => {
       resolvers: [
         iconsResolver({
           prefix: "",
-          //enabledCollections: ["fa6-regular", "fa6-solid"],
           strict: true,
         }),
       ],
@@ -81,6 +80,10 @@ export default defineConfig(({ mode, isSsrBuild }) => {
     envPrefix: ["REACT_", "VITE_"],
     build: {
       target: "esnext",
+    },
+    experimental: {
+      hmrPartialAccept: true,
+      enableNativePlugin: true,
     },
     server: {
       allowedHosts: [".zfgc.com"],

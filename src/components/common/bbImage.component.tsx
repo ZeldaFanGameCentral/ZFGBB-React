@@ -18,12 +18,13 @@ type BBImageLazyComponentType = ReturnType<typeof lazy>;
 const lazyImageComponentCache = new Map<string, BBImageLazyComponentType>();
 
 type ImageModule = { default: string };
+// FIXME: enable support for extracting glob imports for SSR.
+
 const images: Record<string, () => Promise<ImageModule>> =
   import.meta.glob<ImageModule>([
     `/src/assets/images/**/*`,
     `/src/assets/themes/**/*`,
   ]);
-
 /**
  * Resolves a path or URL into a usable image source.
  * @param path - Relative path or full URL to the image.
