@@ -128,7 +128,7 @@ export {};
  * ```ts
  * declare global {
  *   export type ImagePath = "images/logo.png" | "images/hero.jpg";
- *   export type ThemePath = "themes/dark.css" | "themes/light.css";
+ *   export type ThemePath = "themes/midnight/board-summary/off.gif" | "themes/midnight/post/xx.gif" | "themes/midnight/topic/normal_post.gif";
  * }
  * ```
  *
