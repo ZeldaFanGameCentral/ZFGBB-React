@@ -1,5 +1,3 @@
-import type React from "react";
-import { useContext } from "react";
 import { UserContext } from "./providers/user/userProvider";
 import Navigator from "./components/navigation/navigator.component";
 import BBLink from "./components/common/bbLink.component";

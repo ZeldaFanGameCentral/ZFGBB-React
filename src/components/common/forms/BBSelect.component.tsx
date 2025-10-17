@@ -1,5 +1,4 @@
-import type React from "react";
-import { type BBLookup } from "../../../types/forum";
+import type { BBLookup } from "../../../types/forum";
 
 const BBSelect: React.FC<{
   disabled?: boolean;

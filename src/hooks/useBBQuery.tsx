@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import type { BaseBB } from "../types/api";
-import { useCallback } from "react";
 import { handleResponseWithJason } from "@/shared/http/response.handler";
 
 export const useBBQuery = <T extends BaseBB | BaseBB[]>(

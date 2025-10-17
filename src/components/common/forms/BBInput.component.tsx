@@ -1,5 +1,3 @@
-import type React from "react";
-
 const BBInput: React.FC<{
   value: string;
   disabled?: boolean;
