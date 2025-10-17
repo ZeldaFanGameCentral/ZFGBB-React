@@ -15,16 +15,9 @@ export type BBImageProps = Partial<ImageProps> & {
 };
 type BBImageComponentType = FC<BBImageProps>;
 type BBImageLazyComponentType = ReturnType<typeof lazy>;
+
+// FIXME: remove this lazy cache, since we can avoid doing this with better utilization of lazy.
 const lazyImageComponentCache = new Map<string, BBImageLazyComponentType>();
-
-// type ImageModule = { default: string };
-
-// const images: Record<string, () => Promise<ImageModule>> =
-//   import.meta.glob<ImageModule>([
-//     `/public/images/**/*`,
-//     `/src/assets/themes/**/*`,
-//   ]);
-
 /**
  * Resolves a path or URL into a usable image source.
  * @param path - Relative path or full URL to the image.
@@ -32,9 +25,6 @@ const lazyImageComponentCache = new Map<string, BBImageLazyComponentType>();
  */
 async function preloadImage(path: string): Promise<string | undefined> {
   if (URL.canParse(path) || path) return path;
-  // const loader =
-  //   images[`/public/${path}`] ?? images[`/src/assets/themes/${path}`];
-  // if (loader) return (await loader()).default;
   if (import.meta.env.DEV)
     console.warn(`Image not found: ${path}. Rendering nothing.`);
   return undefined;
