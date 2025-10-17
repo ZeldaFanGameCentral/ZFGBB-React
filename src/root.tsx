@@ -1,9 +1,7 @@
 import "./assets/App.css";
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import UserProvider from "./providers/user/userProvider";
 import QueryProvider from "./providers/query/queryProvider";
 import RootLayout from "./rootLayout.component";
-import { Suspense, lazy } from "react";
 
 const TanStackQueryDevtools = import.meta.env.DEV
   ? lazy(() =>

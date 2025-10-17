@@ -1,10 +1,12 @@
-import { defineConfig, loadEnv, Plugin } from "vite";
+import { defineConfig, loadEnv, Plugin, PluginOption } from "vite";
 import { reactRouter } from "@react-router/dev/vite";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import rsc from "@vitejs/plugin-rsc";
 import { unstable_reactRouterRSC } from "@react-router/dev/vite";
+import icons from "unplugin-icons/vite";
+import autoImport from "unplugin-auto-import/vite";
 
 import { generateImagePaths } from "./vite/plugins/vite-plugin-generate-image-paths";
 
@@ -14,11 +16,55 @@ const srcDirectory = resolve(__dirname, "src");
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, isSsrBuild }) => {
   const env = loadEnv(mode, process.cwd(), ["REACT_", "VITE_"]);
-  const plugins = [tailwindcss()];
-  if (isSsrBuild) plugins.push(unstable_reactRouterRSC() as Plugin[], rsc());
-  else plugins.push(reactRouter(), generateImagePaths());
+  const plugins: Array<Plugin | Plugin[] | PluginOption | PluginOption[]> = [
+    autoImport({
+      imports: [
+        "react",
+        "react-router",
+        {
+          // FIXME: remove this once https://github.com/unplugin/unplugin-auto-import/pull/603 is merged.
+          react: [
+            "cache",
+            "cacheSignal",
+            "createContext",
+            "use",
+            "useOptimistic",
+            "useEffectEvent",
+            "useActionState",
+            "Fragment",
+            "Suspense",
+            "Activity",
+          ],
+        },
+        {
+          "react-router": [
+            "Links",
+            "Link",
+            "LinkProps",
+            "Meta",
+            "Outlet",
+            "Scripts",
+            "ScrollRestoration",
+            "Register",
+            "useNavigation",
+            "useNavigate",
+            "useParams",
+            "useLocation",
+            "useSearchParams",
+          ],
+          // FIXME: remove this once https://github.com/unplugin/unplugin-auto-import/pull/603 is merged.
+        },
+      ],
+      dts: "build/types/auto-import.d.ts",
+      include: ["**/*.{ts,tsx,js,jsx}"],
+      viteOptimizeDeps: true,
+    }),
+    tailwindcss(),
+  ];
 
-  plugins.push(generateImagePaths());
+  if (isSsrBuild) plugins.push(unstable_reactRouterRSC(), rsc());
+  else plugins.push(reactRouter());
+  plugins.push(generateImagePaths(), icons());
 
   return {
     base: env["VITE_BASE"] ?? "/",

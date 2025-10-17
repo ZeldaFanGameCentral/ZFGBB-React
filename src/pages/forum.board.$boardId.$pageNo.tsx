@@ -1,6 +1,3 @@
-import type React from "react";
-import { Suspense, useMemo, type JSX } from "react";
-import { useNavigate, useParams } from "react-router";
 import BBLink from "../components/common/bbLink.component";
 import BBPaginator, {
   type BBPaginatorProps,

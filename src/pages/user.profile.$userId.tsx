@@ -1,9 +1,7 @@
-import type React from "react";
 import { useBBQuery } from "../hooks/useBBQuery";
 import type { User } from "../types/user";
 import UserLeftPane from "../components/user/userLeftPane.component";
 import Accordion from "../components/common/accordion/Accordion.component";
-import { useParams } from "react-router";
 import parse from "html-react-parser/lib/index";
 import BBInput from "../components/common/forms/BBInput.component";
 

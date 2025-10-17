@@ -1,4 +1,3 @@
-import type React from "react";
 import BBLink, { type BBLinkProps } from "../common/bbLink.component";
 
 interface NavTabProps extends Omit<BBLinkProps, "relative"> {

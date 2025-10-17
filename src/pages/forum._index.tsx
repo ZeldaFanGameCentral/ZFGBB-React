@@ -1,4 +1,3 @@
-import type React from "react";
 import ForumCategory from "../components/forum/forumCategory.component";
 import { useBBQuery } from "../hooks/useBBQuery";
 import type { Forum } from "../types/forum";

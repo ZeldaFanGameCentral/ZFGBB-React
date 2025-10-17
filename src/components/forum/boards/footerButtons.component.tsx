@@ -1,5 +1,3 @@
-import type React from "react";
-
 export type FooterConfig = {
   label: string;
   callback: () => void;

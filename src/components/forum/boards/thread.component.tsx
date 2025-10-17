@@ -1,5 +1,3 @@
-import type React from "react";
-import { useMemo, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faReply,
@@ -18,7 +16,6 @@ import MessageEditor from "../messageEditor.component";
 import UserLeftPane from "../../user/userLeftPane.component";
 import HasPermission from "../../common/security/HasPermission.component";
 import BBPaginator from "../../common/paginator/bbPaginator.component";
-import { useNavigate } from "react-router";
 import BBLink from "@/components/common/bbLink.component";
 import BBFlex from "@/components/common/layout/bbFlex.component";
 

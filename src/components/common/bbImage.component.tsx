@@ -1,11 +1,4 @@
-import {
-  Suspense,
-  lazy,
-  type ReactElement,
-  type ComponentType,
-  type JSX,
-  type FC,
-} from "react";
+import type { ReactElement, ComponentType, JSX, FC } from "react";
 import Skeleton from "./skeleton.component";
 
 type ImageProps = JSX.IntrinsicElements["img"];

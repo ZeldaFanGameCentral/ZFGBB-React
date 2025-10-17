@@ -1,4 +1,3 @@
-import type React from "react";
 import type { BoardSummary } from "../../../types/forum";
 import BBLink from "../../common/bbLink.component";
 import BBTable from "../../common/tables/bbTable.component";

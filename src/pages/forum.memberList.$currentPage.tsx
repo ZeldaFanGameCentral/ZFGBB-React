@@ -1,5 +1,3 @@
-import type React from "react";
-import { useNavigate, useParams } from "react-router";
 import { useBBQuery } from "../hooks/useBBQuery";
 import type { User } from "../types/user";
 import BBPaginator from "@/components/common/paginator/bbPaginator.component";

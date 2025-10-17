@@ -1,4 +1,3 @@
-import type React from "react";
 import Widget from "../common/widgets/widget.component";
 import type { BoardSummary } from "../../types/forum";
 import BoardSummaryView from "./boards/boardSummary.component";

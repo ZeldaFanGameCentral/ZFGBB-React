@@ -1,6 +1,3 @@
-import type React from "react";
-import { Outlet } from "react-router";
-
 // Reference: https://reactrouter.com/how-to/file-route-conventions for how to use routes.
 // https://reactrouter.com/start/framework/route-module
 const Sonic: React.FC = () => {

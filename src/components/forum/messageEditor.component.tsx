@@ -1,5 +1,3 @@
-import type React from "react";
-import { useRef } from "react";
 import { useBBQuery } from "../../hooks/useBBQuery";
 import type { Message } from "../../types/forum";
 import { useBBMutation } from "../../hooks/useBBMutation";

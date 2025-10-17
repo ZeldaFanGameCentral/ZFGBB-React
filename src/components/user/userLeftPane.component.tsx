@@ -1,5 +1,3 @@
-import type React from "react";
-import { useMemo } from "react";
 import type { User } from "../../types/user";
 import BBImage from "../common/bbImage.component";
 import BBLink from "../common/bbLink.component";

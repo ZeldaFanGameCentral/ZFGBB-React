@@ -1,5 +1,3 @@
-import { Outlet } from "react-router";
-
 export default function ForumMemberListLayout() {
   return (
     <article>

@@ -1,5 +1,3 @@
-import { Outlet, useNavigation } from "react-router";
-
 export default function ForumBoardLayout() {
   const navigation = useNavigation();
   return (

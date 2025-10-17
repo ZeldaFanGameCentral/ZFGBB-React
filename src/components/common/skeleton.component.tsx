@@ -1,5 +1,3 @@
-import type React from "react";
-
 export default function Skeleton<
   PropsType extends React.HTMLAttributes<HTMLDivElement> &
     React.PropsWithChildren,

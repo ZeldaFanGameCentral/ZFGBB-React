@@ -1,4 +1,4 @@
-import { Link, type LinkProps, type Register } from "react-router";
+import type { LinkProps, Register } from "react-router";
 
 /**
  * React-Router generates a type for the routes, so we alias {@link Register} to
