@@ -1,4 +1,4 @@
-import Widget from "../components/common/widgets/widget.component";
+import Widget from "../components/common/widgets/widget";
 
 export default function UserProfile() {
   return (

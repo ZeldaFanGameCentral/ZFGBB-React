@@ -7,7 +7,7 @@
   "type": "module",
   "homepage": "https://zfgc.com",
   "scripts": {
-    "check": "react-router build  && tsc --noEmit && prettier . --check --experimental-cli",
+    "check": "prettier . --check --experimental-cli && react-router build  && tsc --noEmit",
     "format": "prettier . --write ",
     "build": "react-router build",
     "dev": "react-router dev",

@@ -1,8 +1,8 @@
 import { useBBQuery } from "../hooks/useBBQuery";
 import type { User } from "../types/user";
-import BBPaginator from "@/components/common/paginator/bbPaginator.component";
-import Widget from "@/components/common/widgets/widget.component";
-import BBTable from "@/components/common/tables/bbTable.component";
+import BBPaginator from "@/components/common/paginator/bbPaginator";
+import Widget from "@/components/common/widgets/widget";
+import BBTable from "@/components/common/tables/bbTable";
 
 const MemberListContainer: React.FC = () => {
   const navigate = useNavigate();

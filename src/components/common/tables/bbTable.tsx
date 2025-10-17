@@ -1,4 +1,4 @@
-import BBFlex from "../layout/bbFlex.component";
+import BBFlex from "../layout/bbFlex";
 
 export default function BBTable<T extends object>({
   columns,

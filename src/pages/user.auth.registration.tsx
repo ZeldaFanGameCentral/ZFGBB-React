@@ -1,4 +1,4 @@
-import Widget from "../components/common/widgets/widget.component";
+import Widget from "../components/common/widgets/widget";
 
 const UserRegistration: React.FC = () => {
   return (

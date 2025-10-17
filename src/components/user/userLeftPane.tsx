@@ -1,7 +1,7 @@
 import type { User } from "../../types/user";
-import BBImage from "../common/bbImage.component";
-import BBLink from "../common/bbLink.component";
-import { MutedText } from "../text/muted.component";
+import BBImage from "../common/bbImage";
+import BBLink from "../common/bbLink";
+import { MutedText } from "../text/muted";
 
 interface UserLeftPaneProps {
   user: User;

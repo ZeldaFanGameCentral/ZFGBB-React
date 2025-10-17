@@ -1,14 +1,14 @@
-import BBLink from "../components/common/bbLink.component";
+import BBLink from "../components/common/bbLink";
 import BBPaginator, {
   type BBPaginatorProps,
-} from "../components/common/paginator/bbPaginator.component";
-import Widget from "../components/common/widgets/widget.component";
-import BoardSummaryView from "../components/forum/boards/boardSummary.component";
+} from "../components/common/paginator/bbPaginator";
+import Widget from "../components/common/widgets/widget";
+import BoardSummaryView from "../components/forum/boards/boardSummary";
 import { useBBQuery } from "../hooks/useBBQuery";
 import type { Board, Thread } from "../types/forum";
-import Skeleton from "@/components/common/skeleton.component";
-import BBFlex from "@/components/common/layout/bbFlex.component";
-import BBTable from "../components/common/tables/bbTable.component";
+import Skeleton from "@/components/common/skeleton";
+import BBFlex from "@/components/common/layout/bbFlex";
+import BBTable from "../components/common/tables/bbTable";
 
 function BoardTablePaginatorComponent({
   board,

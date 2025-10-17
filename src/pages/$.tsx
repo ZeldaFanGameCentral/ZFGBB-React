@@ -1,4 +1,4 @@
-import BBImage from "@/components/common/bbImage.component";
+import BBImage from "@/components/common/bbImage";
 
 export default function MyNameIsError404() {
   return (
