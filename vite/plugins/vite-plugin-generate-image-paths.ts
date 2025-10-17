@@ -4,20 +4,20 @@ import path from "node:path";
 
 interface ImagePathPluginOptions {
   assetsPath?: string;
+  includeAssetDirs?: string[];
   outputTypeDir?: string;
   outputClientDir?: string;
   outputServerDir?: string;
-  includeDirs?: string[];
   debug?: boolean;
 }
 
 function defaultOptions(): Required<ImagePathPluginOptions> {
   return {
     assetsPath: "public",
+    includeAssetDirs: ["images", "themes"],
     outputTypeDir: "build/types",
     outputClientDir: "build/client/assets",
     outputServerDir: "build/server/assets",
-    includeDirs: ["images", "themes"],
     debug: false,
   };
 }
@@ -54,6 +54,12 @@ async function writeTypeFile(
     process.cwd(),
     `${options.outputTypeDir}/image-paths.d.ts`,
   );
+
+  if (options.debug)
+    console.debug(
+      `[vite-plugin-generate-image-paths] Generating ${outputPath}`,
+    );
+
   await fs.mkdir(path.dirname(outputPath), { recursive: true });
 
   const typeBlocks: string[] = [];
@@ -88,7 +94,12 @@ async function initFileCache(
   const cache = new Map<string, Set<string>>();
   const assetsAbsPath = path.resolve(process.cwd(), options.assetsPath);
 
-  for (const subDir of options.includeDirs) {
+  if (options.debug)
+    console.debug(
+      `[vite-plugin-generate-image-paths] Initializing cache from ${assetsAbsPath}`,
+    );
+
+  for (const subDir of options.includeAssetDirs) {
     const fullDir = path.join(assetsAbsPath, subDir);
     const files = await walk(fullDir);
     const relativeFiles = files.map((filePath) =>
@@ -96,6 +107,11 @@ async function initFileCache(
     );
     cache.set(subDir, new Set(relativeFiles));
   }
+
+  if (options.debug)
+    console.debug(
+      `[vite-plugin-generate-image-paths] Initialized cache with ${cache.size} entries`,
+    );
 
   return cache;
 }
@@ -110,10 +126,10 @@ async function initFileCache(
  *
  * @param userOptions - Configuration options for the plugin @see {@link ImagePathPluginOptions}
  * @param userOptions.assetsPath - Root directory for assets (default: "public")
+ * @param userOptions.includeAssetDirs - Array of subdirectories to scan for generating types (default: ["images", "themes"])
  * @param userOptions.outputTypeDir - Tyoe output directory (default: "build")
  * @param userOptions.outputClientDir - Client assets output directory (default: "build/client/assets")
  * @param userOptions.outputServerDir - Server assets output directory (default: "build/server/assets")
- * @param userOptions.includeDirs - Array of subdirectories to scan for generating types (default: ["images", "themes"])
  * @param userOptions.debug - Enable debug logging (default: false)
  *
  * @returns An array of Vite plugins
@@ -135,8 +151,8 @@ async function initFileCache(
  * Generated type file structure:
  * ```ts
  * declare global {
- *   export type ImagePath = "images/logo.png" | "images/hero.jpg";
- *   export type ThemePath = "themes/midnight/board-summary/off.gif" | "themes/midnight/post/xx.gif";
+ *   export type ImagesPath = "images/logo.png" | "images/hero.jpg";
+ *   export type ThemesPath = "themes/midnight/board-summary/off.gif" | "themes/midnight/post/xx.gif";
  * }
  * ```
  *
@@ -159,8 +175,10 @@ export function generateImagePaths(
   };
 
   const updateCache = (filePath: string, added: boolean) => {
-    const relPath = path.relative(assetsAbsPath, filePath).replace(/\\/g, "/");
-    const subDir = options.includeDirs.find((d) => relPath.startsWith(`${d}/`));
+    const relPath = path.relative(assetsAbsPath, filePath); //.replace(/\\/g, "/");
+    const subDir = options.includeAssetDirs.find((d) =>
+      relPath.startsWith(`${d}/`),
+    );
     if (!subDir) return;
 
     const dirSet = fileCache.get(subDir) ?? new Set<string>();
@@ -183,19 +201,23 @@ export function generateImagePaths(
         fileCache = await initFileCache(options);
         await writeTypeFile(options, fileCache);
 
-        const watchDirs = options.includeDirs.map((dir) =>
+        const watchDirs = options.includeAssetDirs.map((dir) =>
           path.resolve(assetsAbsPath, dir),
         );
-        server.watcher.add(watchDirs);
+        if (options.debug)
+          console.debug(
+            `[vite-plugin-generate-image-paths] Watching ${watchDirs.join(
+              ", ",
+            )}`,
+          );
 
+        server.watcher.add(watchDirs);
         server.watcher.on("add", (file) => {
-          if (!file.startsWith(assetsAbsPath)) return;
           updateCache(file, true);
           triggerRegeneration();
         });
 
         server.watcher.on("unlink", (file) => {
-          if (!file.startsWith(assetsAbsPath)) return;
           updateCache(file, false);
           triggerRegeneration();
         });
