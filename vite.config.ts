@@ -7,6 +7,7 @@ import rsc from "@vitejs/plugin-rsc";
 import { unstable_reactRouterRSC } from "@react-router/dev/vite";
 import icons from "unplugin-icons/vite";
 import autoImport from "unplugin-auto-import/vite";
+import iconsResolver from "unplugin-icons/resolver";
 
 import { generateImagePaths } from "./vite/plugins/vite-plugin-generate-image-paths";
 
@@ -58,13 +59,21 @@ export default defineConfig(({ mode, isSsrBuild }) => {
       dts: "build/types/auto-import.d.ts",
       include: ["**/*.{ts,tsx,js,jsx}"],
       viteOptimizeDeps: true,
+      resolvers: [
+        iconsResolver({
+          prefix: "",
+          //enabledCollections: ["fa6-regular", "fa6-solid"],
+          strict: true,
+        }),
+      ],
     }),
+    icons({ compiler: "jsx", jsx: "react", autoInstall: true }),
     tailwindcss(),
   ];
 
   if (isSsrBuild) plugins.push(unstable_reactRouterRSC(), rsc());
   else plugins.push(reactRouter());
-  plugins.push(generateImagePaths(), icons());
+  plugins.push(generateImagePaths());
 
   return {
     base: env["VITE_BASE"] ?? "/",

@@ -17,9 +17,6 @@
     "prepare:prod": "yarn build --mode=production && yarn workspaces focus --production"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.1.0",
-    "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@fortawesome/react-fontawesome": "^3.1.0",
     "@react-router/node": "^7.9.4",
     "@react-router/serve": "^7.9.4",
     "@tanstack/react-query": "^5.90.2",
@@ -27,14 +24,16 @@
     "isbot": "^5.1.31",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "react-router": "^7.9.4",
-    "tailwindcss": "^4.1.14"
+    "react-router": "^7.9.4"
   },
   "devDependencies": {
     "@iconify-json/fa6-regular": "^1.2.4",
+    "@iconify-json/fa6-solid": "^1.2.4",
     "@prettier/plugin-oxc": "^0.0.4",
     "@react-router/dev": "^7.9.4",
     "@react-router/fs-routes": "^7.9.4",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
     "@tailwindcss/vite": "^4.1.14",
     "@tanstack/react-query-devtools": "^5.90.2",
     "@types/node": "^24.7.2",
@@ -42,6 +41,7 @@
     "@types/react-dom": "^19.2.1",
     "@vitejs/plugin-rsc": "^0.5.0",
     "prettier": "^3.6.2",
+    "tailwindcss": "^4.1.14",
     "typescript": "^5.9.3",
     "unplugin-auto-import": "^20.2.0",
     "unplugin-icons": "^22.4.2",

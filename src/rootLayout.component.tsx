@@ -3,8 +3,6 @@ import { useContext } from "react";
 import { UserContext } from "./providers/user/userProvider";
 import Navigator from "./components/navigation/navigator.component";
 import BBLink from "./components/common/bbLink.component";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BBImage from "./components/common/bbImage.component";
 
 interface RootLayoutProps {
@@ -74,7 +72,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
             <span className="text-xs">Wiki</span>
           </BBLink>
           <button className="flex items-center justify-center hover:bg-muted transition-colors">
-            <FontAwesomeIcon icon={faBars} />
+            <Fa6SolidBars />
           </button>
         </div>
       </nav>

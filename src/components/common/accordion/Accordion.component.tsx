@@ -1,8 +1,3 @@
-import type React from "react";
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusSquare, faMinusSquare } from "@fortawesome/free-solid-svg-icons";
-
 interface AccordionProps {
   title: string;
   children: React.ReactNode;
@@ -25,10 +20,7 @@ const Accordion: React.FC<AccordionProps> = ({
           className="cursor-pointer "
           onClick={() => setExpanded((prev) => !prev)}
         >
-          <FontAwesomeIcon
-            icon={expanded ? faMinusSquare : faPlusSquare}
-            className="mr-2"
-          />
+          {expanded ? <Fa6SolidSquareMinus /> : <Fa6SolidSquarePlus />}
           {title}
         </h5>
       </div>

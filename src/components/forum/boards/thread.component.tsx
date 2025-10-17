@@ -1,13 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faReply,
-  faPen,
-  faTrash,
-  faShuffle,
-  faBook,
-  faFlag,
-  faTriangleExclamation,
-} from "@fortawesome/free-solid-svg-icons";
 import parse from "html-react-parser/lib/index";
 import Widget from "../../common/widgets/widget.component";
 import { useBBQuery } from "../../../hooks/useBBQuery";
@@ -183,10 +173,11 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                             <BBFlex gap="gap-2" wrap={true} className="text-sm">
                               <HasPermission perms={["ZFGC_MESSAGE_EDITOR"]}>
                                 <button className="text-toned hover:transition-colors">
-                                  <FontAwesomeIcon
+                                  {/* <FontAwesomeIcon
                                     icon={faReply}
                                     className="mr-1"
-                                  />
+                                  /> */}
+                                  <Fa6SolidReply className="mr-1" />
                                   <span className="hidden sm:inline">
                                     Reply
                                   </span>
@@ -197,55 +188,60 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                                   className="text-toned hover:transition-colors"
                                   onClick={() => clickModify(msg)}
                                 >
-                                  <FontAwesomeIcon
+                                  {/* <FontAwesomeIcon
                                     icon={faPen}
                                     className="mr-1"
-                                  />
+                                  /> */}
+                                  <Fa6SolidPen className="mr-1" />
                                   <span className="hidden sm:inline">Edit</span>
                                 </button>
                               </HasPermission>
                               <HasPermission perms={["ZFGC_MESSAGE_ADMIN"]}>
                                 <button className="text-toned hover:transition-colors hidden sm:inline-flex">
-                                  <FontAwesomeIcon
+                                  {/* <FontAwesomeIcon
                                     icon={faTrash}
                                     className="mr-1"
-                                  />
+                                  /> */}
+                                  <Fa6SolidTrashCan className="mr-1" />
                                   Remove
                                 </button>
                               </HasPermission>
                               <HasPermission perms={["ZFGC_MESSAGE_ADMIN"]}>
                                 <button className="text-toned hover:transition-colors hidden md:inline-flex">
-                                  <FontAwesomeIcon
+                                  {/* <FontAwesomeIcon
                                     icon={faShuffle}
                                     className="mr-1"
-                                  />
+                                  /> */}
                                   Split
                                 </button>
                               </HasPermission>
                               <HasPermission perms={["ZFGC_MESSAGE_VIEWER"]}>
                                 <button className="text-toned hover:transition-colors hidden md:inline-flex">
-                                  <FontAwesomeIcon
+                                  {/* <FontAwesomeIcon
                                     icon={faBook}
                                     className="mr-1"
-                                  />
+                                  /> */}
+                                  <Fa6SolidShuffle className="mr-1" />
                                   History
                                 </button>
                               </HasPermission>
                               <HasPermission perms={["ZFGC_MESSAGE_EDITOR"]}>
                                 <button className="text-toned hover:transition-colors hidden lg:inline-flex">
-                                  <FontAwesomeIcon
+                                  {/* <FontAwesomeIcon
                                     icon={faFlag}
                                     className="mr-1"
-                                  />
+                                  /> */}
+                                  <Fa6SolidFlag className="mr-1" />
                                   Report
                                 </button>
                               </HasPermission>
                               <HasPermission perms={["ZFGC_MESSAGE_ADMIN"]}>
                                 <button className="text-toned hover:transition-colors hidden lg:inline-flex">
-                                  <FontAwesomeIcon
+                                  {/* <FontAwesomeIcon
                                     icon={faTriangleExclamation}
                                     className="mr-1"
-                                  />
+                                  /> */}
+                                  <Fa6SolidTriangleExclamation className="mr-1" />
                                   Warn
                                 </button>
                               </HasPermission>
