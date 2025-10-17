@@ -5,15 +5,17 @@ import type BBImage from "../../src/components/common/bbImage.component";
 
 interface ImagePathPluginOptions {
   assetsPath?: string;
-  outputFile?: string;
+  outputDir?: string;
+  outputClientDir?: string;
   includeDirs?: string[];
   debug?: boolean;
 }
 
 function defaultOptions(): Required<ImagePathPluginOptions> {
   return {
-    assetsPath: "src/assets",
-    outputFile: "build/types/image-paths.d.ts",
+    assetsPath: "public",
+    outputDir: "build",
+    outputClientDir: "build/client/assets",
     includeDirs: ["images", "themes"],
     debug: false,
   };
@@ -42,7 +44,10 @@ function toPascalCase(input: string): string {
 
 async function generateTypeFile(options: Required<ImagePathPluginOptions>) {
   const assetsAbsPath = path.resolve(process.cwd(), options.assetsPath);
-  const outputPath = path.resolve(process.cwd(), options.outputFile);
+  const outputPath = path.resolve(
+    process.cwd(),
+    `${options.outputDir}/types/image-paths.d.ts`,
+  );
   const outputDir = path.dirname(outputPath);
 
   await fs.mkdir(outputDir, { recursive: true });
@@ -78,16 +83,28 @@ export {};
   await fs.writeFile(outputPath, newBlock + "\n", "utf-8");
   if (options.debug)
     console.debug(
-      `[vite-plugin-generate-image-paths] Wrote: ${options.outputFile}`,
+      `[vite-plugin-generate-image-paths] Wrote: ${options.outputDir}`,
     );
 }
 
 /**
- * Since we have {@link BBImage} component, we need to generate a type file for the image paths in the provided assets directory.
- * It supports both absolute and relative paths, and can be configured to include
- * specific directories or to exclude certain directories.
+ * Vite plugin that generates TypeScript type definitions for asset paths in your project.
  *
- * Usage:
+ * This plugin scans specified directories within your assets folder and generates
+ * type-safe path definitions (e.g., `ImagePath`, `ThemePath`) that can be used with
+ * the {@link BBImage} component. Types are automatically regenerated during development
+ * when files are added or removed.
+ *
+ * @param userOptions - Configuration options for the plugin
+ * @param userOptions.assetsPath - Root directory for assets (default: "public")
+ * @param userOptions.outputDir - Base output directory (default: "build")
+ * @param userOptions.outputClientDir - Client assets output directory (default: "build/client/assets")
+ * @param userOptions.includeDirs - Array of subdirectories to scan for generating types (default: ["images", "themes"])
+ * @param userOptions.debug - Enable debug logging (default: false)
+ *
+ * @returns An array of Vite plugins
+ *
+ * @example
  * ```ts
  * // vite.config.ts
  * import { defineConfig } from "vite";
@@ -96,17 +113,25 @@ export {};
  * export default defineConfig({
  *   plugins: [
  *     generateImagePaths({
- *       // These are the default options.
- *       assetsPath: "src/assets",
- *       outputFile: "build/types/image-paths.d.ts",
+ *       assetsPath: "public",
+ *       outputDir: "build",
+ *       outputClientDir: "build/client/assets",
  *       includeDirs: ["images", "themes"],
- *       // debug: true, // Uncomment to enable debug logging
+ *       debug: true,
  *     }),
  *   ],
  * });
  * ```
  *
- * @param userOptions - The options to pass to the plugin.
+ * @example
+ * Generated type file structure:
+ * ```ts
+ * declare global {
+ *   export type ImagePath = "images/logo.png" | "images/hero.jpg";
+ *   export type ThemePath = "themes/dark.css" | "themes/light.css";
+ * }
+ * ```
+ *
  * @see {@link BBImage}
  */
 export function generateImagePaths(
@@ -119,7 +144,6 @@ export function generateImagePaths(
       name: "vite-plugin-generate-image-paths",
       apply: "serve", // Run in dev and build mode
       async buildStart() {
-        // Generate the type file before build starts
         await generateTypeFile(options);
       },
       async configureServer(server: ViteDevServer) {
@@ -129,10 +153,7 @@ export function generateImagePaths(
         const watchDirs = options.includeDirs.map((d) =>
           path.resolve(process.cwd(), options.assetsPath, d),
         );
-
-        for (const dir of watchDirs) {
-          server.watcher.add(dir);
-        }
+        for (const dir of watchDirs) server.watcher.add(dir);
 
         const isWatchedPath = (filePath: string) =>
           filePath.startsWith(path.resolve(process.cwd(), options.assetsPath));
@@ -150,7 +171,6 @@ export function generateImagePaths(
           }
         });
       },
-      // Build hook to ensure the type file gets generated during production build
       async closeBundle() {
         await generateTypeFile(options);
       },

@@ -17,25 +17,24 @@ type BBImageComponentType = FC<BBImageProps>;
 type BBImageLazyComponentType = ReturnType<typeof lazy>;
 const lazyImageComponentCache = new Map<string, BBImageLazyComponentType>();
 
-type ImageModule = { default: string };
-// FIXME: enable support for extracting glob imports for SSR.
+// type ImageModule = { default: string };
 
-const images: Record<string, () => Promise<ImageModule>> =
-  import.meta.glob<ImageModule>([
-    `/src/assets/images/**/*`,
-    `/src/assets/themes/**/*`,
-  ]);
+// const images: Record<string, () => Promise<ImageModule>> =
+//   import.meta.glob<ImageModule>([
+//     `/public/images/**/*`,
+//     `/src/assets/themes/**/*`,
+//   ]);
+
 /**
  * Resolves a path or URL into a usable image source.
  * @param path - Relative path or full URL to the image.
  * @returns A resolved image path or undefined if not found.
  */
 async function preloadImage(path: string): Promise<string | undefined> {
-  if (URL.canParse(path)) return path;
-
-  const loader = images[`/src/assets/${path}`];
-  if (loader) return (await loader()).default;
-
+  if (URL.canParse(path) || path) return path;
+  // const loader =
+  //   images[`/public/${path}`] ?? images[`/src/assets/themes/${path}`];
+  // if (loader) return (await loader()).default;
   if (import.meta.env.DEV)
     console.warn(`Image not found: ${path}. Rendering nothing.`);
   return undefined;

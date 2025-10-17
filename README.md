@@ -1,6 +1,6 @@
 # ZFGCBB-React
 
-![logo](./src/assets/images/logo.png)
+![logo](./public/images/logo.png)
 
 ## Introduction
 
