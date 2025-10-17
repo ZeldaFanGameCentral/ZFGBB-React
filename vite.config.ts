@@ -91,9 +91,5 @@ export default defineConfig(({ mode, isSsrBuild }) => {
         "~": srcDirectory,
       },
     },
-    ssr: {
-      // Fixes build for styled-components.
-      noExternal: ["styled-components"],
-    },
   };
 });
