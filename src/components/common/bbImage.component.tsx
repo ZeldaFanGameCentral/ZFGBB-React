@@ -23,7 +23,7 @@ const lazyImageComponentCache = new Map<string, BBImageLazyComponentType>();
  * @param path - Relative path or full URL to the image.
  * @returns A resolved image path or undefined if not found.
  */
-async function preloadImage(path: string): Promise<string | undefined> {
+function resolveSrc(path: string) {
   if (URL.canParse(path) || path) return path;
   if (import.meta.env.DEV)
     console.warn(`Image not found: ${path}. Rendering nothing.`);
@@ -38,19 +38,21 @@ async function preloadImage(path: string): Promise<string | undefined> {
  * @param as - The component type to render (e.g., "img").
  */
 function lazyImageLoader(src: SrcPath, as: AsComponent = "img") {
-  const key = `${src}::${typeof as === "string" ? as : (as.name ?? "custom")}`;
+  const resolvedSrc = resolveSrc(src);
+  const key = `${resolvedSrc}::${typeof as === "string" ? as : (as.name ?? "custom")}`;
 
-  if (lazyImageComponentCache.has(key))
+  if (resolvedSrc && lazyImageComponentCache.has(key))
     return lazyImageComponentCache.get(key)!;
 
   const lazyComponent = lazy(async () => {
-    const resolvedSrc = await preloadImage(src);
     const ImageComponent: BBImageComponentType = (
       componentProps: BBImageProps,
     ) => {
+      if (!resolvedSrc) return null;
+
       const Component = as;
       const props: BBImageProps =
-        Component === "img"
+        Component === "img" || Component === "image"
           ? {
               decoding: "async",
               loading: "lazy",
@@ -60,7 +62,8 @@ function lazyImageLoader(src: SrcPath, as: AsComponent = "img") {
             }
           : componentProps;
 
-      return !resolvedSrc ? null : (
+      // FIXME: Move the link preload to an earlier stage of the render lifecycle, so that we can better utilize caching.
+      return (
         <>
           {props.loading === "eager" ? (
             <link
@@ -84,7 +87,6 @@ function lazyImageLoader(src: SrcPath, as: AsComponent = "img") {
 /**
  * The main exported BBImage component.
  * Dynamically resolves images via `preloadImage` and renders them through a lazily loaded component.
- * Supports SSR-safe rendering, URL-based images, and Vite glob imports.
  *
  * Example usage:
  * ```tsx

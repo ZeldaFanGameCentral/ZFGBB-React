@@ -8,7 +8,6 @@ import { unstable_reactRouterRSC } from "@react-router/dev/vite";
 import icons from "unplugin-icons/vite";
 import autoImport from "unplugin-auto-import/vite";
 import iconsResolver from "unplugin-icons/resolver";
-
 import { generateImagePaths } from "./vite/plugins/vite-plugin-generate-image-paths";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
@@ -57,6 +56,7 @@ export default defineConfig(({ mode, isSsrBuild }) => {
         },
       ],
       dts: "build/types/auto-import.d.ts",
+      dtsMode: "overwrite",
       include: ["**/*.{ts,tsx,js,jsx}"],
       viteOptimizeDeps: true,
       resolvers: [
