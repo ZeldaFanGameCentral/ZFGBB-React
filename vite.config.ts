@@ -1,4 +1,4 @@
-import { defineConfig, mergeConfig, UserConfig } from "vite";
+import { defineConfig, mergeConfig, type UserConfig } from "vite";
 import { fileURLToPath, resolve } from "node:url";
 import baseConfig from "@zfgccp/vite-config-base";
 
