@@ -11,9 +11,9 @@
     "build"
   ],
   "scripts": {
-    "check": "prettier . --check --experimental-cli && react-router typegen && react-router build && tsc --noEmit",
+    "check": "prettier . --check --experimental-cli && tsc --noEmit",
     "format": "prettier . --write ",
-    "build": "react-router build",
+    "build": "react-router typegen && react-router build",
     "dev": "react-router dev",
     "preview": "PORT=5173 react-router-serve ./build/server/index.js",
     "start": "react-router-serve ./build/server/index.js",
