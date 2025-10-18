@@ -1721,6 +1721,7 @@ __metadata:
     typescript: "npm:^5.9.3"
     unplugin-auto-import: "npm:^20.2.0"
     unplugin-icons: "npm:^22.4.2"
+    vite: "catalog:"
   languageName: unknown
   linkType: soft
 
