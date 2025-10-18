@@ -23,13 +23,13 @@ TBD. We could use some help writing this out.
       - [`yarn check`: Runs type checking, linting, and formatting checks](#yarn-check-runs-type-checking-linting-and-formatting-checks)
       - [`yarn format`: Formats the code using Prettier](#yarn-format-formats-the-code-using-prettier)
       - [`yarn preview`: Runs the application in the production mode](#yarn-preview-runs-the-application-in-the-production-mode)
-        - [Troubleshooting](#troubleshooting)
-          - [Why is the forum not loading?](#why-is-the-forum-not-loading)
-          - [Why does the `yarn check` command fail for Icon Components?](#why-does-the-yarn-check-command-fail-for-icon-components)
       - [VSCode - Usage](#vscode---usage)
         - [VSCode - Recommended Extensions](#vscode---recommended-extensions)
         - [VSCode - Typescript Workspace Version](#vscode---typescript-workspace-version)
         - [VSCode - Running the application (Launch Tasks)](#vscode---running-the-application-launch-tasks)
+  - [Troubleshooting](#troubleshooting)
+    - [Why is the forum not loading?](#why-is-the-forum-not-loading)
+    - [Why does the `yarn check` command fail for Icon Components?](#why-does-the-yarn-check-command-fail-for-icon-components)
   - [CI/CD \[WIP\]](#cicd-wip)
     - [.github/workflows/workflows-ci.yml](#githubworkflowsworkflows-ciyml)
     - [./github/workflows/workflow-deploy-frontend.yml](#githubworkflowsworkflow-deploy-frontendyml)
@@ -220,28 +220,6 @@ This command runs the application in SSR Mode, using [react-router](https://reac
 
 Note: The `yarn preview` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn preview` at least once.
 
-##### Troubleshooting
-
-###### Why is the forum not loading?
-
-The default value is pointing to your local machine. While we do have dockerfiles for the backend, we haven't gotten around to streamlining using the backend in a development setting for the frontend. To run the frontend locally, pointed to `zfgc.com`, run `yarn dev --mode=production`, and that will point to the production environment. This will get you up and running! \o/ Sometimes this issue may come up because you closed the server in the background, and the app is working off of cache state.
-
-###### Why does the `yarn check` command fail for Icon Components?
-
-If you get an error like this:
-
-```text
-src/root.layout.tsx:70:14 - error TS2304: Cannot find name 'Fa6SolidBars'.
-
-               <Fa6SolidBars />
-                ~~~~~~~~~~~~
-
-
-Found 10 errors in 4 files.
-```
-
-This is likely due to the fact that the `yarn check` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn check` at least once.
-
 #### VSCode - Usage
 
 VSCode is our preferred IDE for development. To get the best experience, try installing the recommended extensions. The provided launch tasks will automatically configure the project for you and allow you to set breakpoints and debug your code. Continue to [VSCode - Recommended Extensions](#vscode---recommended-extensions) for more information.
@@ -287,6 +265,28 @@ Each of these launch tasks will `corepack enable` and `yarn install` before runn
 - `Preview zfgc.com (production)`: Runs the application in production mode with the API calls pointed to `zfgc.com` for the backend, using the value of `REACT_ZFGBB_API_URL` in [.env.production](.env.production). This uses the `production` build of the application with variables loaded from [.env.production](.env.production), by calling `yarn build --mode=production`. The server is provided by [yarn preview](#yarn-preview-runs-the-application-in-the-production-mode).
 
 Now that you are ready, you can proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information.
+
+## Troubleshooting
+
+### Why is the forum not loading?
+
+The default value is pointing to your local machine. While we do have dockerfiles for the backend, we haven't gotten around to streamlining using the backend in a development setting for the frontend. To run the frontend locally, pointed to `zfgc.com`, run `yarn dev --mode=production`, and that will point to the production environment. This will get you up and running! \o/ Sometimes this issue may come up because you closed the server in the background, and the app is working off of cache state.
+
+### Why does the `yarn check` command fail for Icon Components?
+
+If you get an error like this:
+
+```text
+src/root.layout.tsx:70:14 - error TS2304: Cannot find name 'Fa6SolidBars'.
+
+               <Fa6SolidBars />
+                ~~~~~~~~~~~~
+
+
+Found 10 errors in 4 files.
+```
+
+This is likely due to the fact that the `yarn check` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn check` at least once.
 
 ## CI/CD [WIP]
 
