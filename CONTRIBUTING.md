@@ -102,8 +102,10 @@ If this is your first time contributing to this project, or cloning the reposito
    1. If you do not agree with the Code of Conduct, please do not contribute to this project. Feel free to fork the repository and create your own version of the project.
    2. Check the [Projects Board](https://github.com/users/ZFGCCP/projects/4) for open issues that you can help with.
 2. If you are not part of the ZFGCCP organization, you will need to fork this repository.
-3. Make sure you are on the `development` branch. `git switch development && git pull`.
-4. Make a new branch for your changes. `git switch -c my-new-branch`.
+3. When making commits, please sign your commits with `git commit -s`, to certify that you have the rights to submit the work under the [Developer Certificate of Origin](https://developercertificate.org/).
+   1. GitHub has a decent [help article](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits) on signing commits. You can use this to help you sign your commits.
+4. Make sure you are on the `development` branch. `git switch development && git pull`.
+5. Make a new branch for your changes. `git switch -c my-new-branch`.
    1. How do I name my branch? See the next section, we have some recommendations, but we don't have any official rules so you can use whatever naming convention you prefer for your branch.
    2. Branch Naming Conventions (General Recommendations)
       1. If you are working on a new feature, you can name your branch `feature/my-new-feature`.
@@ -119,7 +121,7 @@ If this is your first time contributing to this project, or cloning the reposito
          2. Once you have forked the repository, if you created the branch locally, you can push the branch to your forked repository by creating the origin remote and pushing the branch.
             1. `git remote add origin https://github.com/your-username/ZFGCBB-React.git` just make sure to replace `your-username` with your GitHub username.
    4. If you are a team member, you can create the branch directly on GitHub.
-5. Working on your changes: Use your IDE of choice to edit files and save changes. We recommend using [VSCode](#vscode---usage) for development.
+6. Working on your changes: Use your IDE of choice to edit files and save changes. We recommend using [VSCode](#vscode---usage) for development.
    1. Make sure to run `yarn install` every time you check out a branch.
       1. To understand the commands, see the [package.json](#packagejson---provided-packagejson-scripts) provided scripts section. But for now, we recommend just continuing through the guide.
    2. Use the `yarn dev` command to start the development server. But before you do, continue reading until you reach `Step 5.iii - Use the "yarn format" command to format the code using Prettier`, due to a current limitation with running the development server in local only mode.
@@ -133,7 +135,7 @@ If this is your first time contributing to this project, or cloning the reposito
       1. Feel free to reach out on Discord if you have any questions.
    7. Stage and commit your changes.
    8. Push your changes to your branch on GitHub.
-6. [Create a new pull request](https://github.com/ZFGCCP/ZFGCBB-React/compare) and request a review from one of the maintainers.
+7. [Create a new pull request](https://github.com/ZFGCCP/ZFGCBB-React/compare) and request a review from one of the maintainers.
    1. Add a bullet point list of changes you made.
    2. Mention the issue number you are working on.
       1. If there is no issue, you can create one.
@@ -144,7 +146,7 @@ If this is your first time contributing to this project, or cloning the reposito
       1. It is RECOMMENDED that you use `git pull --rebase` to keep your branch up to date with the `development` branch.
    5. Please squash your commits into a single commit, if possible. We prefer using `git rebase` in favor of `git merge`.
    6. Your PR must pass all checks before it can be merged or requested for review.
-7. As Sonic the Hedgehog says, "Gotta go fast!". And you went fast! Congratulations on making a contribution to the project!
+8. As Sonic the Hedgehog says, "Gotta go fast!". And you went fast! Congratulations on making a contribution to the project!
 
 ### [package.json](package.json) - Provided package.json scripts
 
