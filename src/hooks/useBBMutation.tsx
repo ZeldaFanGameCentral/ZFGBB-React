@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import type { BaseBB } from "../types/api";
-import { handleResponseWithJason } from "@/shared/http/response.handler";
 
 export const useBBMutation = <T extends BaseBB, U extends BaseBB>(
   config: () => [string, T],

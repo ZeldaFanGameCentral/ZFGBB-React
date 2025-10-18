@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { handleResponseWithJason } from "@/shared/http/response.handler";
 
 export const useBBQuery = <T extends BaseBB | BaseBB[]>(
   url: `/${string}`,

@@ -1,4 +1,3 @@
-import { useBBQuery } from "../../hooks/useBBQuery";
 import type { User } from "../../types/user";
 
 const emptyUser = {
