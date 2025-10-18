@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv, Plugin, PluginOption } from "vite";
+import { defineConfig, loadEnv, type Plugin, type PluginOption } from "vite";
 import { reactRouter } from "@react-router/dev/vite";
 import tailwindcss from "@tailwindcss/vite";
 import rsc from "@vitejs/plugin-rsc";
@@ -6,7 +6,7 @@ import { unstable_reactRouterRSC } from "@react-router/dev/vite";
 import icons from "unplugin-icons/vite";
 import autoImport from "unplugin-auto-import/vite";
 import iconsResolver from "unplugin-icons/resolver";
-import { generateImagePaths } from "./plugins/vite-plugin-generate-image-paths.js";
+import { generateImagePaths } from "@zfgccp/vite-plugin-generate-image-paths";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, isSsrBuild }) => {

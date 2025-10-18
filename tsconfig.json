@@ -1,32 +1,6 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "strict": true,
-    "alwaysStrict": true,
-    "isolatedDeclarations": false,
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "incremental": true,
-    "noUncheckedSideEffectImports": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noUncheckedIndexedAccess": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-    "noEmit": true,
-    "erasableSyntaxOnly": true,
-    "noImplicitAny": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "composite": true,
-    "jsx": "react-jsx",
-    "baseUrl": ".",
     "rootDirs": [".", "./.react-router/types"],
     "paths": {
       "@/*": ["./src/*"]
@@ -34,5 +8,13 @@
     "types": ["unplugin-icons/types/react"]
   },
   "include": ["src", "build/types", "./.react-router/types/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "references": [
+    {
+      "path": "./vite/config"
+    },
+    {
+      "path": "./vite/plugins"
+    }
+  ]
 }

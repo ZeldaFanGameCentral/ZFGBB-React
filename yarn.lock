@@ -1665,6 +1665,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@zfgccp/vite-config-base@workspace:*, @zfgccp/vite-config-base@workspace:vite/config":
+  version: 0.0.0-use.local
+  resolution: "@zfgccp/vite-config-base@workspace:vite/config"
+  dependencies:
+    vite: "catalog:"
+  languageName: unknown
+  linkType: soft
+
+"@zfgccp/vite-plugin-generate-image-paths@workspace:*, @zfgccp/vite-plugin-generate-image-paths@workspace:vite/plugins/generate-image-paths":
+  version: 0.0.0-use.local
+  resolution: "@zfgccp/vite-plugin-generate-image-paths@workspace:vite/plugins/generate-image-paths"
+  dependencies:
+    vite: "catalog:"
+  languageName: unknown
+  linkType: soft
+
+"@zfgccp/vite-plugin-preprocess-twmerge@workspace:vite/plugins/preprocess-twmerge":
+  version: 0.0.0-use.local
+  resolution: "@zfgccp/vite-plugin-preprocess-twmerge@workspace:vite/plugins/preprocess-twmerge"
+  dependencies:
+    vite: "catalog:"
+  languageName: unknown
+  linkType: soft
+
 "@zfgccp/zfgcbb-react@workspace:.":
   version: 0.0.0-use.local
   resolution: "@zfgccp/zfgcbb-react@workspace:."
@@ -1685,6 +1709,8 @@ __metadata:
     "@types/react": "npm:^19.2.2"
     "@types/react-dom": "npm:^19.2.2"
     "@vitejs/plugin-rsc": "npm:^0.5.0"
+    "@zfgccp/vite-config-base": "workspace:*"
+    "@zfgccp/vite-plugin-generate-image-paths": "workspace:*"
     html-react-parser: "npm:^5.2.7"
     isbot: "npm:^5.1.31"
     prettier: "npm:^3.6.2"
@@ -1695,7 +1721,6 @@ __metadata:
     typescript: "npm:^5.9.3"
     unplugin-auto-import: "npm:^20.2.0"
     unplugin-icons: "npm:^22.4.2"
-    vite: "npm:rolldown-vite@7.1.17"
   languageName: unknown
   linkType: soft
 

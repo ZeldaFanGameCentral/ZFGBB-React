@@ -1,6 +1,6 @@
 import { defineConfig, mergeConfig, UserConfig } from "vite";
 import { fileURLToPath, resolve } from "node:url";
-import baseConfig from "./vite/vite.config.base.js";
+import baseConfig from "@zfgccp/vite-config-base";
 
 const srcDirectory = resolve(
   fileURLToPath(new URL(".", import.meta.url)),
