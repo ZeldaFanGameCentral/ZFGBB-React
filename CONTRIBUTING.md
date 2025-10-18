@@ -35,7 +35,7 @@ TBD. We could use some help writing this out.
 
 ## Development
 
-We recommend using [VSCode](#vscode---usage) for development. If you are not using [VSCode](#vscode---usage), you can use the provided package.json scripts to get started. To begin, you will need to download the project.
+We recommend using [VSCode](#vscode---usage) for development. If you are not using [VSCode](#vscode---usage), you can use the provided package.json scripts to get started.
 
 ### Downloading the Project
 
@@ -44,14 +44,12 @@ We recommend using [VSCode](#vscode---usage) for development. If you are not usi
    2. We provide a configuration for [VSCode](https://code.visualstudio.com/), and is recommended for development.
 2. Make sure you have [Git](https://git-scm.com/downloads) installed.
    1. We recommend using [GitHub Desktop (optional)](https://desktop.github.com/) or [GitHub CLI (optional)](https://cli.github.com/), if you are new to Git.
-   2. For Nix Users ONLY, you can also install [Nix](https://nixos.org/download.html) and [direnv](https://direnv.net/), which can be used to automatically install the correct version of Node.js and other tools, since there's a [flake.nix](./flake.nix) file in the repository.
+   2. For Nix Users ONLY, you can also install [Nix (optional)](https://nixos.org/download.html) and [direnv (optional)](https://direnv.net/), which can be used to automatically install the correct version of Node.js and other tools, since there's a [flake.nix](./flake.nix) file in the repository.
 3. Clone the repository
 
    ```bash
    git clone https://github.com/ZFGCCP/ZFGCBB-React.git
    ```
-
-If you are not using VSCode, you can use the provided package.json scripts to get started.
 
 #### Quick Start (With VSCode Dev Container)
 
