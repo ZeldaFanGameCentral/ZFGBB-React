@@ -52,6 +52,9 @@ We recommend using [VSCode](#vscode---usage) for development. If you are not usi
    git clone https://github.com/ZFGCCP/ZFGCBB-React.git
    ```
 
+4. Now, you can either continue with [Quick Start (With VSCode Dev Container)](#quick-start-with-vscode-dev-container) or [Quick Start](#quick-start), if you prefer to use your local machine for development.
+5. Happy hacking! Hack the planet!
+
 #### Quick Start (With VSCode Dev Container)
 
 There is a [dev container](./.devcontainer/README.md) for ZFGCBB-React. It is currently the easiest way to get started, so you can ignore the rest of this document if you just want to get started quickly.
@@ -59,9 +62,12 @@ There is a [dev container](./.devcontainer/README.md) for ZFGCBB-React. It is cu
 1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [VS Code Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 2. Open the repository in VS Code.
 3. Open the Command Palette (Ctrl+Shift+P).
-4. Select "Dev Containers: Open Folder in Container".
+4. Type in `Dev Containers: Open Folder in Container`
+   1. Select "Dev Containers: Open Folder in Container".
 5. Wait for the container to start.
 6. That's it, you can now start coding! \o/
+7. You can now proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information for contributing to the project.
+   1. Feel free to check out the [package.json](#packagejson---provided-packagejson-scripts) section for more development information.
 
 #### Quick Start
 
@@ -93,6 +99,7 @@ not using the provided dev container from [Quick Start (With VSCode Dev Containe
 4. Open your browser and navigate to <http://localhost:5173>.
 5. You can now proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information for contributing to the project.
    1. Otherwise, we recommend continuing to the [VSCode - Usage](#vscode---usage) section for more information on how to use the `Debug zfgc.com (live/dev)` task for easy setup.
+   2. Feel free to check out the [package.json](#packagejson---provided-packagejson-scripts) section for more development information.
 
 ### Workflow - Typical Development Workflow
 
@@ -133,6 +140,7 @@ If this is your first time contributing to this project, or cloning the reposito
       1. Note: The `yarn check` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn check` at least once.
    6. Repeat `yarn check` as needed until you every file is fixed, and the check passes.
       1. Feel free to reach out on Discord if you have any questions.
+      2. Consult the [package.json](#packagejson---provided-packagejson-scripts) section for more development information, and help.
    7. Stage and commit your changes.
    8. Push your changes to your branch on GitHub.
 7. [Create a new pull request](https://github.com/ZFGCCP/ZFGCBB-React/compare) and request a review from one of the maintainers.
