@@ -13,8 +13,8 @@ TBD. We could use some help writing this out.
   - [Table of Contents](#table-of-contents)
   - [Development](#development)
     - [Downloading the Project](#downloading-the-project)
-      - [Quick Start (With VSCode)](#quick-start-with-vscode)
-      - [package.json - Usage](#packagejson---usage)
+      - [Quick Start (With VSCode Dev Container)](#quick-start-with-vscode-dev-container)
+      - [Quick Start](#quick-start)
     - [Workflow - Typical Development Workflow](#workflow---typical-development-workflow)
     - [package.json - Provided package.json scripts](#packagejson---provided-packagejson-scripts)
       - [`yarn dev`: Starts the development server](#yarn-dev-starts-the-development-server)
@@ -53,7 +53,7 @@ We recommend using [VSCode](#vscode---usage) for development. If you are not usi
 
 If you are not using VSCode, you can use the provided package.json scripts to get started.
 
-#### Quick Start (With VSCode)
+#### Quick Start (With VSCode Dev Container)
 
 There is a [dev container](./.devcontainer/README.md) for ZFGCBB-React. It is currently the easiest way to get started, so you can ignore the rest of this document if you just want to get started quickly.
 
@@ -63,7 +63,7 @@ There is a [dev container](./.devcontainer/README.md) for ZFGCBB-React. It is cu
 4. Select "Dev Containers: Open Folder in Container".
 5. Wait for the container to start.
 
-#### [package.json](package.json) - Usage
+#### Quick Start
 
 1. Configure the project (Have the prequisites installed - see [Downloading the Project](#downloading-the-project))
 
@@ -95,6 +95,7 @@ There is a [dev container](./.devcontainer/README.md) for ZFGCBB-React. It is cu
 If this is your first time contributing to this project, or cloning the repository, we recommend following the steps below. It will guide you through the process of creating a new branch, making changes, and submitting a pull request.
 
 1. Read the [Code of Conduct](CODE_OF_CONDUCT.md).
+   1. Check the [Projects Board](https://github.com/users/ZFGCCP/projects/4) for open issues that you can help with.
 2. If you are not part of the ZFGCCP organization, you will need to fork this repository.
 3. Make sure you are on the `development` branch. `git switch development && git pull`.
 4. Make a new branch for your changes. `git switch -c my-new-branch`.
@@ -111,17 +112,17 @@ If this is your first time contributing to this project, or cloning the reposito
       1. If you are not a team member, you will need to fork the repository to create a branch.
          1. To fork the repository, click the "Fork" button in the top right corner of the repository page.
          2. Once you have forked the repository, if you created the branch locally, you can push the branch to your forked repository by creating the origin remote and pushing the branch.
-            1. `git remote add origin https://github.com/your-username/ZFGCBB-React.git`
+            1. `git remote add origin https://github.com/your-username/ZFGCBB-React.git` just make sure to replace `your-username` with your GitHub username.
    4. If you are a team member, you can create the branch directly on GitHub.
 5. Working on your changes: Use your IDE of choice to edit files and save changes. We recommend using [VSCode](#vscode---usage) for development.
    1. Make sure to run `yarn install` every time you check out a branch.
       1. To understand the commands, see the [package.json](#packagejson---provided-packagejson-scripts) provided scripts section. But for now, we recommend just continuing through the guide.
    2. Use the `yarn dev` command to start the development server. But before you do, continue reading until you reach `Step 5.3 - Use the "yarn format" command to format the code using Prettier`, due to a current limitation with running the development server in local only mode.
-      1. If you are using VSCode, you can use the `Launch zfgc.com` launch task to do this for you.
-      2. For now, if cloning the [backend](https://github.com/ZFGCCP/ZFGCBB) is too much of a hassle, you can use the `yarn dev --mode=production` command to start the development server on `zfgc.com` or `Debug zfgc.com (live/dev)` in VSCode. See the VSCode usage [reference](#vscode---usage) for more information on how to use the `Launch zfgc.com (live/dev)` task. <!-- FIXME: remove this note when we have a container that can be pulled down and run locally -->
+      1. If you are using VSCode, you can use the `Preview zfgc.com (production)` launch task to do this for you.
+      2. For now, if cloning the [backend](https://github.com/ZFGCCP/ZFGCBB) is too much of a hassle, you can use the `yarn dev --mode=production` command to start the development server on `zfgc.com` or `Debug zfgc.com (local)` in VSCode. See the VSCode usage [reference](#vscode---usage) for more information on how to use the `Debug zfgc.com (production)` task. <!-- FIXME: remove this note when we have a container that can be pulled down and run locally -->
    3. Use the `yarn format` command to format the code using Prettier.
    4. Use the `yarn check` command to run type checking, linting, and formatting checks.
-   5. Repeat steps 1-3 as needed until `yarn check` passes.
+   5. Repeat `yarn check` as needed until you every file is fixed, and the check passes.
       1. Feel free to reach out on Discord if you have any questions.
    6. Stage and commit your changes.
    7. Push your changes to your branch on GitHub.
