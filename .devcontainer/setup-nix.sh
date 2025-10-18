@@ -45,8 +45,6 @@ if ! grep -q "exec nix develop" "$shell_rc"; then
   cat >> "$shell_rc" <<'EOF'
 
 COREPACK_DIR="$HOME/.corepack/bin"
-
-mkdir -p "$COREPACK_DIR"
 export PATH="$COREPACK_DIR:$PATH"
 # Automatically enter Nix flake shell in interactive terminals
 if [[ $- == *i* ]] && [ -f /workspaces/flake.nix ] && [ -z "$IN_NIX_SHELL" ]; then
@@ -56,3 +54,8 @@ fi
 
 EOF
 fi
+
+COREPACK_DIR="$HOME/.corepack/bin"
+
+mkdir -p "$COREPACK_DIR"
+corepack enable --install-directory "$HOME/.corepack/bin"

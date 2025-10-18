@@ -19,7 +19,6 @@
           ];
 
           shellHook = ''
-            corepack enable --install-directory "$HOME/.corepack/bin"
             corepack prepare --activate
             yarn cache clean
             yarn install
