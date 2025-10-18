@@ -1,9 +1,9 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
 {
-  "name": "Node.js",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-24-trixie",
-  "postCreateCommand": "sudo npm install -g corepack@latest sudo corepack enable && yarn install",
+  "name": "ZFGCBB-React",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:24-trixie",
+  "postCreateCommand": "./.devcontainer/setup-nix.sh",
   "postAttachCommand": "yarn dev --host",
   "forwardPorts": [4173, 5173],
   "customizations": {
