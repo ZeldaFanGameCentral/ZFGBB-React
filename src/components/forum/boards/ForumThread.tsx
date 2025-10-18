@@ -13,52 +13,52 @@ const ForumThread: React.FC<ForumThreadProps> = ({
   const threadId = parseInt(paramsThreadId!);
   const currentPage = parseInt(paramsPageNo!);
 
-  const textAreaRef = useRef("");
+  // const textAreaRef = useRef("");
   const [showReplyBox, setShowReplyBox] = useState(false);
-  const [msgText, setMsgText] = useState<
+  const [, setMsgText] = useState<
     string | number | readonly string[] | undefined
   >("");
   const { data: thread, isLoading } = useBBQuery<Thread>(
     `/thread/${threadId}?pageNo=${currentPage}&numPerPage=10`,
   );
-  const [currentMsg, setCurrentMsg] = useState<Message>({} as Message);
+  const [, setCurrentMsg] = useState<Message>({} as Message);
 
   const loadNewPage = (pageNo: number) => {
     navigate(`/forum/thread/${threadId}/${pageNo}`);
   };
 
-  const footer = useMemo(() => {
-    return [
-      {
-        label: "Reply",
-        callback: () => setShowReplyBox(!showReplyBox),
-        permissions: ["ZFGC_MESSAGE_EDITOR", "ZFGC_MESSAGE_ADMIN"],
-      },
-      {
-        label: "Add Poll",
-        callback: () => {},
-        permissions: ["ZFGC_MESSAGE_EDITOR", "ZFGC_MESSAGE_ADMIN"],
-      },
-      {
-        label: "Subscribe",
-        callback: () => {},
-        permissions: [
-          "ZFGC_MESSAGE_VIEWER",
-          "ZFGC_MESSAGE_EDITOR",
-          "ZFGC_MESSAGE_ADMIN",
-        ],
-      },
-      {
-        label: "Mark Unread",
-        callback: () => {},
-        permissions: [
-          "ZFGC_MESSAGE_VIEWER",
-          "ZFGC_MESSAGE_EDITOR",
-          "ZFGC_MESSAGE_ADMIN",
-        ],
-      },
-    ] satisfies BBPermissionLabel[];
-  }, [showReplyBox]);
+  // const footer = useMemo(() => {
+  //   return [
+  //     {
+  //       label: "Reply",
+  //       callback: () => setShowReplyBox(!showReplyBox),
+  //       permissions: ["ZFGC_MESSAGE_EDITOR", "ZFGC_MESSAGE_ADMIN"],
+  //     },
+  //     {
+  //       label: "Add Poll",
+  //       callback: () => {},
+  //       permissions: ["ZFGC_MESSAGE_EDITOR", "ZFGC_MESSAGE_ADMIN"],
+  //     },
+  //     {
+  //       label: "Subscribe",
+  //       callback: () => {},
+  //       permissions: [
+  //         "ZFGC_MESSAGE_VIEWER",
+  //         "ZFGC_MESSAGE_EDITOR",
+  //         "ZFGC_MESSAGE_ADMIN",
+  //       ],
+  //     },
+  //     {
+  //       label: "Mark Unread",
+  //       callback: () => {},
+  //       permissions: [
+  //         "ZFGC_MESSAGE_VIEWER",
+  //         "ZFGC_MESSAGE_EDITOR",
+  //         "ZFGC_MESSAGE_ADMIN",
+  //       ],
+  //     },
+  //   ] satisfies BBPermissionLabel[];
+  // }, [showReplyBox]);
 
   const clickModify = (msg: Message) => {
     setShowReplyBox(true);

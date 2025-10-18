@@ -16,7 +16,6 @@ export default defineConfig((env) => {
     resolve: {
       alias: {
         "@": srcDirectory,
-        "~": srcDirectory,
       },
     },
   } satisfies UserConfig);

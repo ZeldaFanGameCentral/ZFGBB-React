@@ -15,6 +15,7 @@ const { mode } = parseArgs({
 const env = loadEnv(`${mode}`, process.cwd(), ["REACT_", "VITE_"]);
 export default {
   appDirectory: "src",
+  prerender: ["/", "/forum"],
   basename: env["VITE_BASE"] ?? "/",
   presets: [env["VITE_ENABLE_SSR"] === "true" ? presetSsr() : presetSpa()],
 } satisfies Config;

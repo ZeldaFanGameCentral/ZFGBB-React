@@ -3,9 +3,16 @@
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "strict": true,
+    "alwaysStrict": true,
+    "isolatedDeclarations": false,
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "incremental": true,
+    "noUncheckedSideEffectImports": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "allowImportingTsExtensions": true,
@@ -22,8 +29,7 @@
     "baseUrl": ".",
     "rootDirs": [".", "./.react-router/types"],
     "paths": {
-      "@/*": ["./src/*"],
-      "~/*": ["./src/*"]
+      "@/*": ["./src/*"]
     },
     "types": ["unplugin-icons/types/react"]
   },
