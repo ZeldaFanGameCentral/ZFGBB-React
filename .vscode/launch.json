@@ -112,19 +112,19 @@
 
   "compounds": [
     {
-      "name": "Debug zfgc.com (local/dev)",
-      "configurations": ["Dev Server: Local Environment", "Browser Debug"],
-      "stopAll": true,
-      "preLaunchTask": "yarn install"
-    },
-    {
-      "name": "Debug zfgc.com (live/dev)",
+      "name": "Debug zfgc.com (production)",
       "configurations": ["Dev Server: Live Environment", "Browser Debug"],
       "stopAll": true,
       "preLaunchTask": "yarn install"
     },
     {
-      "name": "Debug zfgc.com (local/production)",
+      "name": "Debug zfgc.com (local)",
+      "configurations": ["Dev Server: Local Environment", "Browser Debug"],
+      "stopAll": true,
+      "preLaunchTask": "yarn install"
+    },
+    {
+      "name": "Preview zfgc.com (production)",
       "configurations": ["Preview Server (Production)", "Browser Debug"],
       "stopAll": true,
       "preLaunchTask": "yarn install"

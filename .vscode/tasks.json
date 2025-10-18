@@ -47,7 +47,7 @@
     {
       "label": "yarn install",
       "type": "shell",
-      "command": "corepack yarn",
+      "command": "npx --yes corepack yarn",
       "problemMatcher": [],
       "group": { "kind": "build" },
       "icon": {
