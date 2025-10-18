@@ -92,8 +92,8 @@ There is a [dev container](./.devcontainer/README.md) for ZFGCBB-React. It is cu
 1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [VS Code Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 2. Open the repository in VS Code.
 3. Open the Command Palette (Ctrl+Shift+P).
-4. Type in `Dev Containers: Open Folder in Container`
-   1. Select "Dev Containers: Open Folder in Container".
+4. Type in `Dev Containers: Reopen in Container`.
+   1. Select "Dev Containers: Reopen in Container".
 5. Wait for the container to start.
 6. That's it, you can now start coding! \o/
 7. You can now proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information for contributing to the project.
