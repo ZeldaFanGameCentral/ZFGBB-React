@@ -133,7 +133,7 @@ If this is your first time contributing to this project, or cloning the reposito
 6. Working on your changes: Use your IDE of choice to edit files and save changes. We recommend using [VSCode](#vscode---usage) for development.
    1. Make sure to run `yarn install` every time you check out a branch.
       1. To understand the commands, see the [package.json](#packagejson---provided-packagejson-scripts) provided scripts section. But for now, we recommend just continuing through the guide.
-   2. Use the `yarn dev` command to start the development server. But before you do, continue reading until you reach `Step 5.iii - Use the "yarn format" command to format the code using Prettier`, due to a current limitation with running the development server in local only mode.
+   2. Use the `yarn dev` command to start the development server. But before you do, continue reading until you reach `Step 6.iii - Use the "yarn format" command to format the code using Prettier`, due to a current limitation with running the development server in local only mode.
       1. If you are using VSCode, you can use the `Preview zfgc.com (production)` launch task to do this for you.
       2. For now, if cloning the [backend](https://github.com/ZFGCCP/ZFGCBB) is too much of a hassle, you can use the `yarn dev --mode=production` command to start the development server on `zfgc.com` or `Debug zfgc.com (local)` in VSCode. See the VSCode usage [reference](#vscode---usage) for more information on how to use the `Debug zfgc.com (production)` task. <!-- FIXME: remove this note when we have a container that can be pulled down and run locally -->
    3. Use the `yarn format` command to format the code using Prettier.
