@@ -1,4 +1,4 @@
-import BBImage from "@/components/common/bbImage";
+import BBImage from "@/components/common/BBImage";
 
 export default function Resources() {
   return (

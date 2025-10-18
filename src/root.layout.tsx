@@ -1,7 +1,7 @@
 import { UserContext } from "./providers/user/userProvider";
-import Navigator from "./components/navigation/navigator";
-import BBLink from "./components/common/bbLink";
-import BBImage from "./components/common/bbImage";
+import Navigator from "./components/navigation/Navigator";
+import BBLink from "./components/common/BBLink";
+import BBImage from "./components/common/BBImage";
 
 interface RootLayoutProps {
   children: React.ReactNode;

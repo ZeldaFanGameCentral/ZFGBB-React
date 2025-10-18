@@ -1,6 +1,6 @@
 import type { BoardSummary } from "../../../types/forum";
-import BBLink from "../../common/bbLink";
-import BBTable from "../../common/tables/bbTable";
+import BBLink from "../../common/BBLink";
+import BBTable from "../../common/tables/BBTable";
 
 interface BoardSummaryViewProps {
   subBoards: BoardSummary[];

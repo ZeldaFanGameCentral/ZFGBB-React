@@ -34,6 +34,7 @@ export default defineConfig(({ mode, isSsrBuild }) => {
             "Fragment",
             "Suspense",
             "Activity",
+            "StrictMode",
           ],
         },
         {
@@ -58,6 +59,7 @@ export default defineConfig(({ mode, isSsrBuild }) => {
       dts: "build/types/auto-import.d.ts",
       dtsMode: "overwrite",
       include: ["**/*.{ts,tsx,js,jsx}"],
+      dirs: ["src/components/**", "src/types/**"],
       viteOptimizeDeps: true,
       resolvers: [
         iconsResolver({

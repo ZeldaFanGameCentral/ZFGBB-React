@@ -1,7 +1,7 @@
-import Widget from "../components/common/widgets/widget";
-import BBImage from "@/components/common/bbImage";
-import BBLink from "@/components/common/bbLink";
-import Skeleton from "@/components/common/skeleton";
+import Widget from "../components/common/widgets/Widget";
+import BBImage from "@/components/common/BBImage";
+import BBLink from "@/components/common/BBLink";
+import Skeleton from "@/components/common/Skeleton";
 
 export default () => {
   return (

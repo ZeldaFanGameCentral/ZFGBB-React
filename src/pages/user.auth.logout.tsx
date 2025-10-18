@@ -1,4 +1,4 @@
-import Widget from "../components/common/widgets/widget";
+import Widget from "../components/common/widgets/Widget";
 
 const UserLogout: React.FC = () => {
   return (

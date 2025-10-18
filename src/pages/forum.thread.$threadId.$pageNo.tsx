@@ -1,4 +1,4 @@
-import ForumThread from "../components/forum/boards/thread";
+import ForumThread from "../components/forum/boards/ForumThread";
 
 // FIXME: Move the ForumThread component into this file.
 const ForumThreadPage: React.FC = () => {
