@@ -3,8 +3,9 @@
 {
   "name": "ZFGCBB-React",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:24-trixie",
-  "postCreateCommand": "./.devcontainer/setup-nix.sh",
-  "postAttachCommand": "yarn dev --host",
+  "onCreateCommand": "bash ./.devcontainer/setup-nix.sh",
+  "postStartCommand": ". ~/.profile && nix develop --command yarn dev --host",
+  "mounts": ["source=nix-store,target=/nix,type=volume"],
   "forwardPorts": [4173, 5173],
   "customizations": {
     "vscode": {
@@ -14,7 +15,8 @@
         "vitest.explorer",
         "dbaeumer.vscode-eslint",
         "yzhang.markdown-all-in-one",
-        "DavidAnson.vscode-markdownlint"
+        "DavidAnson.vscode-markdownlint",
+        "jnoortheen.nix-ide"
       ]
     }
   }

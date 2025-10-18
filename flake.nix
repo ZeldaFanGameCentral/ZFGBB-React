@@ -1,5 +1,5 @@
 {
-  description = "Node.js + Vite + TypeScript development environment";
+  description = "ZFGCBB-React";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -15,9 +15,13 @@
           buildInputs = [
             pkgs.nodejs-slim
             pkgs.corepack
+            pkgs.bash
           ];
 
           shellHook = ''
+            corepack enable --install-directory "$HOME/.corepack/bin"
+            corepack prepare --activate
+            yarn cache clean
             yarn install
           '';
         };
