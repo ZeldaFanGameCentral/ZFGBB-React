@@ -1,5 +1,3 @@
-import Widget from "../components/common/widgets/Widget";
-
 const Sonic: React.FC = () => {
   return (
     <div className="grid grid-cols-1 gap-4">

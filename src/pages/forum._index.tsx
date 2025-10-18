@@ -1,9 +1,3 @@
-import ForumCategory from "../components/forum/ForumCategory";
-import { useBBQuery } from "../hooks/useBBQuery";
-import type { Forum } from "../types/forum";
-import Widget from "../components/common/widgets/Widget";
-import BBLink from "../components/common/BBLink";
-
 const ForumMain: React.FC = () => {
   const { data: forumIndex } = useBBQuery<Forum>("/board/forum");
 

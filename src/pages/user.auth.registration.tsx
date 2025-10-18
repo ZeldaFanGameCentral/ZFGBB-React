@@ -1,5 +1,3 @@
-import Widget from "../components/common/widgets/Widget";
-
 const UserRegistration: React.FC = () => {
   return (
     <Widget widgetTitle={"Registration"}>

@@ -1,5 +1,3 @@
-import ForumThread from "../components/forum/boards/ForumThread";
-
 // FIXME: Move the ForumThread component into this file.
 const ForumThreadPage: React.FC = () => {
   const { threadId, pageNo } = useParams();

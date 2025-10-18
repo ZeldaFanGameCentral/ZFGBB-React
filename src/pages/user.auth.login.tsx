@@ -1,5 +1,3 @@
-import Widget from "../components/common/widgets/Widget";
-
 const UserLogin: React.FC = () => {
   return (
     <Widget widgetTitle={"Login"}>

@@ -19,10 +19,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
-        <script
-          crossOrigin="anonymous"
-          src="//unpkg.com/react-scan/dist/auto.global.js"
-        />
         <Meta />
         <Links />
         <base href={import.meta.env.VITE_BASE ?? "/"} />

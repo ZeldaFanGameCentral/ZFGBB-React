@@ -1,5 +1,3 @@
-import BBImage from "@/components/common/BBImage";
-
 export default function MyNameIsError404() {
   return (
     <div className="d-flex flex-column justify-content-center align-items-center">

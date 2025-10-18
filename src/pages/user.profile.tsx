@@ -1,5 +1,3 @@
-import Widget from "../components/common/widgets/Widget";
-
 export default function UserProfile() {
   return (
     <article>

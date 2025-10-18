@@ -1,5 +1,3 @@
-import BBLink, { type BBLinkProps } from "../common/BBLink";
-
 interface NavTabProps extends Omit<BBLinkProps, "relative"> {
   title: string;
 }

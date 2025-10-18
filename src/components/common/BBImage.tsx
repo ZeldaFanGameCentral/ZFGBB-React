@@ -1,5 +1,4 @@
 import type { ReactElement, ComponentType, JSX, FC } from "react";
-import Skeleton from "./Skeleton";
 
 type ImageProps = JSX.IntrinsicElements["img"];
 type AsComponent = ("img" | "image") | ComponentType<Partial<ImageProps>>;

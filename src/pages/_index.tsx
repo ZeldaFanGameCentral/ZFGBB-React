@@ -1,8 +1,3 @@
-import Widget from "../components/common/widgets/Widget";
-import BBImage from "@/components/common/BBImage";
-import BBLink from "@/components/common/BBLink";
-import Skeleton from "@/components/common/Skeleton";
-
 export default () => {
   return (
     <article>
