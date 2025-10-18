@@ -99,7 +99,8 @@ not using the provided dev container from [Quick Start (With VSCode Dev Containe
 If this is your first time contributing to this project, or cloning the repository, we recommend following the steps below. It will guide you through the process of creating a new branch, making changes, and submitting a pull request.
 
 1. Read the [Code of Conduct](CODE_OF_CONDUCT.md).
-   1. Check the [Projects Board](https://github.com/users/ZFGCCP/projects/4) for open issues that you can help with.
+   1. If you do not agree with the Code of Conduct, please do not contribute to this project. Feel free to fork the repository and create your own version of the project.
+   2. Check the [Projects Board](https://github.com/users/ZFGCCP/projects/4) for open issues that you can help with.
 2. If you are not part of the ZFGCCP organization, you will need to fork this repository.
 3. Make sure you are on the `development` branch. `git switch development && git pull`.
 4. Make a new branch for your changes. `git switch -c my-new-branch`.
