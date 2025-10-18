@@ -13,7 +13,7 @@ const UserProfileMaster: React.FC = () => {
         </span>
       ) : null}
       <div className="col-span-12 md:col-span-9 w-full 2xl:w-1/3">
-        <BBAccordion title="BIO INFORMATION" startExpanded>
+        <BBAccordionWidget title="BIO INFORMATION" startExpanded>
           <form className="space-y-4">
             <div className="flex flex-col sm:flex-row items-start sm:items-center">
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
@@ -84,9 +84,9 @@ const UserProfileMaster: React.FC = () => {
               </div>
             </div>
           </form>
-        </BBAccordion>
+        </BBAccordionWidget>
 
-        <BBAccordion title="Contact Information">
+        <BBAccordionWidget title="Contact Information">
           <form className="space-y-4">
             {user?.bioInfo?.hideEmailFlag === true && (
               <div className="flex flex-col sm:flex-row items-start sm:items-center">
@@ -147,7 +147,7 @@ const UserProfileMaster: React.FC = () => {
               </span>
             </div>
           </form>
-        </BBAccordion>
+        </BBAccordionWidget>
       </div>
     </div>
   );
