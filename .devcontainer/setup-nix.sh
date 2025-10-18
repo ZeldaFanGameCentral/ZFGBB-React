@@ -22,7 +22,6 @@ if ! command -v nix >/dev/null 2>&1; then
   fi
   
   sh <(curl -L https://nixos.org/nix/install) --no-daemon
-  source "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi
 
 if [ ! -f ~/.config/nix/nix.conf ]; then
@@ -32,6 +31,7 @@ experimental-features = nix-command flakes
 EOF
 fi
 
+source "$HOME/.nix-profile/etc/profile.d/nix.sh"
 current_shell=$(basename "$SHELL")
 case "$current_shell" in
   bash) shell_rc="$HOME/.bashrc" ;;
