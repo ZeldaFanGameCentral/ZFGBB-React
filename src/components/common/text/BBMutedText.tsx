@@ -1,9 +1,11 @@
-const BBMutedText = ({
-  children,
-  Ass = "span",
-}: {
+export interface BBMutedTextProps {
   children: React.ReactNode;
   Ass?: React.ElementType;
-}) => <Ass className="text-muted">{children}</Ass>;
+}
 
-export default BBMutedText;
+export default function BBMutedText({
+  children,
+  Ass = "span",
+}: BBMutedTextProps) {
+  return <Ass className="text-muted">{children}</Ass>;
+}

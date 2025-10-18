@@ -1,4 +1,4 @@
-interface BBFlexProps {
+export interface BBFlexProps {
   children: React.ReactNode;
   className?: string;
   direction?: "row" | "col";
@@ -8,7 +8,7 @@ interface BBFlexProps {
   gap?: string;
 }
 
-const BBFlex: React.FC<BBFlexProps> = ({
+export default function BBFlex({
   children,
   className = "",
   direction = "row",
@@ -16,7 +16,7 @@ const BBFlex: React.FC<BBFlexProps> = ({
   align = "start",
   wrap = false,
   gap = "gap-4",
-}) => {
+}: BBFlexProps) {
   const flexDirection = direction === "col" ? "flex-col" : "flex-row";
   const justifyContent = {
     start: "justify-start",
@@ -44,6 +44,4 @@ const BBFlex: React.FC<BBFlexProps> = ({
       {children}
     </div>
   );
-};
-
-export default BBFlex;
+}

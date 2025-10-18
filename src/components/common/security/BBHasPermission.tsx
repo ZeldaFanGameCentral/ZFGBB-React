@@ -1,10 +1,15 @@
 import { UserContext } from "../../../providers/user/userProvider";
 import type { BBPermission } from "../../../types/api";
 
-const HasPermission: React.FC<{
+export interface BBHasPermissionProps {
   perms: BBPermission[];
   children: React.ReactNode;
-}> = ({ perms, children }) => {
+}
+
+export default function BBHasPermission({
+  perms,
+  children,
+}: BBHasPermissionProps) {
   const { permissions } = useContext(UserContext);
   const hasPerm = useMemo(() => {
     return permissions
@@ -13,6 +18,4 @@ const HasPermission: React.FC<{
   }, [perms, permissions]);
 
   return <>{hasPerm && <span>{children}</span>}</>;
-};
-
-export default HasPermission;
+}

@@ -1,18 +1,18 @@
-export type BBPaginatorProps = {
+export interface BBPaginatorProps {
   numPages: number;
   currentPage: number;
   maxPageCount?: number;
   onPageChange: (pageNo: number) => void;
   className?: string;
-};
+}
 
-const BBPaginator: React.FC<BBPaginatorProps> = ({
+export default function BBPaginator({
   numPages,
   currentPage,
   onPageChange,
   maxPageCount,
   className = "",
-}) => {
+}: BBPaginatorProps) {
   const maxPages = maxPageCount ?? 10;
 
   const maxToRender = useMemo(() => {
@@ -104,6 +104,4 @@ const BBPaginator: React.FC<BBPaginatorProps> = ({
       </div>
     </div>
   );
-};
-
-export default BBPaginator;
+}

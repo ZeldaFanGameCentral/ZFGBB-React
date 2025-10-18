@@ -1,10 +1,10 @@
-interface AccordionProps {
+export interface BBAccordionProps {
   title: string;
   children: React.ReactNode;
   startExpanded?: boolean;
 }
 
-const BBAccordion: React.FC<AccordionProps> = ({
+const BBAccordion: React.FC<BBAccordionProps> = ({
   title,
   children,
   startExpanded,

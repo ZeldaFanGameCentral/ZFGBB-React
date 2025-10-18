@@ -1,10 +1,10 @@
-interface WidgetProps {
+export interface BBWidgetProps {
   widgetTitle?: string;
   className?: string;
   children: React.ReactNode;
 }
 
-const BBWidget: React.FC<WidgetProps> = ({
+const BBWidget: React.FC<BBWidgetProps> = ({
   widgetTitle,
   className = "",
   children,
