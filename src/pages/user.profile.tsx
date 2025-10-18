@@ -2,9 +2,9 @@ export default function UserProfile() {
   return (
     <article>
       <section className="col-12 my-2">
-        <Widget widgetTitle={"Profile Summary"}>
+        <BBWidget widgetTitle={"Profile Summary"}>
           <Outlet />
-        </Widget>
+        </BBWidget>
       </section>
     </article>
   );

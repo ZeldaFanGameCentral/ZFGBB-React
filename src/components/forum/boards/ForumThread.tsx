@@ -105,7 +105,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
         ) : null}
 
         {thread && !isLoading ? (
-          <Widget widgetTitle={thread ? thread.threadName : ""}>
+          <BBWidget widgetTitle={thread ? thread.threadName : ""}>
             <div className="divide-y divide-default">
               {thread?.messages?.map((msg, index) => {
                 const isEven = index % 2 === 0;
@@ -145,11 +145,11 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                                 {new Date(
                                   msg.createdTsAsString,
                                 ).toLocaleString()}
-                                <HasPermission perms={["ZFGC_MESSAGE_ADMIN"]}>
+                                <BBHasPermission perms={["ZFGC_MESSAGE_ADMIN"]}>
                                   <span className="text-muted">
                                     - 192.168.1.1
                                   </span>
-                                </HasPermission>
+                                </BBHasPermission>
                               </div>
                               {msg.currentMessage.updatedTsAsString && (
                                 <div className="text-muted">
@@ -162,15 +162,15 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                             </div>
 
                             <BBFlex gap="gap-2" wrap={true} className="text-sm">
-                              <HasPermission perms={["ZFGC_MESSAGE_EDITOR"]}>
+                              <BBHasPermission perms={["ZFGC_MESSAGE_EDITOR"]}>
                                 <button className="text-toned hover:transition-colors">
                                   <Fa6SolidReply className="mr-1" />
                                   <span className="hidden sm:inline">
                                     Reply
                                   </span>
                                 </button>
-                              </HasPermission>
-                              <HasPermission perms={["ZFGC_MESSAGE_EDITOR"]}>
+                              </BBHasPermission>
+                              <BBHasPermission perms={["ZFGC_MESSAGE_EDITOR"]}>
                                 <button
                                   className="text-toned hover:transition-colors"
                                   onClick={() => clickModify(msg)}
@@ -178,36 +178,36 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                                   <Fa6SolidPen className="mr-1" />
                                   <span className="hidden sm:inline">Edit</span>
                                 </button>
-                              </HasPermission>
-                              <HasPermission perms={["ZFGC_MESSAGE_ADMIN"]}>
+                              </BBHasPermission>
+                              <BBHasPermission perms={["ZFGC_MESSAGE_ADMIN"]}>
                                 <button className="text-toned hover:transition-colors hidden sm:inline-flex">
                                   <Fa6SolidTrashCan className="mr-1" />
                                   Remove
                                 </button>
-                              </HasPermission>
-                              <HasPermission perms={["ZFGC_MESSAGE_ADMIN"]}>
+                              </BBHasPermission>
+                              <BBHasPermission perms={["ZFGC_MESSAGE_ADMIN"]}>
                                 <button className="text-toned hover:transition-colors hidden md:inline-flex">
                                   Split
                                 </button>
-                              </HasPermission>
-                              <HasPermission perms={["ZFGC_MESSAGE_VIEWER"]}>
+                              </BBHasPermission>
+                              <BBHasPermission perms={["ZFGC_MESSAGE_VIEWER"]}>
                                 <button className="text-toned hover:transition-colors hidden md:inline-flex">
                                   <Fa6SolidShuffle className="mr-1" />
                                   History
                                 </button>
-                              </HasPermission>
-                              <HasPermission perms={["ZFGC_MESSAGE_EDITOR"]}>
+                              </BBHasPermission>
+                              <BBHasPermission perms={["ZFGC_MESSAGE_EDITOR"]}>
                                 <button className="text-toned hover:transition-colors hidden lg:inline-flex">
                                   <Fa6SolidFlag className="mr-1" />
                                   Report
                                 </button>
-                              </HasPermission>
-                              <HasPermission perms={["ZFGC_MESSAGE_ADMIN"]}>
+                              </BBHasPermission>
+                              <BBHasPermission perms={["ZFGC_MESSAGE_ADMIN"]}>
                                 <button className="text-toned hover:transition-colors hidden lg:inline-flex">
                                   <Fa6SolidTriangleExclamation className="mr-1" />
                                   Warn
                                 </button>
-                              </HasPermission>
+                              </BBHasPermission>
                             </BBFlex>
                           </BBFlex>
                         </div>
@@ -245,7 +245,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                 />
               </div>
             )}
-          </Widget>
+          </BBWidget>
         ) : null}
 
         {thread && !isLoading ? (

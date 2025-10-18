@@ -1,4 +1,4 @@
-const MutedText = ({
+const BBMutedText = ({
   children,
   Ass = "span",
 }: {
@@ -6,4 +6,4 @@ const MutedText = ({
   Ass?: React.ElementType;
 }) => <Ass className="text-muted">{children}</Ass>;
 
-export default MutedText;
+export default BBMutedText;

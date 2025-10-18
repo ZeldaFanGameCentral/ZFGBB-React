@@ -5,9 +5,9 @@ const ForumCategory: React.FC<{ title: string; subBoards: BoardSummary[] }> = ({
   subBoards,
 }) => {
   return (
-    <Widget widgetTitle={title}>
+    <BBWidget widgetTitle={title}>
       <BoardSummaryView subBoards={subBoards} />
-    </Widget>
+    </BBWidget>
   );
 };
 

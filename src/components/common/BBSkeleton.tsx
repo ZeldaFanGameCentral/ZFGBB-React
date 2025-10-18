@@ -1,4 +1,4 @@
-export default function Skeleton<
+export default function BBSkeleton<
   PropsType extends React.HTMLAttributes<HTMLDivElement> &
     React.PropsWithChildren,
 >({ className = "", style, ...rest }: PropsType) {

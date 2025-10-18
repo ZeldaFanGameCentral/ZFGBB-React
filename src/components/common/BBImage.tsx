@@ -105,7 +105,7 @@ export default function BBImage({ src, fallback, as, ...rest }: BBImageProps) {
     );
 
   const LazyImage = lazyImageLoader(src, as ?? "img");
-  const MyAss = fallback ?? <Skeleton />;
+  const MyAss = fallback ?? <BBSkeleton />;
 
   return (
     <Suspense fallback={MyAss}>

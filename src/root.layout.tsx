@@ -1,7 +1,4 @@
 import { UserContext } from "./providers/user/userProvider";
-import Navigator from "./components/navigation/Navigator";
-import BBLink from "./components/common/BBLink";
-import BBImage from "./components/common/BBImage";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -20,7 +17,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
               alt="Logo"
               className="relative -z-10 md:mb-[-1.5rem]"
             />
-            <Navigator />
+            <HeaderNavigation />
           </div>
           <div className="self-center px-2">
             <p className="mb-0">

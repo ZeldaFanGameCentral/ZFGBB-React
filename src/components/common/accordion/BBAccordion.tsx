@@ -4,7 +4,7 @@ interface AccordionProps {
   startExpanded?: boolean;
 }
 
-const Accordion: React.FC<AccordionProps> = ({
+const BBAccordion: React.FC<AccordionProps> = ({
   title,
   children,
   startExpanded,
@@ -29,4 +29,4 @@ const Accordion: React.FC<AccordionProps> = ({
   );
 };
 
-export default Accordion;
+export default BBAccordion;

@@ -12,7 +12,7 @@ const NavTab: React.FC<NavTabProps> = ({ title, ...props }) => {
   );
 };
 
-const Navigator: React.FC = () => {
+const HeaderNavigation: React.FC = () => {
   return (
     <nav className="hidden md:flex items-end">
       <NavTab title="Home" to="/" />
@@ -43,4 +43,4 @@ const Navigator: React.FC = () => {
   );
 };
 
-export default Navigator;
+export default HeaderNavigation;

@@ -4,7 +4,7 @@ interface WidgetProps {
   children: React.ReactNode;
 }
 
-const Widget: React.FC<WidgetProps> = ({
+const BBWidget: React.FC<WidgetProps> = ({
   widgetTitle,
   className = "",
   children,
@@ -21,4 +21,4 @@ const Widget: React.FC<WidgetProps> = ({
   );
 };
 
-export default Widget;
+export default BBWidget;

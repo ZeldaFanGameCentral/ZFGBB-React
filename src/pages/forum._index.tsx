@@ -10,7 +10,7 @@ export default function ForumMain(props: Route.ComponentProps) {
   return (
     <article>
       <section className="grid grid-cols-1 gap-4">
-        <Widget className="mb-5 my-2">
+        <BBWidget className="mb-5 my-2">
           <div className="m-4 text-center animate-pulse">
             <div>
               Hi! We're read-only for now, but make sure to join us on{" "}
@@ -23,7 +23,7 @@ export default function ForumMain(props: Route.ComponentProps) {
               </BBLink>
             </div>
           </div>
-        </Widget>
+        </BBWidget>
 
         {forumIndex?.categories?.map((cat) => {
           return (

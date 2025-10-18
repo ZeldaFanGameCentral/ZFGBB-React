@@ -28,7 +28,7 @@ function BoardTablePaginatorComponent({
         />
       ) : (
         <span className={skeletonContainerClassName}>
-          <Skeleton className={skeletonClassName} />
+          <BBSkeleton className={skeletonClassName} />
         </span>
       )}
     </div>
@@ -238,9 +238,9 @@ const BoardContainer: React.FC = () => {
       board &&
       board.childBoards &&
       board?.childBoards?.length > 0 ? (
-        <Widget widgetTitle={"Child Boards"}>
+        <BBWidget widgetTitle={"Child Boards"}>
           <BoardSummaryView subBoards={board.childBoards} />
-        </Widget>
+        </BBWidget>
       ) : null}
 
       <div className="my-3">
@@ -267,7 +267,7 @@ const BoardContainer: React.FC = () => {
         skeletonClassName="p-8"
       />
 
-      <Widget widgetTitle={boardName}>
+      <BBWidget widgetTitle={boardName}>
         <BoardTableComponent board={board} isLoading={isLoading} />
         <BoardTablePaginatorComponent
           board={board}
@@ -278,7 +278,7 @@ const BoardContainer: React.FC = () => {
           skeletonContainerClassName="w-full p-4 mb-2"
           skeletonClassName="p-8"
         />
-      </Widget>
+      </BBWidget>
 
       {!isLoading ? (
         <div className="my-3">

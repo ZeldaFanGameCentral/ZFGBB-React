@@ -65,7 +65,7 @@ const MemberListContainer: React.FC = () => {
   ];
 
   return (
-    <Widget widgetTitle="Member List">
+    <BBWidget widgetTitle="Member List">
       <BBTable
         columns={columns}
         data={memberList || []}
@@ -81,7 +81,7 @@ const MemberListContainer: React.FC = () => {
           />
         </div>
       )}
-    </Widget>
+    </BBWidget>
   );
 };
 

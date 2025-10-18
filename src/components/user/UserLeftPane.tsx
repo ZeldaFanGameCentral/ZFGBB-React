@@ -66,13 +66,13 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
 
       <div className="p-3 space-y-2 text-sm flex-1">
         <div className="flex justify-between">
-          <MutedText>Posts: {user?.bioInfo?.postCount}</MutedText>
+          <BBMutedText>Posts: {user?.bioInfo?.postCount}</BBMutedText>
         </div>
         <div className="flex justify-between">
-          <MutedText>Joined: {user?.bioInfo?.dateRegistered}</MutedText>
+          <BBMutedText>Joined: {user?.bioInfo?.dateRegistered}</BBMutedText>
         </div>
         <div className="flex justify-between">
-          <MutedText>Status:</MutedText>
+          <BBMutedText>Status:</BBMutedText>
           <span></span>
         </div>
       </div>

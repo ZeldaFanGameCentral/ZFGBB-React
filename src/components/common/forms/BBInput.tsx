@@ -1,17 +1,40 @@
-const BBInput: React.FC<{
-  value: string;
-  disabled?: boolean;
-  placeholder?: string;
-}> = ({ value, disabled, placeholder }) => {
-  return (
-    <input
-      type="text"
-      value={value || ""}
-      className="w-full p-2 bg-default border border-default "
-      disabled={disabled || false}
-      placeholder={placeholder || ""}
-    />
-  );
-};
+interface BBInputWithLabelProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  label: string;
+  labelComponent?: never;
+}
 
-export default BBInput;
+interface BBInputWithLabelComponentProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  label?: never;
+  labelComponent?: React.ReactNode;
+}
+
+type BBInputProps = BBInputWithLabelProps | BBInputWithLabelComponentProps;
+
+export default function BBInput({
+  className,
+  type,
+  name,
+  label,
+  labelComponent,
+  ...props
+}: BBInputProps) {
+  return (
+    <>
+      {labelComponent ? (
+        labelComponent
+      ) : (
+        <label htmlFor={name} className="block text-sm font-medium text-muted">
+          {label}
+        </label>
+      )}
+      <input
+        type={type}
+        className={`w-full p-2 bg-default border border-default ${className}`}
+        name={name}
+        {...props}
+      />
+    </>
+  );
+}
