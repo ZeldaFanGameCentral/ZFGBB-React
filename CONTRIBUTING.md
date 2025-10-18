@@ -66,7 +66,7 @@ not using the provided dev container from [Quick Start (With VSCode Dev Containe
    corepack enable
    ```
 
-   **_NOTE: If you are using [VSCode](#vscode---usage), you can use the `Debug zfgc.com (local/dev)` launch task to do this for you. This will also let you set breakpoints and debug your code in VSCode._**
+   **_NOTE: If you are using [VSCode](#vscode---usage), you can use the `Debug zfgc.com (production)` or `Debug zfgc.com (local)` launch task to do the next steps for you. This will also let you set breakpoints and debug your code in VSCode._**
 
 2. Install the dependencies
 
@@ -82,7 +82,7 @@ not using the provided dev container from [Quick Start (With VSCode Dev Containe
 
 4. Open your browser and navigate to <http://localhost:5173>.
 5. You can now proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information for contributing to the project.
-   1. Otherwise, we recommend continuing to the [VSCode - Usage](#vscode---usage) section for more information on how to use the `Debug zfgc.com (live/dev)` task for easy setup.
+   1. Otherwise, we recommend continuing to the [VSCode - Usage](#vscode---usage) section for more information on how to use the `Debug zfgc.com (production)` or `Debug zfgc.com (local)` task for easy setup.
    2. Feel free to check out the [package.json](#packagejson---provided-packagejson-scripts) section for more development information.
 
 ### Quick Start (With VSCode Dev Container)
@@ -261,7 +261,7 @@ Find the launch tasks by navigating to the `Run and Debug` section `(CRTL/CMD + 
 Each of these launch tasks will `corepack enable` and `yarn install` before running the application, so you do not need to worry about that. See [.vscode/tasks.json](./.vscode/tasks.json) if you would like to see how these tasks run those commands.
 
 - `Debug zfgc.com (production)`: Runs the application in production mode with the API calls pointed to `zfgc.com` for the backend, using the value of `REACT_ZFGBB_API_URL` in [.env.production](.env.production). This uses the `development` build of the application with variables loaded from [.env.production](.env.production), by calling [yarn build --mode=production](#yarn-build-builds-the-application-for-production).
-- `Debug zfgc.com (local/dev)`: Runs the application in development mode with the API calls pointed to <http://localhost:8080/zfgbb> or the value of `REACT_ZFGBB_API_URL` in [.env.local](.env.local). This uses the `development` build of the application, by calling [yarn dev](#yarn-dev-starts-the-development-server).
+- `Debug zfgc.com (local)`: Runs the application in development mode with the API calls pointed to <http://localhost:8080/zfgbb> or the value of `REACT_ZFGBB_API_URL` in [.env.local](.env.local). This uses the `development` build of the application, by calling [yarn dev](#yarn-dev-starts-the-development-server).
 - `Preview zfgc.com (production)`: Runs the application in production mode with the API calls pointed to `zfgc.com` for the backend, using the value of `REACT_ZFGBB_API_URL` in [.env.production](.env.production). This uses the `production` build of the application with variables loaded from [.env.production](.env.production), by calling `yarn build --mode=production`. The server is provided by [yarn preview](#yarn-preview-runs-the-application-in-the-production-mode).
 
 Now that you are ready, you can proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information.
