@@ -23,13 +23,13 @@ TBD. We could use some help writing this out.
       - [`yarn check`: Runs type checking, linting, and formatting checks](#yarn-check-runs-type-checking-linting-and-formatting-checks)
       - [`yarn format`: Formats the code using Prettier](#yarn-format-formats-the-code-using-prettier)
       - [`yarn preview`: Runs the application in the production mode](#yarn-preview-runs-the-application-in-the-production-mode)
-      - [VSCode - Usage](#vscode---usage)
-        - [VSCode - Recommended Extensions](#vscode---recommended-extensions)
-        - [VSCode - Typescript Workspace Version](#vscode---typescript-workspace-version)
-        - [VSCode - Running the application (Launch Tasks)](#vscode---running-the-application-launch-tasks)
-  - [Troubleshooting](#troubleshooting)
-    - [Why is the forum not loading?](#why-is-the-forum-not-loading)
-    - [Why does the `yarn check` command fail for Icon Components?](#why-does-the-yarn-check-command-fail-for-icon-components)
+    - [VSCode - Usage](#vscode---usage)
+      - [VSCode - Recommended Extensions](#vscode---recommended-extensions)
+      - [VSCode - Typescript Workspace Version](#vscode---typescript-workspace-version)
+      - [VSCode - Running the application (Launch Tasks)](#vscode---running-the-application-launch-tasks)
+    - [Troubleshooting](#troubleshooting)
+      - [Why is the forum not loading?](#why-is-the-forum-not-loading)
+      - [Why does the `yarn check` command fail for Icon Components?](#why-does-the-yarn-check-command-fail-for-icon-components)
   - [CI/CD \[WIP\]](#cicd-wip)
     - [.github/workflows/workflows-ci.yml](#githubworkflowsworkflows-ciyml)
     - [./github/workflows/workflow-deploy-frontend.yml](#githubworkflowsworkflow-deploy-frontendyml)
@@ -220,11 +220,11 @@ This command runs the application in SSR Mode, using [react-router](https://reac
 
 Note: The `yarn preview` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn preview` at least once.
 
-#### VSCode - Usage
+### VSCode - Usage
 
 VSCode is our preferred IDE for development. To get the best experience, try installing the recommended extensions. The provided launch tasks will automatically configure the project for you and allow you to set breakpoints and debug your code. Continue to [VSCode - Recommended Extensions](#vscode---recommended-extensions) for more information.
 
-##### VSCode - Recommended Extensions
+#### VSCode - Recommended Extensions
 
 This project provides [extension recommendations](./.vscode/extensions.json) for VSCode. Press `(CRTL/CMD + SHIFT + X)` to open the Extensions panel on the sidebar. You can use the `@recommended` tag to only install extensions that are recommended by this project. See <https://code.visualstudio.com/docs/configure/extensions/extension-marketplace#_recommended-extensions> for more information.
 
@@ -232,7 +232,7 @@ This project provides [extension recommendations](./.vscode/extensions.json) for
 
 If the sidebar looks like this, then you can install the recommended extensions if the option is available. After you've installed the recommended extensions, you can continue to [VSCode - Typescript Workspace Version](#vscode---typescript-workspace-version) for more information.
 
-##### VSCode - Typescript Workspace Version
+#### VSCode - Typescript Workspace Version
 
 Please be sure to allow the [Typescript Workspace Version](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-the-workspace-version) to be enabled. This will allow you to get type checking and intellisense for the entire project.
 
@@ -250,7 +250,7 @@ Then you should be prompted to select a version. Select `Use Workspace Version`.
 
 If a notification pops up, you will need to press `Allow`. After you've pressed `Allow`, you can proceed to [VSCode - Running the application (Launch Tasks)](#vscode---running-the-application-launch-tasks) for more information.
 
-##### VSCode - Running the application (Launch Tasks)
+#### VSCode - Running the application (Launch Tasks)
 
 The VSCode project is setup with two [launch tasks](./.vscode/launch.json):
 
@@ -266,13 +266,13 @@ Each of these launch tasks will `corepack enable` and `yarn install` before runn
 
 Now that you are ready, you can proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information.
 
-## Troubleshooting
+### Troubleshooting
 
-### Why is the forum not loading?
+#### Why is the forum not loading?
 
 The default value is pointing to your local machine. While we do have dockerfiles for the backend, we haven't gotten around to streamlining using the backend in a development setting for the frontend. To run the frontend locally, pointed to `zfgc.com`, run `yarn dev --mode=production`, and that will point to the production environment. This will get you up and running! \o/ Sometimes this issue may come up because you closed the server in the background, and the app is working off of cache state.
 
-### Why does the `yarn check` command fail for Icon Components?
+#### Why does the `yarn check` command fail for Icon Components?
 
 If you get an error like this:
 
