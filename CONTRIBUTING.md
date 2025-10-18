@@ -25,6 +25,7 @@ TBD. We could use some help writing this out.
       - [`yarn preview`: Runs the application in the production mode](#yarn-preview-runs-the-application-in-the-production-mode)
         - [Troubleshooting](#troubleshooting)
           - [Why is the forum not loading?](#why-is-the-forum-not-loading)
+          - [Why does the `yarn check` command fail for Icon Components?](#why-does-the-yarn-check-command-fail-for-icon-components)
       - [VSCode - Usage](#vscode---usage)
         - [VSCode - Recommended Extensions](#vscode---recommended-extensions)
         - [VSCode - Typescript Workspace Version](#vscode---typescript-workspace-version)
@@ -60,12 +61,17 @@ There is a [dev container](./.devcontainer/README.md) for ZFGCBB-React. It is cu
 3. Open the Command Palette (Ctrl+Shift+P).
 4. Select "Dev Containers: Open Folder in Container".
 5. Wait for the container to start.
+6. That's it, you can now start coding! \o/
 
 #### Quick Start
 
-1. Configure the project (Have the prequisites installed - see [Downloading the Project](#downloading-the-project))
+Follow the steps below to get started with the project, if you are setting up the development environment on your local machine, and are
+not using the provided dev container from [Quick Start (With VSCode Dev Container)](#quick-start-with-vscode-dev-container).
+
+1. Configure the project (Have the prequisites installed - see [Downloading the Project](#downloading-the-project)) We use [corepack](https://nodejs.org/api/corepack.html) to manage the package manager, so make sure to run the following command to enable it. This is a one time setup.
 
    ```bash
+   # Make sure you are in the project directory that you cloned.
    npm install -g corepack@latest
    corepack enable
    ```
@@ -115,15 +121,17 @@ If this is your first time contributing to this project, or cloning the reposito
 5. Working on your changes: Use your IDE of choice to edit files and save changes. We recommend using [VSCode](#vscode---usage) for development.
    1. Make sure to run `yarn install` every time you check out a branch.
       1. To understand the commands, see the [package.json](#packagejson---provided-packagejson-scripts) provided scripts section. But for now, we recommend just continuing through the guide.
-   2. Use the `yarn dev` command to start the development server. But before you do, continue reading until you reach `Step 5.3 - Use the "yarn format" command to format the code using Prettier`, due to a current limitation with running the development server in local only mode.
+   2. Use the `yarn dev` command to start the development server. But before you do, continue reading until you reach `Step 5.iii - Use the "yarn format" command to format the code using Prettier`, due to a current limitation with running the development server in local only mode.
       1. If you are using VSCode, you can use the `Preview zfgc.com (production)` launch task to do this for you.
       2. For now, if cloning the [backend](https://github.com/ZFGCCP/ZFGCBB) is too much of a hassle, you can use the `yarn dev --mode=production` command to start the development server on `zfgc.com` or `Debug zfgc.com (local)` in VSCode. See the VSCode usage [reference](#vscode---usage) for more information on how to use the `Debug zfgc.com (production)` task. <!-- FIXME: remove this note when we have a container that can be pulled down and run locally -->
    3. Use the `yarn format` command to format the code using Prettier.
-   4. Use the `yarn check` command to run type checking, linting, and formatting checks.
-   5. Repeat `yarn check` as needed until you every file is fixed, and the check passes.
+   4. Use the `yarn build` command to build the application for production.
+   5. Use the `yarn check` command to run type checking, linting, and formatting checks.
+      1. Note: The `yarn check` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn check` at least once.
+   6. Repeat `yarn check` as needed until you every file is fixed, and the check passes.
       1. Feel free to reach out on Discord if you have any questions.
-   6. Stage and commit your changes.
-   7. Push your changes to your branch on GitHub.
+   7. Stage and commit your changes.
+   8. Push your changes to your branch on GitHub.
 6. [Create a new pull request](https://github.com/ZFGCCP/ZFGCBB-React/compare) and request a review from one of the maintainers.
    1. Add a bullet point list of changes you made.
    2. Mention the issue number you are working on.
@@ -185,6 +193,8 @@ rm -f build.zip && zip -rj build.zip build/client/
 
 This commands runs type checking, linting, and formatting checks using [TypeScript](https://www.typescriptlang.org/) and [Prettier](https://prettier.io/), and [react-router](https://reactrouter.com/tutorials/quickstart#build-and-run)'s typegen command. It will throw an error if any of the checks fail.
 
+Note: The `yarn check` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn check` at least once.
+
 #### `yarn format`: Formats the code using Prettier
 
 This command formats the code using [Prettier](https://prettier.io/).
@@ -195,11 +205,29 @@ This command runs the react-router-serve server, using [react-router](https://re
 
 This command runs the application in SSR Mode, using [react-router](https://reactrouter.com/tutorials/quickstart#build-and-run). See also documentation for [react-router SPA Mode](https://reactrouter.com/how-to/spa) for more context over the differences between SPA Mode and SSR Mode.
 
+Note: The `yarn preview` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn preview` at least once.
+
 ##### Troubleshooting
 
 ###### Why is the forum not loading?
 
 The default value is pointing to your local machine. While we do have dockerfiles for the backend, we haven't gotten around to streamlining using the backend in a development setting for the frontend. To run the frontend locally, pointed to `zfgc.com`, run `yarn dev --mode=production`, and that will point to the production environment. This will get you up and running! \o/ Sometimes this issue may come up because you closed the server in the background, and the app is working off of cache state.
+
+###### Why does the `yarn check` command fail for Icon Components?
+
+If you get an error like this:
+
+```text
+src/root.layout.tsx:70:14 - error TS2304: Cannot find name 'Fa6SolidBars'.
+
+               <Fa6SolidBars />
+                ~~~~~~~~~~~~
+
+
+Found 10 errors in 4 files.
+```
+
+This is likely due to the fact that the `yarn check` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn check` at least once.
 
 #### VSCode - Usage
 
