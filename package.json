@@ -7,7 +7,7 @@
   "type": "module",
   "homepage": "https://zfgc.com",
   "scripts": {
-    "check": "prettier . --check --experimental-cli && (node -e \"const fs=require('fs');fs.existsSync('./build/auto-imports.d.ts')||process.exit(1)\" || react-router build) && tsc --noEmit",
+    "check": "prettier . --check --experimental-cli && react-router typegen && react-router build && tsc --noEmit",
     "format": "prettier . --write ",
     "build": "react-router build",
     "dev": "react-router dev",

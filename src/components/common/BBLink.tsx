@@ -3,7 +3,7 @@ import type { LinkProps, Register } from "react-router";
 /**
  * React-Router generates a type for the routes, so we alias {@link Register} to
  * make it easier to use.
- * @see {@link https://reactrouter.com/7.6.3/start/framework/routing}
+ * @see {@link https://reactrouter.com/start/framework/routing}
  */
 export type RouteParams = Register["pages"];
 
