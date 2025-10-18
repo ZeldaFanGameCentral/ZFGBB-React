@@ -11,10 +11,10 @@ TBD. We could use some help writing this out.
 
 - [Contributing](#contributing)
   - [Table of Contents](#table-of-contents)
+  - [Setup](#setup)
+    - [Quick Start](#quick-start)
+    - [Quick Start (With VSCode Dev Container)](#quick-start-with-vscode-dev-container)
   - [Development](#development)
-    - [Downloading the Project](#downloading-the-project)
-      - [Quick Start (With VSCode Dev Container)](#quick-start-with-vscode-dev-container)
-      - [Quick Start](#quick-start)
     - [Workflow - Typical Development Workflow](#workflow---typical-development-workflow)
     - [package.json - Provided package.json scripts](#packagejson---provided-packagejson-scripts)
       - [`yarn dev`: Starts the development server](#yarn-dev-starts-the-development-server)
@@ -34,11 +34,9 @@ TBD. We could use some help writing this out.
     - [.github/workflows/workflows-ci.yml](#githubworkflowsworkflows-ciyml)
     - [./github/workflows/workflow-deploy-frontend.yml](#githubworkflowsworkflow-deploy-frontendyml)
 
-## Development
+## Setup
 
-We recommend using [VSCode](#vscode---usage) for development. If you are not using [VSCode](#vscode---usage), you can use the provided package.json scripts to get started.
-
-### Downloading the Project
+Follow the steps below to get started with the project.
 
 1. Make sure you have [Node.js](https://nodejs.org/en/download/) installed. (We recommend using the current LTS version).
    1. If you are using [nvm (optional)](https://github.com/nvm-sh/nvm), you can use `nvm use` to switch to the correct version.
@@ -55,26 +53,12 @@ We recommend using [VSCode](#vscode---usage) for development. If you are not usi
 4. Now, you can either continue with [Quick Start (With VSCode Dev Container)](#quick-start-with-vscode-dev-container) or [Quick Start](#quick-start), if you prefer to use your local machine for development.
 5. Happy hacking! Hack the planet!
 
-#### Quick Start (With VSCode Dev Container)
-
-There is a [dev container](./.devcontainer/README.md) for ZFGCBB-React. It is currently the easiest way to get started, so you can ignore the rest of this document if you just want to get started quickly.
-
-1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [VS Code Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
-2. Open the repository in VS Code.
-3. Open the Command Palette (Ctrl+Shift+P).
-4. Type in `Dev Containers: Open Folder in Container`
-   1. Select "Dev Containers: Open Folder in Container".
-5. Wait for the container to start.
-6. That's it, you can now start coding! \o/
-7. You can now proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information for contributing to the project.
-   1. Feel free to check out the [package.json](#packagejson---provided-packagejson-scripts) section for more development information.
-
-#### Quick Start
+### Quick Start
 
 Follow the steps below to get started with the project, if you are setting up the development environment on your local machine, and are
 not using the provided dev container from [Quick Start (With VSCode Dev Container)](#quick-start-with-vscode-dev-container).
 
-1. Configure the project (Have the prequisites installed - see [Downloading the Project](#downloading-the-project)) We use [corepack](https://nodejs.org/api/corepack.html) to manage the package manager, so make sure to run the following command to enable it. This is a one time setup.
+1. Configure the project (Have the prequisites installed - see [Setup](#setup)) We use [corepack](https://nodejs.org/api/corepack.html) to manage the package manager, so make sure to run the following command to enable it. This is a one time setup.
 
    ```bash
    # Make sure you are in the project directory that you cloned.
@@ -100,6 +84,24 @@ not using the provided dev container from [Quick Start (With VSCode Dev Containe
 5. You can now proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information for contributing to the project.
    1. Otherwise, we recommend continuing to the [VSCode - Usage](#vscode---usage) section for more information on how to use the `Debug zfgc.com (live/dev)` task for easy setup.
    2. Feel free to check out the [package.json](#packagejson---provided-packagejson-scripts) section for more development information.
+
+### Quick Start (With VSCode Dev Container)
+
+There is a [dev container](./.devcontainer/README.md) for ZFGCBB-React. It is currently the easiest way to get started, so you can ignore the rest of this document if you just want to get started quickly.
+
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [VS Code Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
+2. Open the repository in VS Code.
+3. Open the Command Palette (Ctrl+Shift+P).
+4. Type in `Dev Containers: Open Folder in Container`
+   1. Select "Dev Containers: Open Folder in Container".
+5. Wait for the container to start.
+6. That's it, you can now start coding! \o/
+7. You can now proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information for contributing to the project.
+   1. Feel free to check out the [package.json](#packagejson---provided-packagejson-scripts) section for more development information.
+
+## Development
+
+We recommend using [VSCode](#vscode---usage) for development. If you are not using [VSCode](#vscode---usage), you can use the provided package.json scripts to get started.
 
 ### Workflow - Typical Development Workflow
 
