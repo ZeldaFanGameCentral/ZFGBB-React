@@ -1,13 +1,4 @@
 import parse from "html-react-parser/lib/index";
-import Widget from "../../common/widgets/Widget";
-import { useBBQuery } from "../../../hooks/useBBQuery";
-import type { BBPermissionLabel, Message, Thread } from "../../../types/forum";
-import MessageEditor from "../MessageEditor";
-import UserLeftPane from "../../user/UserLeftPane";
-import HasPermission from "../../common/security/HasPermission";
-import BBPaginator from "../../common/paginator/BBPaginator";
-import BBLink from "@/components/common/BBLink";
-import BBFlex from "@/components/common/layout/BBFlex";
 
 interface ForumThreadProps {
   threadId: string;

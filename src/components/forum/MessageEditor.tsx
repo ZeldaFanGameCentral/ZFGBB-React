@@ -1,6 +1,4 @@
-import { useBBQuery } from "../../hooks/useBBQuery";
 import type { Message } from "../../types/forum";
-import { useBBMutation } from "../../hooks/useBBMutation";
 import type { BaseBB } from "../../types/api";
 
 interface MessageEditorProps {
