@@ -1,4 +1,5 @@
 .react-router
+.yarn/install-state.gz
 build
 node_modules
 *.tsbuildinfo
