@@ -13,7 +13,8 @@ TBD. We could use some help writing this out.
   - [Table of Contents](#table-of-contents)
   - [Development](#development)
     - [Downloading the Project](#downloading-the-project)
-      - [package.json - Usage (Quick Start)](#packagejson---usage-quick-start)
+      - [Quick Start (With VSCode)](#quick-start-with-vscode)
+      - [package.json - Usage](#packagejson---usage)
     - [Workflow - Typical Development Workflow](#workflow---typical-development-workflow)
     - [package.json - Provided package.json scripts](#packagejson---provided-packagejson-scripts)
       - [`yarn dev`: Starts the development server](#yarn-dev-starts-the-development-server)
@@ -21,15 +22,13 @@ TBD. We could use some help writing this out.
         - [Packaging for Production](#packaging-for-production)
       - [`yarn check`: Runs type checking, linting, and formatting checks](#yarn-check-runs-type-checking-linting-and-formatting-checks)
       - [`yarn format`: Formats the code using Prettier](#yarn-format-formats-the-code-using-prettier)
-      - [`yarn preview`: Runs the application in the production mode (SPA Mode)](#yarn-preview-runs-the-application-in-the-production-mode-spa-mode)
-      - [`yarn preview:ssr`: Runs the application in the production mode with server-side rendering (Unsupported/Do not use)](#yarn-previewssr-runs-the-application-in-the-production-mode-with-server-side-rendering-unsupporteddo-not-use)
+      - [`yarn preview`: Runs the application in the production mode](#yarn-preview-runs-the-application-in-the-production-mode)
         - [Troubleshooting](#troubleshooting)
           - [Why is the forum not loading?](#why-is-the-forum-not-loading)
       - [VSCode - Usage](#vscode---usage)
         - [VSCode - Recommended Extensions](#vscode---recommended-extensions)
         - [VSCode - Typescript Workspace Version](#vscode---typescript-workspace-version)
         - [VSCode - Running the application (Launch Tasks)](#vscode---running-the-application-launch-tasks)
-        - [VSCode - Using the devcontainer (optional)](#vscode---using-the-devcontainer-optional)
   - [CI/CD \[WIP\]](#cicd-wip)
     - [.github/workflows/workflows-ci.yml](#githubworkflowsworkflows-ciyml)
     - [./github/workflows/workflow-deploy-frontend.yml](#githubworkflowsworkflow-deploy-frontendyml)
@@ -45,6 +44,7 @@ We recommend using [VSCode](#vscode---usage) for development. If you are not usi
    2. We provide a configuration for [VSCode](https://code.visualstudio.com/), and is recommended for development.
 2. Make sure you have [Git](https://git-scm.com/downloads) installed.
    1. We recommend using [GitHub Desktop (optional)](https://desktop.github.com/) or [GitHub CLI (optional)](https://cli.github.com/), if you are new to Git.
+   2. For Nix Users ONLY, you can also install [Nix](https://nixos.org/download.html) and [direnv](https://direnv.net/), which can be used to automatically install the correct version of Node.js and other tools, since there's a [flake.nix](./flake.nix) file in the repository.
 3. Clone the repository
 
    ```bash
@@ -53,7 +53,17 @@ We recommend using [VSCode](#vscode---usage) for development. If you are not usi
 
 If you are not using VSCode, you can use the provided package.json scripts to get started.
 
-#### [package.json](package.json) - Usage (Quick Start)
+#### Quick Start (With VSCode)
+
+There is a [dev container](./.devcontainer/README.md) for ZFGCBB-React. It is currently the easiest way to get started, so you can ignore the rest of this document if you just want to get started quickly.
+
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [VS Code Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
+2. Open the repository in VS Code.
+3. Open the Command Palette (Ctrl+Shift+P).
+4. Select "Dev Containers: Open Folder in Container".
+5. Wait for the container to start.
+
+#### [package.json](package.json) - Usage
 
 1. Configure the project (Have the prequisites installed - see [Downloading the Project](#downloading-the-project))
 
@@ -122,7 +132,9 @@ If this is your first time contributing to this project, or cloning the reposito
       1. Example: `feat: add new feature`
       2. See: <https://www.conventionalcommits.org/en/v1.0.0/>
    4. For the duration of your pull request, please keep your branch up to date with the `development` branch.
-   5. Your PR must pass all checks before it can be merged or requested for review.
+      1. It is RECOMMENDED that you use `git pull --rebase` to keep your branch up to date with the `development` branch.
+   5. Please squash your commits into a single commit, if possible. We prefer using `git rebase` in favor of `git merge`.
+   6. Your PR must pass all checks before it can be merged or requested for review.
 7. As Sonic the Hedgehog says, "Gotta go fast!". And you went fast! Congratulations on making a contribution to the project!
 
 ### [package.json](package.json) - Provided package.json scripts
@@ -147,40 +159,11 @@ This command starts the development server, using [react-router/dev](https://rea
 
 Since `yarn dev` forwards to `react-router dev`, the arguments for `react-router` can be forwarded to `yarn dev` as well.
 
-```text
-  `dev` Options:
-    --clearScreen       Allow/disable clear screen when logging (boolean)
-    --config, -c        Use specified config file (string)
-    --cors              Enable CORS (boolean)
-    --force             Force the optimizer to ignore the cache and re-bundle (boolean)
-    --host              Specify hostname (string)
-    --logLevel, -l      Info | warn | error | silent (string)
-    --mode, -m          Set env mode (string)
-    --open              Open browser on startup (boolean | string)
-    --port              Specify port (number)
-    --profile           Start built-in Node.js inspector
-    --strictPort        Exit if specified port is already in use (boolean)
-```
-
 #### `yarn build`: Builds the application for production
 
 This command builds the application for production, using [react-router](https://reactrouter.com/tutorials/quickstart#build-and-run).
 
 Since `yarn build` forwards to `react-router build`, the arguments for `react-router` can be forwarded to `yarn build` as well.
-
-```text
-  `build` Options:
-    --assetsInlineLimit Static asset base64 inline threshold in bytes (default: 4096) (number)
-    --clearScreen       Allow/disable clear screen when logging (boolean)
-    --config, -c        Use specified config file (string)
-    --emptyOutDir       Force empty outDir when it's outside of root (boolean)
-    --logLevel, -l      Info | warn | error | silent (string)
-    --minify            Enable/disable minification, or specify minifier to use (default: "esbuild") (boolean | "terser" | "esbuild")
-    --mode, -m          Set env mode (string)
-    --profile           Start built-in Node.js inspector
-    --sourcemapClient   Output source maps for client build (default: false) (boolean | "inline" | "hidden")
-    --sourcemapServer   Output source maps for server build (default: false) (boolean | "inline" | "hidden")
-```
 
 ##### Packaging for Production
 
@@ -206,20 +189,11 @@ This commands runs type checking, linting, and formatting checks using [TypeScri
 
 This command formats the code using [Prettier](https://prettier.io/).
 
-#### `yarn preview`: Runs the application in the production mode (SPA Mode)
+#### `yarn preview`: Runs the application in the production mode
 
-This project supports both SPA Mode and SSR Mode. This command runs the application in [SPA Mode](https://reactrouter.com/how-to/spa), using [vite](https://vitejs.dev/).
-
-SPA Mode is the default mode for this project.
-
-#### `yarn preview:ssr`: Runs the application in the production mode with server-side rendering (Unsupported/Do not use)
-
-**NOTE:** This command is not currently supported, and should not be used for now. Use the [yarn preview](#yarn-preview-runs-the-application-in-the-production-mode-spa-mode) command instead if testing preview of a production build.
+This command runs the react-router-serve server, using [react-router](https://reactrouter.com/tutorials/quickstart#build-and-run). It is used to run a production build of the application locally, pointed to `zfgc.com`.
 
 This command runs the application in SSR Mode, using [react-router](https://reactrouter.com/tutorials/quickstart#build-and-run). See also documentation for [react-router SPA Mode](https://reactrouter.com/how-to/spa) for more context over the differences between SPA Mode and SSR Mode.
-
-<!-- - `yarn preview:ssr`: Runs the application in the production mode with server-side rendering
-- `yarn start`: Runs the application in production mode with server-side rendering -->
 
 ##### Troubleshooting
 
@@ -267,21 +241,11 @@ Find the launch tasks by navigating to the `Run and Debug` section `(CRTL/CMD + 
 
 Each of these launch tasks will `corepack enable` and `yarn install` before running the application, so you do not need to worry about that. See [.vscode/tasks.json](./.vscode/tasks.json) if you would like to see how these tasks run those commands.
 
+- `Debug zfgc.com (production)`: Runs the application in production mode with the API calls pointed to `zfgc.com` for the backend, using the value of `REACT_ZFGBB_API_URL` in [.env.production](.env.production). This uses the `development` build of the application with variables loaded from [.env.production](.env.production), by calling [yarn build --mode=production](#yarn-build-builds-the-application-for-production).
 - `Debug zfgc.com (local/dev)`: Runs the application in development mode with the API calls pointed to <http://localhost:8080/zfgbb> or the value of `REACT_ZFGBB_API_URL` in [.env.local](.env.local). This uses the `development` build of the application, by calling [yarn dev](#yarn-dev-starts-the-development-server).
-- `Debug zfgc.com (live/dev)`: Runs the application in production mode with the API calls pointed to `zfgc.com` for the backend, using the value of `REACT_ZFGBB_API_URL` in [.env.production](.env.production). This uses the `development` build of the application with variables loaded from [.env.production](.env.production), by calling [yarn build --mode=production](#yarn-build-builds-the-application-for-production).
-- `Debug zfgc.com (local/production)`: Runs the application in production mode with the API calls pointed to `zfgc.com` for the backend, using the value of `REACT_ZFGBB_API_URL` in [.env.production](.env.production). This uses the `production` build of the application with variables loaded from [.env.production](.env.production), by calling `yarn build --mode=production`. The server is provided by [yarn preview](#yarn-preview-runs-the-application-in-the-production-mode-spa-mode).
+- `Preview zfgc.com (production)`: Runs the application in production mode with the API calls pointed to `zfgc.com` for the backend, using the value of `REACT_ZFGBB_API_URL` in [.env.production](.env.production). This uses the `production` build of the application with variables loaded from [.env.production](.env.production), by calling `yarn build --mode=production`. The server is provided by [yarn preview](#yarn-preview-runs-the-application-in-the-production-mode).
 
 Now that you are ready, you can proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information.
-
-##### VSCode - Using the devcontainer (optional)
-
-If you would like to avoid having to setup a development environment on your actual machine. This repository implements a VS Code Dev Container, which can give you a simple way to get started developing! To learn more about the VS Code Dev Containers, check out the [documentation](https://code.visualstudio.com/docs/devcontainers/containers).
-
-1. Install the [Remote - Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) in VSCode.
-2. Open the project in VSCode.
-3. Press `CRTL + P` and type `Remote-Containers: Reopen in Container`.
-4. Wait for the container to start.
-5. Open your browser and navigate to <http://localhost:5173>.
 
 ## CI/CD [WIP]
 
