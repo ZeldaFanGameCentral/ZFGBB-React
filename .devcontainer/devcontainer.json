@@ -4,7 +4,7 @@
   "name": "ZFGCBB-React",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:24-trixie",
   "onCreateCommand": "bash ./.devcontainer/setup-nix.sh",
-  "postStartCommand": ". ~/.profile && nix develop --command yarn dev",
+  "postStartCommand": ". ~/.profile && nix develop --command yarn dev --mode=production",
   "mounts": ["source=nix-store,target=/nix,type=volume"],
   "forwardPorts": [4173, 5173],
   "customizations": {
