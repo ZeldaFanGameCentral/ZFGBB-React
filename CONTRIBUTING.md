@@ -105,7 +105,8 @@ If this is your first time contributing to this project, or cloning the reposito
       3. If you are working on a documentation change, you can name your branch `docs/my-docs-change`.
       4. If you are working on a refactor, you can name your branch `refactor/my-refactor`.
       5. If you are working on a test, you can name your branch `test/my-test`.
-      6. You are ready to start working on your branch!
+      6. As an optional convention, you can prefix your branch name with your username, e.g., `vashsbutthole/feature/my-new-feature`.
+      7. You are ready to start working on your branch!
    3. Create the branch on GitHub. (If you are just simply trying to run the project locally, you can skip this step! Proceed to `Step 5 - Working on your changes`)
       1. If you are not a team member, you will need to fork the repository to create a branch.
          1. To fork the repository, click the "Fork" button in the top right corner of the repository page.
