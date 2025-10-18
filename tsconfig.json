@@ -11,10 +11,7 @@
   "exclude": ["node_modules"],
   "references": [
     {
-      "path": "./vite/config"
-    },
-    {
-      "path": "./vite/plugins"
+      "path": "./core"
     }
   ]
 }

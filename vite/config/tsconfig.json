@@ -1,9 +1,0 @@
-{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "noEmit": false,
-    "allowImportingTsExtensions": false
-  },
-  "include": ["vite.config.base.ts"],
-  "exclude": ["node_modules"]
-}

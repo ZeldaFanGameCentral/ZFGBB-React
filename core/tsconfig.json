@@ -1,15 +1,15 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "noEmit": false,
     "allowImportingTsExtensions": false
   },
   "references": [
     {
-      "path": "./generate-image-paths"
+      "path": "./vite/config"
     },
     {
-      "path": "./preprocess-twmerge"
+      "path": "./vite/plugins"
     }
   ]
 }

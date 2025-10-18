@@ -2,11 +2,8 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "noEmit": false,
-    "allowImportingTsExtensions": false,
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "allowImportingTsExtensions": false
   },
-  "include": ["src"],
+  "include": ["vite.config.base.ts"],
   "exclude": ["node_modules"]
 }

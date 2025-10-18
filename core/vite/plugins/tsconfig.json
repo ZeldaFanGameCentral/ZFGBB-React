@@ -1,0 +1,15 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "allowImportingTsExtensions": false
+  },
+  "references": [
+    {
+      "path": "./generate-image-paths"
+    },
+    {
+      "path": "./preprocess-twmerge"
+    }
+  ]
+}
