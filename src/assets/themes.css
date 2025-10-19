@@ -47,9 +47,9 @@
   --fill-color-default: #000000;
   --fill-color-inverted: #ffffff;
 
-  --image-board-status-off: url("/src/assets/themes/midnight/images/board-summary/off.gif");
-  --image-post-indicator: url("/src/assets/themes/midnight/images/post/xx.gif");
-  --image-topic-normal: url("/src/assets/themes/midnight/images/topic/normal_post.gif");
+  --image-board-status-off: url("/themes/midnight/images/board-summary/off.gif");
+  --image-post-indicator: url("/themes/midnight/images/post/xx.gif");
+  --image-topic-normal: url("/themes/midnight/images/topic/normal_post.gif");
 }
 
 @layer base {

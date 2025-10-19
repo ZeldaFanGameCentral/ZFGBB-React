@@ -1,9 +1,7 @@
 import "./assets/App.css";
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import UserProvider from "./providers/user/userProvider";
 import QueryProvider from "./providers/query/queryProvider";
-import RootLayout from "./rootLayout.component";
-import { Suspense, lazy } from "react";
+import RootLayout from "./root.layout";
 
 const TanStackQueryDevtools = import.meta.env.DEV
   ? lazy(() =>
@@ -21,14 +19,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <base href={import.meta.env.VITE_BASE ?? "/"} />
         <meta charSet="UTF-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <Meta />
         <Links />
-        <base href={import.meta.env.VITE_BASE ?? "/"} />
       </head>
       <body>
         {children}
@@ -60,8 +55,4 @@ export function ErrorBoundary() {
       <p>Something went wrong. Please try again later.</p>
     </main>
   );
-}
-
-export function meta() {
-  return [{ title: "ZFGC.com" }];
 }

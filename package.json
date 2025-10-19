@@ -3,45 +3,58 @@
   "author": "ZFGC.com",
   "keywords": [],
   "description": "Putting the drama back into the Llama! Sponsored by Infini's Pizza!",
-  "version": "2025.5.0",
+  "version": "2025.10.0",
   "type": "module",
-  "homepage": "https://zfgccp.github.io/ZFGCBB-React/",
+  "homepage": "https://zfgc.com",
+  "files": [
+    "README.md",
+    "build"
+  ],
   "scripts": {
-    "check": "react-router typegen  && tsc --noEmit && prettier . --check --experimental-cli",
+    "check": "prettier . --check --experimental-cli && tsc --noEmit",
     "format": "prettier . --write ",
-    "build": "react-router build",
+    "build": "react-router typegen && react-router build",
     "dev": "react-router dev",
-    "preview": "vite preview --port 5173",
-    "preview:ssr": "PORT=5173 react-router-serve ./build/server/index.js",
+    "preview": "PORT=5173 react-router-serve ./build/server/index.js",
     "start": "react-router-serve ./build/server/index.js",
     "prepare:prod": "yarn build --mode=production && yarn workspaces focus --production"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.1.0",
-    "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@fortawesome/react-fontawesome": "^3.1.0",
     "@react-router/node": "^7.9.4",
     "@react-router/serve": "^7.9.4",
-    "@tanstack/react-query": "^5.90.2",
-    "html-react-parser": "^5.2.6",
+    "@tanstack/react-query": "^5.90.5",
+    "html-react-parser": "^5.2.7",
     "isbot": "^5.1.31",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "react-router": "^7.9.4",
-    "tailwindcss": "^4.1.14"
+    "react-router": "^7.9.4"
   },
   "devDependencies": {
+    "@iconify-json/fa6-regular": "^1.2.4",
+    "@iconify-json/fa6-solid": "^1.2.4",
     "@prettier/plugin-oxc": "^0.0.4",
     "@react-router/dev": "^7.9.4",
     "@react-router/fs-routes": "^7.9.4",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
     "@tailwindcss/vite": "^4.1.14",
     "@tanstack/react-query-devtools": "^5.90.2",
-    "@types/node": "^24.7.2",
+    "@types/node": "^24.8.1",
     "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.1",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-rsc": "^0.5.0",
+    "@zfgccp/vite-config-base": "workspace:*",
+    "@zfgccp/vite-plugin-generate-image-paths": "workspace:*",
     "prettier": "^3.6.2",
+    "tailwindcss": "^4.1.14",
     "typescript": "^5.9.3",
-    "vite": "^7.1.9"
+    "unplugin-auto-import": "^20.2.0",
+    "unplugin-icons": "^22.4.2",
+    "vite": "catalog:"
   },
-  "packageManager": "yarn@4.10.3+sha512.c38cafb5c7bb273f3926d04e55e1d8c9dfa7d9c3ea1f36a4868fa028b9e5f72298f0b7f401ad5eb921749eb012eb1c3bb74bf7503df3ee43fd600d14a018266f"
+  "packageManager": "yarn@4.10.3+sha512.c38cafb5c7bb273f3926d04e55e1d8c9dfa7d9c3ea1f36a4868fa028b9e5f72298f0b7f401ad5eb921749eb012eb1c3bb74bf7503df3ee43fd600d14a018266f",
+  "workspaces": [
+    ".",
+    "core/**"
+  ]
 }

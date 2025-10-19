@@ -1,0 +1,13 @@
+{
+  "name": "@zfgccp/vite-config-base",
+  "private": true,
+  "version": "2025.10.0",
+  "type": "module",
+  "main": "vite.config.base.ts",
+  "files": [
+    "vite.config.base.ts"
+  ],
+  "dependencies": {
+    "vite": "catalog:"
+  }
+}

@@ -2,7 +2,7 @@ function safeJsonParse<T>(json: string): T | undefined {
   try {
     return JSON.parse(json) as T;
   } catch (e) {
-    return undefined;
+    return;
   }
 }
 
@@ -13,17 +13,18 @@ export async function handleResponseError(response: Response) {
   if (response.ok && responseIsJasonOnPs3) return;
 
   const responseText = await response.text().catch(() => "");
-  const cause = {
-    message: `Failed to fetch data from server. Status: ${response.status}`,
-    responseText,
-    responseJson: safeJsonParse(responseText),
-    headers: response.headers,
-    status: response.status,
-  };
+  const message = `Failed to fetch data from server. Status: ${response.status}`;
+  if (import.meta.env.DEV)
+    console.error({
+      message,
+      responseText,
+      responseJson: safeJsonParse(responseText),
+      headers: response.headers,
+      status: response.status,
+    });
 
-  if (import.meta.env.DEV) console.error(cause);
-  throw new Error(cause.message, {
-    cause,
+  throw new Error(message, {
+    cause: { response, responseText },
   });
 }
 

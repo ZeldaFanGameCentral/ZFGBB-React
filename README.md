@@ -1,6 +1,6 @@
 # ZFGCBB-React
 
-![logo](./src/assets/images/logo.png)
+![logo](./public/images/logo.png)
 
 ## Introduction
 
@@ -14,7 +14,7 @@ If you are looking for an old man with a sword, then you may want to check out <
   - [Introduction](#introduction)
   - [Table of Contents](#table-of-contents)
   - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
+  - [Architecture](#architecture)
   - [License](#license)
   - [Contributing](#contributing)
   - [CI Status](#ci-status)
@@ -24,12 +24,20 @@ If you are looking for an old man with a sword, then you may want to check out <
 
 ## Getting Started
 
-### Prerequisites
-
 - [Node.js](https://nodejs.org/en/download/) (We recommend using the current LTS version)
 - You can use any editor of your choice, but we provide a preconfigured [VSCode](https://code.visualstudio.com/) workspace in the `.vscode` directory.
 
-After installing Node.js, you can use the provided package.json scripts to get started. Refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
+After installing Node.js, you can use the provided package.json scripts to get started. Refer to the quick start section in the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
+
+## Architecture
+
+ZFGCBB is a [React](https://reactjs.org/) application, built using [Vite](https://vitejs.dev/), and [TypeScript](https://www.typescriptlang.org/). Routing is handled by [react-router](https://reactrouter.com/), with file-based routing. Styling is handled by [Tailwind CSS](https://tailwindcss.com/).
+
+We implement a foundational collection of libraries in [./core](./core) for ZFGCBB. The application source code is located in [./src](./src).
+
+The backend is based on Java Spring Boot. You can find it here: [ZFGCBB](https://github.com/ZFGCCP/ZFGCBB).
+
+You can view an overview of the [![architecture](./docs//architecture/zfgc-architecture-overview.excalidraw.svg)](./docs/architecture/zfgc-architecture-overview.excalidraw.svg).
 
 ## License
 

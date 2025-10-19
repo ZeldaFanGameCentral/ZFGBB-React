@@ -1,17 +1,12 @@
-import type React from "react";
-import ForumCategory from "../components/forum/forumCategory.component";
-import { useBBQuery } from "../hooks/useBBQuery";
-import type { Forum } from "../types/forum";
-import Widget from "../components/common/widgets/widget.component";
-import BBLink from "../components/common/bbLink.component";
+import type { Forum } from "@/types/forum";
+import type { Route } from "./+types/forum._index";
 
-const ForumMain: React.FC = () => {
+export default function ForumMain(_: Route.ComponentProps) {
   const { data: forumIndex } = useBBQuery<Forum>("/board/forum");
-
   return (
     <article>
       <section className="grid grid-cols-1 gap-4">
-        <Widget className="mb-5 my-2">
+        <BBWidget className="mb-5 my-2">
           <div className="m-4 text-center animate-pulse">
             <div>
               Hi! We're read-only for now, but make sure to join us on{" "}
@@ -24,7 +19,7 @@ const ForumMain: React.FC = () => {
               </BBLink>
             </div>
           </div>
-        </Widget>
+        </BBWidget>
 
         {forumIndex?.categories?.map((cat) => {
           return (
@@ -36,6 +31,14 @@ const ForumMain: React.FC = () => {
       </section>
     </article>
   );
-};
+}
 
-export default ForumMain;
+export function HydrateFallback() {
+  return <>Loading...</>;
+}
+
+// export async function clientLoader(_: Route.LoaderArgs) {
+//   return undefined as Forum | undefined;
+//   // const { data: forumIndex } = useBBQuery<Forum>("/board/forum");
+//   // return forumIndex;
+// }
