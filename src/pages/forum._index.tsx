@@ -1,12 +1,8 @@
 import type { Forum } from "@/types/forum";
 import type { Route } from "./+types/forum._index";
 
-export default function ForumMain(props: Route.ComponentProps) {
-  let forumIndex = props.loaderData;
-  const { data } = useBBQuery<Forum>("/board/forum");
-  forumIndex = data;
-
-  if (!forumIndex) return <>Loading...</>;
+export default function ForumMain(_: Route.ComponentProps) {
+  const { data: forumIndex } = useBBQuery<Forum>("/board/forum");
   return (
     <article>
       <section className="grid grid-cols-1 gap-4">
@@ -41,8 +37,8 @@ export function HydrateFallback() {
   return <>Loading...</>;
 }
 
-export async function clientLoader(_: Route.LoaderArgs) {
-  return undefined as Forum | undefined;
-  // const { data: forumIndex } = useBBQuery<Forum>("/board/forum");
-  // return forumIndex;
-}
+// export async function clientLoader(_: Route.LoaderArgs) {
+//   return undefined as Forum | undefined;
+//   // const { data: forumIndex } = useBBQuery<Forum>("/board/forum");
+//   // return forumIndex;
+// }
