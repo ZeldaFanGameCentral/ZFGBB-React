@@ -3,8 +3,8 @@ import type { Route } from "./+types/forum._index";
 
 export default function ForumMain(props: Route.ComponentProps) {
   let forumIndex = props.loaderData;
-  const { data } = useBBQuery<Forum>("/board/forum");
-  forumIndex = data;
+  // const { data } = useBBQuery<Forum>("/board/forum");
+  // forumIndex = data;
 
   if (!forumIndex) return <>Loading...</>;
   return (
@@ -41,8 +41,20 @@ export function HydrateFallback() {
   return <>Loading...</>;
 }
 
-export async function clientLoader(_: Route.LoaderArgs) {
-  return undefined as Forum | undefined;
+export async function loader(_: Route.LoaderArgs) {
+  const client = useQueryClient();
+  const query = {
+    queryKey: ["/board/forum"],
+    queryFn: () =>
+      fetch(`${import.meta.env.REACT_ZFGBB_API_URL}/board/forum`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((response) => handleResponseWithJason<Forum>(response)),
+  };
+  client.prefetchQuery(query);
+  return client.getQueryData<Forum>(query.queryKey);
   // const { data: forumIndex } = useBBQuery<Forum>("/board/forum");
   // return forumIndex;
 }
