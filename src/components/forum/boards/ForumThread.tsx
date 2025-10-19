@@ -1,13 +1,16 @@
+import type { Thread } from "@/types/forum";
 import parse from "html-react-parser/lib/index";
 
-interface ForumThreadProps {
+export interface ForumThreadProps {
   threadId: string;
   pageNo: string;
+  thread: Thread;
 }
 
 const ForumThread: React.FC<ForumThreadProps> = ({
   threadId: paramsThreadId,
   pageNo: paramsPageNo,
+  thread,
 }) => {
   const navigate = useNavigate();
   const threadId = parseInt(paramsThreadId!);
@@ -18,9 +21,11 @@ const ForumThread: React.FC<ForumThreadProps> = ({
   const [, setMsgText] = useState<
     string | number | readonly string[] | undefined
   >("");
-  const { data: thread, isLoading } = useBBQuery<Thread>(
-    `/thread/${threadId}?pageNo=${currentPage}&numPerPage=10`,
-  );
+  const isLoading = false; // FIXME: Remove this.
+
+  // const { data: thread, isLoading } = useBBQuery<Thread>(
+  //   `/thread/${threadId}?pageNo=${currentPage}&numPerPage=10`,
+  // );
   const [, setCurrentMsg] = useState<Message>({} as Message);
 
   const loadNewPage = (pageNo: number) => {
