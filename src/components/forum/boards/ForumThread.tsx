@@ -197,7 +197,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                       </div>
 
                       <div
-                        className={`p-3 grow ${isEven ? "bg-elevated" : "bg-muted"} min-h-64 sm:max-h-[calc(100dvh-25dvh)] md:max-h-dvh w-full overflow-auto whitespace-pre-wrap snap-start snap-mandatory`}
+                        className={`p-3 grow ${isEven ? "bg-elevated" : "bg-muted"} min-h-64 max-h-[calc(100dvh-25dvh)] md:max-h-dvh w-full overflow-auto whitespace-pre-wrap snap-start snap-mandatory`}
                       >
                         {parse(msg.currentMessage.messageText.toString())}
                       </div>
