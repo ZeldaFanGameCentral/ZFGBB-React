@@ -66,8 +66,7 @@ If you are not using VScode, then continue reading.
 
    ```bash
    # Make sure you are in the project directory that you cloned.
-   npm install -g corepack@latest
-   corepack enable
+   npx corepack enable
    ```
 
 2. Install the dependencies
