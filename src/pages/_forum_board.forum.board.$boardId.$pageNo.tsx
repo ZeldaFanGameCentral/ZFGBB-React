@@ -7,8 +7,8 @@ function BoardTablePaginatorComponent({
   currentPage,
   maxPageCount,
   className = "",
-  skeletonContainerClassName = "",
-  skeletonClassName = "",
+  // skeletonContainerClassName = "",
+  // skeletonClassName = "",
 }: {
   board?: Board;
   isLoading: boolean;
@@ -18,19 +18,15 @@ function BoardTablePaginatorComponent({
 } & Omit<BBPaginatorProps, "numPages">) {
   return (
     <div className="flex justify-left scrollbar-thin">
-      {!isLoading && board ? (
+      {
         <BBPaginator
-          numPages={board.pageCount}
+          numPages={!isLoading && board ? board.pageCount : currentPage}
           currentPage={currentPage}
           maxPageCount={maxPageCount}
           onPageChange={onPageChange}
           className={className}
         />
-      ) : (
-        <span className={skeletonContainerClassName}>
-          <BBSkeleton className={skeletonClassName} />
-        </span>
-      )}
+      }
     </div>
   );
 }
