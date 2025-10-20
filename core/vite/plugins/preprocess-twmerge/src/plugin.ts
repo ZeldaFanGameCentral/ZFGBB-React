@@ -5,7 +5,8 @@ import parser from "@babel/parser";
 import babelTraverse from "@babel/traverse";
 import babelGenerate from "@babel/generator";
 import * as types from "@babel/types";
-import type { Node } from "@babel/types";
+import type { Node, ArgumentPlaceholder } from "@babel/types";
+import type { Scope } from "@babel/traverse";
 
 // gm112 note: this is a type hack to workaround babel shipping with cjs
 const traverse = (babelTraverse as unknown as { default: typeof babelTraverse })
@@ -13,7 +14,11 @@ const traverse = (babelTraverse as unknown as { default: typeof babelTraverse })
 const generate = (babelGenerate as unknown as { default: typeof babelGenerate })
   .default;
 
-function mergeClassesFromExpression(node: Node): string {
+function mergeClassesFromExpression(
+  node: Node,
+  scope: Scope,
+  twMergeImportSepcifier: string,
+): string {
   if (types.isStringLiteral(node)) return node.value;
 
   if (types.isTemplateLiteral(node))
@@ -23,35 +28,79 @@ function mergeClassesFromExpression(node: Node): string {
 
   if (types.isConditionalExpression(node))
     return [
-      mergeClassesFromExpression(node.consequent),
-      mergeClassesFromExpression(node.alternate),
+      mergeClassesFromExpression(
+        node.consequent,
+        scope,
+        twMergeImportSepcifier,
+      ),
+      mergeClassesFromExpression(node.alternate, scope, twMergeImportSepcifier),
     ].join(" ");
 
   if (types.isLogicalExpression(node))
-    return [mergeClassesFromExpression(node.right)].join(" ");
+    return [
+      mergeClassesFromExpression(node.right, scope, twMergeImportSepcifier),
+    ].join(" ");
 
   if (types.isArrayExpression(node))
     return node.elements
       .map((element) =>
-        element ? mergeClassesFromExpression(element as Node) : "",
+        element
+          ? mergeClassesFromExpression(
+              element as Node,
+              scope,
+              twMergeImportSepcifier,
+            )
+          : "",
       )
       .join(" ");
 
-  const node_is_clsx_or_classnames =
-    types.isCallExpression(node) &&
-    types.isIdentifier(node.callee) &&
-    ["clsx", "classnames"].includes(node.callee.name);
+  if (types.isBinaryExpression(node) && node.operator === "+")
+    return (
+      mergeClassesFromExpression(node.left, scope, twMergeImportSepcifier) +
+      " " +
+      mergeClassesFromExpression(node.right, scope, twMergeImportSepcifier)
+    );
 
-  if (!node_is_clsx_or_classnames) return "";
+  if (types.isIdentifier(node)) {
+    const binding = scope.getBinding(node.name);
+    if (!binding) return "";
+    const path = binding.path;
+    if (
+      path.isVariableDeclarator() &&
+      path.parentPath.isVariableDeclaration() &&
+      path.parentPath.node.kind === "const" // ignore let, var, etc.
+    ) {
+      const init = path.node.init;
+      if (types.isStringLiteral(init)) return init.value;
+      if (types.isTemplateLiteral(init) && init.expressions.length === 0)
+        return init.quasis
+          .map(({ value: { cooked, raw } }) => cooked ?? raw)
+          .join("");
+    }
+  }
 
-  return node.arguments
-    .map((arg) => mergeClassesFromExpression(arg as Node))
-    .join(" ");
+  return "";
+  // const node_is_dynamic =
+  //   types.isCallExpression(node) && types.isIdentifier(node.callee);
+
+  // if (!node_is_dynamic) return "";
+
+  // return node.arguments
+  //   .map((argument) =>
+  //     mergeClassesFromExpression(
+  //       argument as Node,
+  //       scope,
+  //       twMergeImportSepcifier,
+  //     ),
+  //   )
+  //   .join(" ");
 }
 
 const preprocessTwMergeOptions = {
   include: /\.(jsx|tsx)$/,
   exclude: /node_modules/,
+  handleDynamicClassName: false,
+  twMergeImportSepcifier: "",
 };
 
 export type PreprocessTwMergeOptions = Partial<typeof preprocessTwMergeOptions>;
@@ -64,6 +113,8 @@ export type PreprocessTwMergeOptions = Partial<typeof preprocessTwMergeOptions>;
 export function preprocessTwMerge({
   include = preprocessTwMergeOptions.include,
   exclude = preprocessTwMergeOptions.exclude,
+  handleDynamicClassName = preprocessTwMergeOptions.handleDynamicClassName,
+  twMergeImportSepcifier = preprocessTwMergeOptions.twMergeImportSepcifier,
 }: PreprocessTwMergeOptions = {}): Plugin[] {
   return [
     {
@@ -79,25 +130,55 @@ export function preprocessTwMerge({
         }); //babel AST
 
         traverse(ZeldaAncientStoneTablets, {
-          JSXAttribute(path) {
-            const expression = path.node?.value;
-            if (path.node.name.name !== "className" || !expression) return;
+          Program(path) {
+            if (!handleDynamicClassName || !twMergeImportSepcifier) return;
+            const hasTwMergeBeenImported = path.node.body.some(
+              (node) =>
+                types.isImportDeclaration(node) &&
+                node.source.value === "tailwind-merge",
+            );
+            if (hasTwMergeBeenImported) return;
 
+            // Add import twMerge from "tailwind-merge";
+            path.node.body.unshift(
+              types.importDeclaration(
+                [
+                  types.importDefaultSpecifier(
+                    types.identifier(twMergeImportSepcifier),
+                  ),
+                ],
+                types.stringLiteral("tailwind-merge"),
+              ),
+            );
+          },
+          JSXAttribute({ node, scope }) {
+            const attribute = node?.value;
+            if (node.name.name !== "className" || !attribute) return;
             // className="..."
-            if (types.isStringLiteral(expression))
-              path.node.value = types.stringLiteral(twMerge(expression.value));
+            if (types.isStringLiteral(attribute))
+              node.value = types.stringLiteral(twMerge(attribute.value));
 
-            return;
+            if (
+              !handleDynamicClassName ||
+              !types.isJSXExpressionContainer(attribute) ||
+              !twMergeImportSepcifier
+            )
+              return;
 
-            // FIXME: fix handling of className={...}
-            // if (!types.isJSXExpressionContainer(expression)) return;
-            // // className={...}
-            // const rawClasses = mergeClassesFromExpression(
-            //   expression.expression,
-            // );
+            // className={...}
+            const rawClasses = mergeClassesFromExpression(
+              attribute.expression,
+              scope,
+              twMergeImportSepcifier,
+            );
 
-            // if (!rawClasses?.trim()) return;
-            // path.node.value = types.stringLiteral(twMerge(rawClasses));
+            if (!rawClasses?.trim()) return;
+
+            node.value = types.jsxExpressionContainer(
+              types.callExpression(types.identifier(twMergeImportSepcifier), [
+                attribute.expression as unknown as ArgumentPlaceholder,
+              ]),
+            );
           },
         });
 

@@ -22,11 +22,6 @@ jobs:
       contents: read
       security-events: write
 
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [javascript-typescript, actions]
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -34,7 +29,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
-          languages: ${{ matrix.language }}
+          languages: javascript-typescript, actions
 
       - name: Use Node.js
         uses: actions/setup-node@v5
