@@ -77,10 +77,7 @@ const UserProfileMaster: React.FC = () => {
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
                 Signature
               </label>
-              <div>
-                {user?.bioInfo?.signatureParsed &&
-                  parse(user?.bioInfo?.signatureParsed)}
-              </div>
+              <UserSignature user={user} />
             </div>
           </form>
         </BBAccordionWidget>

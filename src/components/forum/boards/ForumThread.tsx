@@ -1,5 +1,4 @@
 import type { Thread } from "@/types/forum";
-import parse from "html-react-parser/lib/index";
 
 export interface ForumThreadProps {
   pageNo: string;
@@ -20,9 +19,6 @@ const ForumThread: React.FC<ForumThreadProps> = ({
     string | number | readonly string[] | undefined
   >("");
 
-  // const { data: thread, isLoading } = useBBQuery<Thread>(
-  //   `/thread/${threadId}?pageNo=${currentPage}&numPerPage=10`,
-  // );
   const [, setCurrentMsg] = useState<Message>({} as Message);
 
   const loadNewPage = (pageNo: number) => {
@@ -89,7 +85,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
               </BBLink>
             )) || <span>Loading...</span>}
             <span>&gt;&gt;</span>
-            <span>{thread?.threadName}</span>
+            <span>{thread?.threadName ?? "Loading..."}</span>
           </BBFlex>
         </div>
         <div className="bg-accented p-4 scrollbar-thin">
@@ -196,21 +192,11 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                         </BBFlex>
                       </div>
 
-                      <div
-                        className={`p-3 grow ${isEven ? "bg-elevated" : "bg-muted"} min-h-64 max-h-[calc(100dvh-25dvh)] md:max-h-dvh w-full overflow-auto whitespace-pre-wrap snap-start snap-mandatory`}
-                      >
-                        {parse(msg.currentMessage.messageText.toString())}
-                      </div>
-
-                      <div
-                        className={`shrink ${msg.createdUser.bioInfo?.signature?.trim() ? `border-t border-default ${isEven ? "bg-elevated" : "bg-muted"}` : ""}`}
-                      >
-                        {msg.createdUser.bioInfo?.signature?.trim() && (
-                          <div className="overflow-x-auto min-h-24 max-h-42 scrollbar-thin p-1">
-                            {parse(msg.createdUser.bioInfo?.signature)}
-                          </div>
-                        )}
-                      </div>
+                      <UserMessage
+                        messageText={msg.currentMessage.messageText}
+                        isEven={isEven}
+                      />
+                      <UserSignature user={msg.createdUser} isEven={isEven} />
                     </div>
                   </div>
                 </div>
