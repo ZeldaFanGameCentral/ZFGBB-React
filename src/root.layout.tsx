@@ -13,7 +13,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <header className="hidden md:flex justify-between items-end border-b-2 border-default bg-default px-2">
           <div className="z-10">
             <div className="relative -z-10 md:mb-[-1.5rem] min-h-[100px] min-w-[480px]">
-              <BBImage src="images/logo.png" alt="Logo" />
+              <BBImage src="images/logo.png" alt="Logo" loading="eager" />
             </div>
             <HeaderNavigation />
           </div>
@@ -27,8 +27,13 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         </header>
 
         <header className="md:hidden bg-default border-b-2 border-default">
-          <div className="flex justify-center pt-2">
-            <BBImage className="h-16 w-auto" src="images/logo.png" alt="Logo" />
+          <div className="flex justify-center pt-2 min-h-[100px] min-w-[480px]">
+            <BBImage
+              className="h-16 w-auto"
+              src="images/logo.png"
+              alt="Logo"
+              loading="eager"
+            />
           </div>
         </header>
 

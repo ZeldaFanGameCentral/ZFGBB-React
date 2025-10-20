@@ -1,24 +1,23 @@
 export default () => {
   return (
     <article>
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <BBGrid columns="1 lg:grid-cols-2" as="section">
         <div className="my-2">
           <BBWidget widgetTitle="Featured Project">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 p-4">
-              <section className="flex justify-center w-full">
+            <BBGrid columns="1 lg:grid-cols-2" className="p-4" as="header">
+              <BBFlex justify="center">
                 <BBImage
-                  className="max-w-full h-auto max-h-38  min-h-38 object-cover border-default rounded border"
+                  className="h-38 max-h-38 min-w-full object-cover border-default rounded border"
                   src="images/potm/triforceSaga.png"
                   alt="Triforce Saga project screenshot"
                   loading="eager"
-                  fallback={<BBSkeleton className="size-full min-h-38" />}
                 />
-              </section>
+              </BBFlex>
               <section>
                 <h5 className="text-highlighted">Triforce Saga</h5>
                 <h6 className="text-dimmed">Developer: chaoazul1</h6>
               </section>
-            </div>
+            </BBGrid>
           </BBWidget>
         </div>
 
@@ -30,9 +29,9 @@ export default () => {
             </div>
           </BBWidget>
         </div>
-      </section>
+      </BBGrid>
 
-      <div className="grid grid-cols-1 gap-4">
+      <BBGrid>
         <div className="my-2">
           <BBWidget widgetTitle="Announcements">
             <article className="p-4">
@@ -64,7 +63,7 @@ export default () => {
             </article>
           </BBWidget>
         </div>
-      </div>
+      </BBGrid>
     </article>
   );
 };

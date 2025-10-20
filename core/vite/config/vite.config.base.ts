@@ -10,7 +10,7 @@ import { generateImagePaths } from "@zfgccp/vite-plugin-generate-image-paths";
 import { preprocessTwMerge } from "@zfgccp/vite-plugin-preprocess-twmerge";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ isSsrBuild }) => {
+export default defineConfig(({ isSsrBuild, command }) => {
   const plugins: Array<Plugin | Plugin[] | PluginOption | PluginOption[]> = [
     tailwindcss(),
     autoImport({
@@ -53,7 +53,7 @@ export default defineConfig(({ isSsrBuild }) => {
         },
       ],
       dts: "build/types/auto-import.d.ts",
-      dtsMode: "overwrite",
+      dtsMode: command === "build" ? "overwrite" : "append",
       include: ["**/*.{ts,tsx,js,jsx}"],
       dirs: ["src/components/**", "src/types/**", "src/hooks", "src/shared/**"],
       viteOptimizeDeps: true,
@@ -64,12 +64,14 @@ export default defineConfig(({ isSsrBuild }) => {
         }),
       ],
     }),
-    icons({ compiler: "jsx", jsx: "react", autoInstall: true }),
   ];
 
   if (isSsrBuild) plugins.push(unstable_reactRouterRSC(), rsc());
   else plugins.push(reactRouter());
-  plugins.push(generateImagePaths());
+  plugins.push(
+    icons({ compiler: "jsx", jsx: "react", autoInstall: true }),
+    generateImagePaths(),
+  );
   plugins.push(preprocessTwMerge());
 
   return {

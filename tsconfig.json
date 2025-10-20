@@ -4,8 +4,7 @@
     "rootDirs": [".", "./.react-router/types"],
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "types": ["unplugin-icons/types/react"]
+    }
   },
   "include": ["src", "build/types", "./.react-router/types/**/*"],
   "exclude": ["node_modules"],

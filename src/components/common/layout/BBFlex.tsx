@@ -1,3 +1,5 @@
+import type { ElementType } from "react";
+
 export interface BBFlexProps {
   children: React.ReactNode;
   className?: string;
@@ -6,6 +8,7 @@ export interface BBFlexProps {
   align?: "start" | "end" | "center" | "baseline" | "stretch";
   wrap?: boolean;
   gap?: string;
+  as?: ElementType;
 }
 
 export default function BBFlex({

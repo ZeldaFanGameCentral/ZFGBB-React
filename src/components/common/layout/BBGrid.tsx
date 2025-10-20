@@ -1,8 +1,11 @@
+import type { ElementType } from "react";
+
 export interface BBGridProps {
   children: React.ReactNode;
   className?: string;
   columns?: number | string;
   gap?: string;
+  as?: ElementType;
 }
 
 export default function BBGrid({
