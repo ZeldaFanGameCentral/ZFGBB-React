@@ -12,11 +12,9 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
       <main className="overflow-auto bg-default min-h-0 size-full scrollbar-color-default scrollbar-gutter-stable px-1.5 mr-1">
         <header className="hidden md:flex justify-between items-end border-b-2 border-default bg-default px-2">
           <div className="z-10">
-            <BBImage
-              src="images/logo.png"
-              alt="Logo"
-              className="relative -z-10 md:mb-[-1.5rem]"
-            />
+            <div className="relative -z-10 md:mb-[-1.5rem] min-h-[100px] min-w-[480px]">
+              <BBImage src="images/logo.png" alt="Logo" />
+            </div>
             <HeaderNavigation />
           </div>
           <div className="self-center px-2">
