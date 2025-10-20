@@ -274,7 +274,9 @@ Now that you are ready, you can proceed to [Workflow - Typical Development Workf
 
 #### Why is the forum not loading?
 
-The default value is pointing to your local machine. While we do have dockerfiles for the backend, we haven't gotten around to streamlining using the backend in a development setting for the frontend. To run the frontend locally, pointed to `zfgc.com`, run `yarn dev --mode=production`, and that will point to the production environment. Or if you're using VSCode, use the `Debug zfgc.com (production)` launch task to achieve the same thing. This will get you up and running! \o/
+If you ran `yarn dev`, or in VSCode ran `Debug zfgc.com (local)`, and the forum index is not loading, then the issue is that you are not running the backend on your machine. While we do have dockerfiles for the backend, we haven't gotten around to streamlining using the backend in a development setting for the frontend. To run the frontend locally, pointed to `zfgc.com`, run `yarn dev --mode=production`, and that will point to the production environment. Or if you're using VSCode, use the `Debug zfgc.com (production)` launch task to achieve the same thing. This will get you up and running! \o/
+
+Sometimes this issue may come up because you closed the server in the background, and the app is working off of cache state. Double check that you are running `vite`.
 
 #### Why does the `yarn check` command fail for Icon Components?
 
