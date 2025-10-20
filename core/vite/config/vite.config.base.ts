@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv, type Plugin, type PluginOption } from "vite";
+import { defineConfig, type Plugin, type PluginOption } from "vite";
 import { reactRouter } from "@react-router/dev/vite";
 import tailwindcss from "@tailwindcss/vite";
 import rsc from "@vitejs/plugin-rsc";
@@ -10,8 +10,7 @@ import { generateImagePaths } from "@zfgccp/vite-plugin-generate-image-paths";
 import { preprocessTwMerge } from "@zfgccp/vite-plugin-preprocess-twmerge";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode, isSsrBuild }) => {
-  const env = loadEnv(mode, process.cwd(), ["REACT_", "VITE_"]);
+export default defineConfig(({ isSsrBuild }) => {
   const plugins: Array<Plugin | Plugin[] | PluginOption | PluginOption[]> = [
     tailwindcss(),
     autoImport({
@@ -57,7 +56,7 @@ export default defineConfig(({ mode, isSsrBuild }) => {
       dtsMode: "overwrite",
       include: ["**/*.{ts,tsx,js,jsx}"],
       dirs: ["src/components/**", "src/types/**", "src/hooks", "src/shared/**"],
-      //viteOptimizeDeps: true,
+      viteOptimizeDeps: true,
       resolvers: [
         iconsResolver({
           prefix: "",
