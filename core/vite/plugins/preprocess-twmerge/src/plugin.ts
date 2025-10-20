@@ -7,18 +7,19 @@ import babelGenerate from "@babel/generator";
 import * as types from "@babel/types";
 import type { Node } from "@babel/types";
 
+// gm112 note: this is a type hack to workaround babel shipping with cjs
 const traverse = (babelTraverse as unknown as { default: typeof babelTraverse })
   .default;
 const generate = (babelGenerate as unknown as { default: typeof babelGenerate })
   .default;
-// const parser = (babelParser as unknown as { default: typeof babelParser })
-//   .default;
 
 function mergeClassesFromExpression(node: Node): string {
   if (types.isStringLiteral(node)) return node.value;
 
   if (types.isTemplateLiteral(node))
-    return node.quasis.map(({ value: { raw } }) => raw).join(" ");
+    return node.quasis
+      .map(({ value: { raw, cooked } }) => cooked ?? raw)
+      .join(" ");
 
   if (types.isConditionalExpression(node))
     return [
@@ -92,6 +93,8 @@ export function preprocessTwMerge({
             const rawClasses = mergeClassesFromExpression(
               expression.expression,
             );
+
+            if (!rawClasses?.trim()) return;
             path.node.value = types.stringLiteral(twMerge(rawClasses));
           },
         });
