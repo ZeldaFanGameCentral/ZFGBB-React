@@ -222,6 +222,8 @@ This command runs the application in SSR Mode, using [react-router](https://reac
 
 Note: The `yarn preview` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn preview` at least once.
 
+If you are using SPA mode(achieved by setting VITE_ENABLE_SSR=false in the `.env`. files), you can use `npx serve build/client` to run the application in SPA mode.
+
 ### VSCode - Usage
 
 VSCode is our preferred IDE for development. To get the best experience, try installing the recommended extensions. The provided launch tasks will automatically configure the project for you and allow you to set breakpoints and debug your code. Continue to [VSCode - Recommended Extensions](#vscode---recommended-extensions) for more information.
@@ -272,7 +274,7 @@ Now that you are ready, you can proceed to [Workflow - Typical Development Workf
 
 #### Why is the forum not loading?
 
-The default value is pointing to your local machine. While we do have dockerfiles for the backend, we haven't gotten around to streamlining using the backend in a development setting for the frontend. To run the frontend locally, pointed to `zfgc.com`, run `yarn dev --mode=production`, and that will point to the production environment. This will get you up and running! \o/ Sometimes this issue may come up because you closed the server in the background, and the app is working off of cache state.
+The default value is pointing to your local machine. While we do have dockerfiles for the backend, we haven't gotten around to streamlining using the backend in a development setting for the frontend. To run the frontend locally, pointed to `zfgc.com`, run `yarn dev --mode=production`, and that will point to the production environment. Or if you're using VSCode, use the `Debug zfgc.com (production)` launch task to achieve the same thing. This will get you up and running! \o/
 
 #### Why does the `yarn check` command fail for Icon Components?
 
