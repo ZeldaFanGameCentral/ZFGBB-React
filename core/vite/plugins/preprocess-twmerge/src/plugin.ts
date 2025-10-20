@@ -36,11 +36,6 @@ function mergeClassesFromExpression(
       mergeClassesFromExpression(node.alternate, scope, twMergeImportSepcifier),
     ].join(" ");
 
-  if (types.isLogicalExpression(node))
-    return [
-      mergeClassesFromExpression(node.right, scope, twMergeImportSepcifier),
-    ].join(" ");
-
   if (types.isArrayExpression(node))
     return node.elements
       .map((element) =>
@@ -172,6 +167,34 @@ export function preprocessTwMerge({
               !types.isJSXExpressionContainer(attribute)
             )
               return;
+
+            if (types.isLogicalExpression(attribute.expression)) {
+              // This is a logical expression, so we need to evaluate both sides and update the expression.
+              const left = mergeClassesFromExpression(
+                attribute.expression.left,
+                scope,
+                twMergeImportSepcifier,
+              );
+              const right = mergeClassesFromExpression(
+                attribute.expression.right,
+                scope,
+                twMergeImportSepcifier,
+              );
+              node.value = types.jsxExpressionContainer(
+                types.logicalExpression(
+                  attribute.expression.operator,
+                  types.callExpression(
+                    types.identifier(twMergeImportSepcifier),
+                    [types.stringLiteral(left)],
+                  ),
+                  types.callExpression(
+                    types.identifier(twMergeImportSepcifier),
+                    [types.stringLiteral(right)],
+                  ),
+                ),
+              );
+              return;
+            }
 
             // className={...}
             const rawClasses = mergeClassesFromExpression(
