@@ -239,26 +239,24 @@ const BoardContainer: React.FC = () => {
         </BBWidget>
       ) : null}
 
-      <div className="my-3">
-        <BBFlex gap="gap-2">
-          <BBLink to="/forum" prefetch="render">
-            ZFGC.com
-          </BBLink>
-          <span>&gt;&gt;</span>
-          {!isLoading && board ? (
-            <span>{boardName}</span>
-          ) : (
-            <span>Loading...</span>
-          )}
-        </BBFlex>
-      </div>
+      <BBFlex gap="gap-2">
+        <BBLink to="/forum" prefetch="render">
+          ZFGC.com
+        </BBLink>
+        <span>&gt;&gt;</span>
+        {!isLoading && board ? (
+          <span>{boardName}</span>
+        ) : (
+          <span>Loading...</span>
+        )}
+      </BBFlex>
 
       <BoardTablePaginatorComponent
         board={board}
         onPageChange={loadNewPage}
         isLoading={isLoading}
         currentPage={Number(pageNo)}
-        className="bg-accented p-4 mb-4"
+        className="bg-accented p-4 my-4"
         skeletonContainerClassName="bg-accented p-4 mb-4 w-full"
         skeletonClassName="p-8 size-full"
       />

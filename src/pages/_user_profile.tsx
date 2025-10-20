@@ -10,9 +10,12 @@ export default function UserProfile() {
           <span>Profile</span>
         </BBFlex>
 
-        <BBWidget widgetTitle={"Profile Summary"}>
-          <Outlet />
-        </BBWidget>
+        <div className="my-3">
+          <BBWidget widgetTitle={"Profile Summary"}>
+            <Outlet />
+          </BBWidget>
+        </div>
+
         <BBFlex gap="gap-2">
           <BBLink to="/forum" prefetch="render">
             ZFGC.com

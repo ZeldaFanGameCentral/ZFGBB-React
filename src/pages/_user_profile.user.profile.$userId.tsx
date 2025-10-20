@@ -5,7 +5,7 @@ const UserProfileMaster: React.FC = () => {
   const { data: user } = useBBQuery<User>(`/user-profile/${userId}`);
 
   return (
-    <div className="flex flex-col md:flex-row ">
+    <div className="flex flex-col md:flex-row">
       <span className="lg:w-1/4">
         <UserLeftPane user={user} />
       </span>
