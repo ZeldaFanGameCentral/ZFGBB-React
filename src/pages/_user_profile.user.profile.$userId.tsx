@@ -1,5 +1,4 @@
 import type { User } from "../types/user";
-import parse from "html-react-parser/lib/index";
 
 const UserProfileMaster: React.FC = () => {
   const { userId } = useParams();
