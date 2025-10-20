@@ -12,8 +12,9 @@ This is a [dev container](https://code.visualstudio.com/docs/devcontainers/conta
 
 1. Open the repository in VS Code.
 2. Open the Command Palette (Ctrl+Shift+P).
-3. Select "Dev Containers: Open Folder in Container".
-4. Wait for the container to start. It will set everything up for you and run ZFGCBB-React in watch mode, so you can start coding.
+3. Type in `Dev Containers: Reopen in Container`.
+4. Select "Dev Containers: Reopen in Container".
+5. Wait for the container to start. It will set everything up for you and run ZFGCBB-React in watch mode, so you can start coding.
 
 ## Files
 

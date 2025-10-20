@@ -84,6 +84,7 @@ not using the provided dev container from [Quick Start (With VSCode Dev Containe
 5. You can now proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information for contributing to the project.
    1. Otherwise, we recommend continuing to the [VSCode - Usage](#vscode---usage) section for more information on how to use the `Debug zfgc.com (production)` or `Debug zfgc.com (local)` task for easy setup.
    2. Feel free to check out the [package.json](#packagejson---provided-packagejson-scripts) section for more development information.
+   3. If you have any issues, please refer to the [Troubleshooting](#troubleshooting) section.
 
 ### Quick Start (With VSCode Dev Container)
 
@@ -98,6 +99,7 @@ There is a [dev container](./.devcontainer/README.md) for ZFGCBB-React. It is cu
 6. That's it, you can now start coding! \o/
 7. You can now proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information for contributing to the project.
    1. Feel free to check out the [package.json](#packagejson---provided-packagejson-scripts) section for more development information.
+   2. If you have any issues, please refer to the [Troubleshooting](#troubleshooting) section.
 
 ## Development
 
