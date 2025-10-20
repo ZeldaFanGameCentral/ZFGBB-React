@@ -6,9 +6,7 @@ export interface UserSignatureProps {
 
 export default function UserSignature({ user, isEven }: UserSignatureProps) {
   // FIXME: gm112 note: seems like on the thread view, the backend returns parsed html on user.bioInfo.signature, and on the profile view, user.bioInfo.signatureParsed.... Wtf?
-  const signature = (
-    user?.bioInfo?.signatureParsed ?? user?.bioInfo?.signature
-  )?.trim();
+  const signature = user?.bioInfo?.signatureParsed?.trim();
   if (!signature) return null;
 
   return (
