@@ -19,8 +19,6 @@ function mergeClassesFromExpression(
   scope: Scope,
   twMergeImportSepcifier: string,
 ): string {
-  if (types.isStringLiteral(node)) return node.value;
-
   if (types.isTemplateLiteral(node))
     return node.quasis
       .map(({ value: { raw, cooked } }) => cooked ?? raw)
@@ -80,6 +78,10 @@ function mergeClassesFromExpression(
   }
 
   return "";
+  // gm112 note: I left this commented because I need to figure out how to detect promises here.
+  // If so, then we can expand dynamic evaluation a bit. For now, just bail with an empty string
+  // instead of trying to evaluate the dynamic function expression.
+
   // const node_is_dynamic =
   //   types.isCallExpression(node) && types.isIdentifier(node.callee);
 
