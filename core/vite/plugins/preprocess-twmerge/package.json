@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/plugin.ts",
   "files": [
-    "plugin.ts"
+    "src"
   ],
   "dependencies": {
     "vite": "catalog:"

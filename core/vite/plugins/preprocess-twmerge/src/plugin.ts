@@ -1,37 +1,35 @@
 import type { Plugin } from "vite";
 import { twMerge } from "tailwind-merge";
-import { parse } from "@babel/parser";
-import traverse from "@babel/traverse";
-import generate from "@babel/generator";
-import {
-  isArrayExpression,
-  isCallExpression,
-  isConditionalExpression,
-  isIdentifier,
-  isJSXExpressionContainer,
-  isLogicalExpression,
-  isStringLiteral,
-  isTemplateLiteral,
-  stringLiteral,
-  type Node,
-} from "@babel/types";
+import parser from "@babel/parser";
+
+import babelTraverse from "@babel/traverse";
+import babelGenerate from "@babel/generator";
+import * as types from "@babel/types";
+import type { Node } from "@babel/types";
+
+const traverse = (babelTraverse as unknown as { default: typeof babelTraverse })
+  .default;
+const generate = (babelGenerate as unknown as { default: typeof babelGenerate })
+  .default;
+// const parser = (babelParser as unknown as { default: typeof babelParser })
+//   .default;
 
 function mergeClassesFromExpression(node: Node): string {
-  if (isStringLiteral(node)) return node.value;
+  if (types.isStringLiteral(node)) return node.value;
 
-  if (isTemplateLiteral(node))
+  if (types.isTemplateLiteral(node))
     return node.quasis.map(({ value: { raw } }) => raw).join(" ");
 
-  if (isConditionalExpression(node))
+  if (types.isConditionalExpression(node))
     return [
       mergeClassesFromExpression(node.consequent),
       mergeClassesFromExpression(node.alternate),
     ].join(" ");
 
-  if (isLogicalExpression(node))
+  if (types.isLogicalExpression(node))
     return [mergeClassesFromExpression(node.right)].join(" ");
 
-  if (isArrayExpression(node))
+  if (types.isArrayExpression(node))
     return node.elements
       .map((element) =>
         element ? mergeClassesFromExpression(element as Node) : "",
@@ -39,8 +37,8 @@ function mergeClassesFromExpression(node: Node): string {
       .join(" ");
 
   const node_is_clsx_or_classnames =
-    isCallExpression(node) &&
-    isIdentifier(node.callee) &&
+    types.isCallExpression(node) &&
+    types.isIdentifier(node.callee) &&
     ["clsx", "classnames"].includes(node.callee.name);
 
   if (!node_is_clsx_or_classnames) return "";
@@ -65,7 +63,7 @@ export type PreprocessTwMergeOptions = Partial<typeof preprocessTwMergeOptions>;
 export function preprocessTwMerge({
   include = preprocessTwMergeOptions.include,
   exclude = preprocessTwMergeOptions.exclude,
-}: PreprocessTwMergeOptions): Plugin[] {
+}: PreprocessTwMergeOptions = {}): Plugin[] {
   return [
     {
       name: "vite-plugin-preprocess-twmerge",
@@ -73,7 +71,7 @@ export function preprocessTwMerge({
       transform(code, id) {
         if (!include.test(id) || exclude.test(id)) return;
 
-        const ZeldaAncientStoneTablets = parse(code, {
+        const ZeldaAncientStoneTablets = parser.parse(code, {
           sourceType: "module",
           plugins: ["jsx", "typescript"],
           sourceFilename: id,
@@ -85,16 +83,16 @@ export function preprocessTwMerge({
             if (path.node.name.name !== "className" || !expression) return;
 
             // className="..."
-            if (isStringLiteral(expression))
-              path.node.value = stringLiteral(twMerge(expression.value));
+            if (types.isStringLiteral(expression))
+              path.node.value = types.stringLiteral(twMerge(expression.value));
 
-            if (!isJSXExpressionContainer(expression)) return;
+            if (!types.isJSXExpressionContainer(expression)) return;
 
             // className={...}
             const rawClasses = mergeClassesFromExpression(
               expression.expression,
             );
-            path.node.value = stringLiteral(twMerge(rawClasses));
+            path.node.value = types.stringLiteral(twMerge(rawClasses));
           },
         });
 

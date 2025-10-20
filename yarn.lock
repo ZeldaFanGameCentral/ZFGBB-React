@@ -1687,6 +1687,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zfgccp/vite-config-base@workspace:core/vite/config"
   dependencies:
+    "@zfgccp/vite-plugin-preprocess-twmerge": "workspace:*"
     vite: "catalog:"
   languageName: unknown
   linkType: soft
@@ -1699,7 +1700,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zfgccp/vite-plugin-preprocess-twmerge@workspace:core/vite/plugins/preprocess-twmerge":
+"@zfgccp/vite-plugin-preprocess-twmerge@workspace:*, @zfgccp/vite-plugin-preprocess-twmerge@workspace:core/vite/plugins/preprocess-twmerge":
   version: 0.0.0-use.local
   resolution: "@zfgccp/vite-plugin-preprocess-twmerge@workspace:core/vite/plugins/preprocess-twmerge"
   dependencies:

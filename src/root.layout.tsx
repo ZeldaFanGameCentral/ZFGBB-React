@@ -8,7 +8,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   const { displayName } = useContext(UserContext);
 
   return (
-    <div className="grid grid-rows-[1fr_auto] md:grid-rows-[1fr] size-full overflow-hidden">
+    <div className="grid grid grid-rows-[1fr_auto] md:grid-rows-[1fr] size-full overflow-hidden">
       <main className="overflow-auto bg-default min-h-0 size-full scrollbar-color-default scrollbar-gutter-stable px-1.5 mr-1">
         <header className="hidden md:flex justify-between items-end border-b-2 border-default bg-default px-2">
           <div className="z-10">

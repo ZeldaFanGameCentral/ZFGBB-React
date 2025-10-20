@@ -8,6 +8,7 @@
     "vite.config.base.ts"
   ],
   "dependencies": {
+    "@zfgccp/vite-plugin-preprocess-twmerge": "workspace:*",
     "vite": "catalog:"
   }
 }
