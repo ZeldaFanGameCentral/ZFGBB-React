@@ -1720,7 +1720,7 @@ __metadata:
     tailwindcss: "npm:^4.1.14"
     typescript: "npm:^5.9.3"
     unplugin-auto-import: "npm:^20.2.0"
-    unplugin-icons: "npm:^22.4.2"
+    unplugin-icons: "npm:^22.5.0"
     vite: "catalog:"
   languageName: unknown
   linkType: soft
@@ -4738,9 +4738,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unplugin-icons@npm:^22.4.2":
-  version: 22.4.2
-  resolution: "unplugin-icons@npm:22.4.2"
+"unplugin-icons@npm:^22.5.0":
+  version: 22.5.0
+  resolution: "unplugin-icons@npm:22.5.0"
   dependencies:
     "@antfu/install-pkg": "npm:^1.1.0"
     "@iconify/utils": "npm:^3.0.2"
@@ -4767,7 +4767,7 @@ __metadata:
       optional: true
     vue-template-es2015-compiler:
       optional: true
-  checksum: 10c0/e9e529e13e7e004ee74a4999fcc8993db8c7345345fddbd7f934303593dca76fcfc656a2f12d34fc66133ccc02d3b517514c92fdc8ff097adb608abdac972535
+  checksum: 10c0/94347b1ba2727370b3cd273b5d721a76cd2ce22350455c1744284d1ac5679586ded7197836246c3d45af7da54d11e75f62564be7450d50ecccc693c5a0fc27cb
   languageName: node
   linkType: hard
 

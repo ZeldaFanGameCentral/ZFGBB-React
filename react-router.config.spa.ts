@@ -10,7 +10,7 @@ export function presetSpa(): Preset {
       future: {
         unstable_viteEnvironmentApi: true,
         unstable_optimizeDeps: true,
-        unstable_splitRouteModules: true,
+        unstable_splitRouteModules: false,
         unstable_subResourceIntegrity: true,
         v8_middleware: true,
       },

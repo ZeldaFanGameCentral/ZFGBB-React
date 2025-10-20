@@ -56,7 +56,7 @@ export default defineConfig(({ mode, isSsrBuild }) => {
       dtsMode: "overwrite",
       include: ["**/*.{ts,tsx,js,jsx}"],
       dirs: ["src/components/**", "src/types/**", "src/hooks", "src/shared/**"],
-      viteOptimizeDeps: true,
+      //viteOptimizeDeps: true,
       resolvers: [
         iconsResolver({
           prefix: "",
@@ -72,7 +72,6 @@ export default defineConfig(({ mode, isSsrBuild }) => {
   plugins.push(generateImagePaths());
 
   return {
-    base: env["VITE_BASE"] ?? "/",
     plugins,
     envPrefix: ["REACT_", "VITE_"],
     build: {
