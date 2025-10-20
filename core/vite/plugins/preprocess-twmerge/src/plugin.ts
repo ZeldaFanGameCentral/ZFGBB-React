@@ -9,10 +9,12 @@ import type { Node, ArgumentPlaceholder } from "@babel/types";
 import type { Scope } from "@babel/traverse";
 
 // gm112 note: this is a type hack to workaround babel shipping with cjs
-const traverse = (babelTraverse as unknown as { default: typeof babelTraverse })
-  .default;
-const generate = (babelGenerate as unknown as { default: typeof babelGenerate })
-  .default;
+const traverse =
+  (babelTraverse as unknown as { default: typeof babelTraverse }).default ??
+  babelTraverse;
+const generate =
+  (babelGenerate as unknown as { default: typeof babelGenerate }).default ??
+  babelGenerate;
 
 function mergeClassesFromExpression(
   node: Node,
@@ -78,6 +80,7 @@ function mergeClassesFromExpression(
   }
 
   return "";
+
   // gm112 note: I left this commented because I need to figure out how to detect promises here.
   // If so, then we can expand dynamic evaluation a bit. For now, just bail with an empty string
   // instead of trying to evaluate the dynamic function expression.
@@ -125,6 +128,7 @@ export function preprocessTwMerge({
       transform(code, id) {
         if (!include.test(id) || exclude.test(id)) return;
 
+        // Heheh, AST? Ancient Stone Tablets! Mwahaha.
         const ZeldaAncientStoneTablets = parser.parse(code, {
           sourceType: "module",
           plugins: ["jsx", "typescript"],
@@ -175,7 +179,7 @@ export function preprocessTwMerge({
             );
 
             if (!rawClasses?.trim()) return;
-
+            // This injects the twMerge() call into the JSX className attribute.
             node.value = types.jsxExpressionContainer(
               types.callExpression(types.identifier(twMergeImportSepcifier), [
                 attribute.expression as unknown as ArgumentPlaceholder,
