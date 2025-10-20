@@ -264,7 +264,7 @@ const BoardContainer: React.FC = () => {
         currentPage={Number(pageNo)}
         className="bg-accented p-4 mb-4"
         skeletonContainerClassName="bg-accented p-4 mb-4 w-full"
-        skeletonClassName="p-8"
+        skeletonClassName="p-8 size-full"
       />
 
       <BBWidget widgetTitle={boardName}>
@@ -276,7 +276,7 @@ const BoardContainer: React.FC = () => {
           currentPage={Number(pageNo)}
           className="bg-accented p-4"
           skeletonContainerClassName="w-full p-4 mb-2"
-          skeletonClassName="p-8"
+          skeletonClassName="p-8 size-full"
         />
       </BBWidget>
 

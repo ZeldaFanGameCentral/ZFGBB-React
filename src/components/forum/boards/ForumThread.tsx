@@ -116,13 +116,6 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                 const isEven = index % 2 === 0;
                 return (
                   <div key={msg.id}>
-                    {/* gm112 note: Leaving this here for reference, in case if there's feedback regarding the mobile view being too squashed.
-                  <div className="flex flex-col xs:flex-row min-h-[300px]">
-                    <div className="sm:w-28 md:w-34 lg:w-64 shrink-0 border-b sm:border-b-0 sm:border-r border-default">
-                      <UserLeftPane user={msg.createdUser} />
-                    </div>
-                  */}
-
                     <div className="flex flex-row min-h-[300px]">
                       <div
                         className={`w-28 md:w-34 lg:w-64 shrink-0 border-r ${isEven ? "bg-elevated" : "bg-muted"} border-default`}
@@ -135,7 +128,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                         />
                       </div>
 
-                      <div className="flex-1 flex-col shrink min-w-0">
+                      <div className="flex flex-1 flex-col grow min-w-0">
                         <div
                           className={`border-b border-default p-3 ${isEven ? "bg-elevated" : "bg-muted"} shrink-0 min-h-[76px] flex items-start`}
                         >
@@ -223,17 +216,15 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                           {parse(msg.currentMessage.messageText.toString())}
                         </div>
 
-                        {msg.createdUser.bioInfo?.signature?.trim() && (
-                          <div
-                            className={`${isEven ? "bg-elevated" : "bg-muted"} border-t border-default p-3  shrink-0`}
-                          >
-                            <div className="overflow-x-auto max-h-42 scrollbar-thin">
-                              {msg.createdUser.bioInfo?.signature
-                                ? parse(msg.createdUser.bioInfo?.signature)
-                                : null}
+                        <div
+                          className={`grow ${isEven ? "bg-elevated" : "bg-muted"} ${msg.createdUser.bioInfo?.signature?.trim() ? "border-t border-default p-1" : ""}`}
+                        >
+                          {msg.createdUser.bioInfo?.signature?.trim() && (
+                            <div className="overflow-x-auto max-h-42 scrollbar-thin p-1">
+                              {parse(msg.createdUser.bioInfo?.signature)}
                             </div>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>

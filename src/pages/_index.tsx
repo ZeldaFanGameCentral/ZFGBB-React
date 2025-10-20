@@ -7,7 +7,7 @@ export default () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 p-4">
               <section className="flex justify-center w-full">
                 <BBImage
-                  className="max-w-full h-auto max-h-38 object-cover border-default rounded border"
+                  className="max-w-full h-auto max-h-38  min-h-38 object-cover border-default rounded border"
                   src="images/potm/triforceSaga.png"
                   alt="Triforce Saga project screenshot"
                   loading="eager"

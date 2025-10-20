@@ -7,11 +7,10 @@ const UserProfileMaster: React.FC = () => {
 
   return (
     <div className="flex flex-col md:flex-row ">
-      {user ? (
-        <span className="lg:w-1/4">
-          <UserLeftPane user={user} />
-        </span>
-      ) : null}
+      <span className="lg:w-1/4">
+        <UserLeftPane user={user} />
+      </span>
+
       <div className="col-span-12 md:col-span-9 w-full 2xl:w-1/3">
         <BBAccordionWidget title="BIO INFORMATION" startExpanded>
           <form className="space-y-4">
