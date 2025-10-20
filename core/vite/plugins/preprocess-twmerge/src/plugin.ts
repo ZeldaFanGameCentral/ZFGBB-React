@@ -87,15 +87,17 @@ export function preprocessTwMerge({
             if (types.isStringLiteral(expression))
               path.node.value = types.stringLiteral(twMerge(expression.value));
 
-            if (!types.isJSXExpressionContainer(expression)) return;
+            return;
 
-            // className={...}
-            const rawClasses = mergeClassesFromExpression(
-              expression.expression,
-            );
+            // FIXME: fix handling of className={...}
+            // if (!types.isJSXExpressionContainer(expression)) return;
+            // // className={...}
+            // const rawClasses = mergeClassesFromExpression(
+            //   expression.expression,
+            // );
 
-            if (!rawClasses?.trim()) return;
-            path.node.value = types.stringLiteral(twMerge(rawClasses));
+            // if (!rawClasses?.trim()) return;
+            // path.node.value = types.stringLiteral(twMerge(rawClasses));
           },
         });
 
