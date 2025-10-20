@@ -1,5 +1,4 @@
 import type { Plugin } from "vite";
-
 import { twMerge } from "tailwind-merge";
 import { parse } from "@babel/parser";
 import traverse from "@babel/traverse";
@@ -21,7 +20,7 @@ function mergeClassesFromExpression(node: Node): string {
   if (isStringLiteral(node)) return node.value;
 
   if (isTemplateLiteral(node))
-    return node.quasis.map((q) => q.value.raw).join(" ");
+    return node.quasis.map(({ value: { raw } }) => raw).join(" ");
 
   if (isConditionalExpression(node))
     return [
@@ -77,30 +76,37 @@ export function preprocessTwMerge({
         const ZeldaAncientStoneTablets = parse(code, {
           sourceType: "module",
           plugins: ["jsx", "typescript"],
+          sourceFilename: id,
         }); //babel AST
 
         traverse(ZeldaAncientStoneTablets, {
           JSXAttribute(path) {
-            if (path.node.name.name !== "className") return;
-
-            let expr = path.node.value;
-            if (!expr) return;
+            const expression = path.node?.value;
+            if (path.node.name.name !== "className" || !expression) return;
 
             // className="..."
-            if (isStringLiteral(expr)) {
-              path.node.value = stringLiteral(twMerge(expr.value));
-            }
+            if (isStringLiteral(expression))
+              path.node.value = stringLiteral(twMerge(expression.value));
+
+            if (!isJSXExpressionContainer(expression)) return;
 
             // className={...}
-            if (isJSXExpressionContainer(expr)) {
-              const rawClasses = mergeClassesFromExpression(expr.expression);
-              path.node.value = stringLiteral(twMerge(rawClasses));
-            }
+            const rawClasses = mergeClassesFromExpression(
+              expression.expression,
+            );
+            path.node.value = stringLiteral(twMerge(rawClasses));
           },
         });
 
-        const result = generate(ZeldaAncientStoneTablets, {}, code);
-        return { code: result.code, map: null };
+        const result = generate(
+          ZeldaAncientStoneTablets,
+          {
+            sourceMaps: true,
+            sourceFileName: id,
+          },
+          code,
+        );
+        return { code: result.code, map: result.map };
       },
     },
   ];
