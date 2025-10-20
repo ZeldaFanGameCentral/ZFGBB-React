@@ -62,21 +62,23 @@ function mergeClassesFromExpression(
     );
 
   if (types.isIdentifier(node)) {
-    const binding = scope.getBinding(node.name);
-    if (!binding) return "";
-    const path = binding.path;
-    if (
+    const { path } = scope.getBinding(node.name) ?? {};
+    const isConstIdentifier =
+      !!path &&
       path.isVariableDeclarator() &&
       path.parentPath.isVariableDeclaration() &&
-      path.parentPath.node.kind === "const" // ignore let, var, etc.
-    ) {
-      const init = path.node.init;
-      if (types.isStringLiteral(init)) return init.value;
-      if (types.isTemplateLiteral(init) && init.expressions.length === 0)
-        return init.quasis
-          .map(({ value: { cooked, raw } }) => cooked ?? raw)
-          .join("");
-    }
+      path.parentPath.node.kind === "const"; // ignore let, var, etc.
+
+    if (!isConstIdentifier) return "";
+
+    const init = path.node.init;
+    if (types.isStringLiteral(init)) return init.value;
+    else
+      return mergeClassesFromExpression(
+        init as Node,
+        scope,
+        twMergeImportSepcifier,
+      );
   }
 
   return "";
@@ -166,8 +168,8 @@ export function preprocessTwMerge({
 
             if (
               !handleDynamicClassName ||
-              !types.isJSXExpressionContainer(attribute) ||
-              !twMergeImportSepcifier
+              !twMergeImportSepcifier ||
+              !types.isJSXExpressionContainer(attribute)
             )
               return;
 
