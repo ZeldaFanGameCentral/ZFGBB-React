@@ -1,12 +1,16 @@
 import type { User } from "../../types/user";
 
 interface UserLeftPaneProps {
-  user: User;
+  user?: User;
   backgrounds?: {
     avatarContainer?: ThemeBackgroundClass;
     profileInfoContainer?: ThemeBackgroundClass;
   };
 }
+
+const AvatarSkeleton: React.FC = () => {
+  return <BBSkeleton className="h-24 w-24 rounded border border-default " />;
+};
 
 const UserLeftPane: React.FC<UserLeftPaneProps> = ({
   user,
@@ -16,7 +20,7 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
   },
 }) => {
   const avatarSrc = useMemo(() => {
-    if (user.bioInfo?.avatar) {
+    if (user?.bioInfo?.avatar) {
       return user.bioInfo?.avatar?.url && user.bioInfo?.avatar?.url?.trim()
         ? user.bioInfo.avatar.url
         : (`${import.meta.env.REACT_ZFGBB_API_URL}/content/image/${user.bioInfo.avatar.contentResourceId}` as `${string}://${string}/${string}`);
@@ -27,13 +31,13 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
 
   return (
     <div
-      className={`flex-1 flex-col shrink ${backgrounds.avatarContainer} bg-muted h-full`}
+      className={`flex flex-1 flex-col shrink ${backgrounds.avatarContainer} h-full`}
     >
       <div
         className={`p-3 ${backgrounds.profileInfoContainer} border-b border-default shrink-0 min-h-[76px] flex items-start`}
       >
         <div className="space-y-0.5 leading-tight font-medium truncate block max-w-[160px]">
-          {user.id > 0 ? (
+          {user && user.id > 0 ? (
             <BBLink
               to={`/user/profile/${user.id}`}
               className="font-medium"
@@ -52,12 +56,18 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
         </div>
       </div>
 
-      <div className="p-4 flex-col justify-center shrink-0">
-        <BBImage
-          src={avatarSrc}
-          alt="User avatar"
-          className="w-24 h-24 rounded border border-default object-cover"
-        />
+      <div className="flex p-4 flex-col items-center justify-center">
+        {user && (
+          <BBImage
+            src={avatarSrc}
+            alt="User avatar"
+            className="w-24 h-24 rounded border border-default object-cover"
+            fallback={<AvatarSkeleton />}
+          />
+        )}
+
+        {!user && <AvatarSkeleton />}
+
         <div>{user?.bioInfo?.personalText}</div>
         <div>
           (+{user?.bioInfo?.karmaGood}/-{user?.bioInfo?.karmaBad})

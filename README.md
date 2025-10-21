@@ -37,7 +37,7 @@ We implement a foundational collection of libraries in [./core](./core) for ZFGC
 
 The backend is based on Java Spring Boot. You can find it here: [ZFGCBB](https://github.com/ZFGCCP/ZFGCBB).
 
-You can view an overview of the [![architecture](./docs//architecture/zfgc-architecture-overview.excalidraw.svg)](./docs/architecture/zfgc-architecture-overview.excalidraw.svg).
+[![architecture](./docs//architecture/zfgc-architecture-overview.excalidraw.svg)](./docs/architecture/zfgc-architecture-overview.excalidraw.svg)
 
 ## License
 

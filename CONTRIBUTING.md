@@ -43,7 +43,7 @@ Follow the steps below to get started with the project.
    2. We provide a configuration for [VSCode](https://code.visualstudio.com/), and is recommended for development.
 2. Make sure you have [Git](https://git-scm.com/downloads) installed.
    1. We recommend using [GitHub Desktop (optional)](https://desktop.github.com/) or [GitHub CLI (optional)](https://cli.github.com/), if you are new to Git.
-   2. For Nix Users ONLY, you can also install [Nix (optional)](https://nixos.org/download.html) and [direnv (optional)](https://direnv.net/), which can be used to automatically install the correct version of Node.js and other tools, since there's a [flake.nix](./flake.nix) file in the repository.
+   2. For Nix Users ONLY, you can also install [Nix (optional)](https://nixos.org/download.html) and [direnv (optional)](https://direnv.net/), for the [flake.nix](./flake.nix) file in the repository. The [devcontainer](./.devcontainer/README.md) also uses this to set up the environment.
 3. Clone the repository
 
    ```bash
@@ -58,15 +58,16 @@ Follow the steps below to get started with the project.
 Follow the steps below to get started with the project, if you are setting up the development environment on your local machine, and are
 not using the provided dev container from [Quick Start (With VSCode Dev Container)](#quick-start-with-vscode-dev-container).
 
+**_NOTE: If you are using [VSCode](#vscode---usage), you can use the `Debug zfgc.com (production)` or `Debug zfgc.com (local)` launch task to do the next steps for you. After cloning the repository and installing NodeJS, open the directory in VSCode. This will also let you set breakpoints and debug your code in VSCode, rather than in the browser._**
+
+If you are not using VScode, then continue reading.
+
 1. Configure the project (Have the prequisites installed - see [Setup](#setup)) We use [corepack](https://nodejs.org/api/corepack.html) to manage the package manager, so make sure to run the following command to enable it. This is a one time setup.
 
    ```bash
    # Make sure you are in the project directory that you cloned.
-   npm install -g corepack@latest
-   corepack enable
+   npx corepack enable
    ```
-
-   **_NOTE: If you are using [VSCode](#vscode---usage), you can use the `Debug zfgc.com (production)` or `Debug zfgc.com (local)` launch task to do the next steps for you. This will also let you set breakpoints and debug your code in VSCode._**
 
 2. Install the dependencies
 
@@ -84,6 +85,7 @@ not using the provided dev container from [Quick Start (With VSCode Dev Containe
 5. You can now proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information for contributing to the project.
    1. Otherwise, we recommend continuing to the [VSCode - Usage](#vscode---usage) section for more information on how to use the `Debug zfgc.com (production)` or `Debug zfgc.com (local)` task for easy setup.
    2. Feel free to check out the [package.json](#packagejson---provided-packagejson-scripts) section for more development information.
+   3. If you have any issues, please refer to the [Troubleshooting](#troubleshooting) section.
 
 ### Quick Start (With VSCode Dev Container)
 
@@ -98,6 +100,7 @@ There is a [dev container](./.devcontainer/README.md) for ZFGCBB-React. It is cu
 6. That's it, you can now start coding! \o/
 7. You can now proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information for contributing to the project.
    1. Feel free to check out the [package.json](#packagejson---provided-packagejson-scripts) section for more development information.
+   2. If you have any issues, please refer to the [Troubleshooting](#troubleshooting) section.
 
 ## Development
 
@@ -133,9 +136,10 @@ If this is your first time contributing to this project, or cloning the reposito
 6. Working on your changes: Use your IDE of choice to edit files and save changes. We recommend using [VSCode](#vscode---usage) for development.
    1. Make sure to run `yarn install` every time you check out a branch.
       1. To understand the commands, see the [package.json](#packagejson---provided-packagejson-scripts) provided scripts section. But for now, we recommend just continuing through the guide.
-   2. Use the `yarn dev` command to start the development server. But before you do, continue reading until you reach `Step 6.iii - Use the "yarn format" command to format the code using Prettier`, due to a current limitation with running the development server in local only mode.
-      1. If you are using VSCode, you can use the `Preview zfgc.com (production)` launch task to do this for you.
-      2. For now, if cloning the [backend](https://github.com/ZFGCCP/ZFGCBB) is too much of a hassle, you can use the `yarn dev --mode=production` command to start the development server on `zfgc.com` or `Debug zfgc.com (local)` in VSCode. See the VSCode usage [reference](#vscode---usage) for more information on how to use the `Debug zfgc.com (production)` task. <!-- FIXME: remove this note when we have a container that can be pulled down and run locally -->
+   2. Use the `yarn dev` command to start the development server. But before you do, continue reading until you reach `Step 6.iii - Use the "yarn format" command to format the code using Prettier`, due to a current limitation with running the development server in local only mode. `yarn` dev by itself will expect you to be running the [backend](https://github.com/ZFGCCP/ZFGCBB) locally. If you are not, please read the next steps.
+      1. For now, if cloning the [backend](https://github.com/ZFGCCP/ZFGCBB) is too much of a hassle, you can use the following to instead use the production instance.
+         1. In command line, run `yarn dev --mode=production` command to start the development server on `zfgc.com` or `Debug zfgc.com (local)` in VSCode.
+         2. In VSCode, you can use `Debug zfgc.com (production)`. See the VSCode usage [reference](#vscode---usage) for more information on how to use VS Code.
    3. Use the `yarn format` command to format the code using Prettier.
    4. Use the `yarn build` command to build the application for production.
    5. Use the `yarn check` command to run type checking, linting, and formatting checks.
@@ -220,6 +224,8 @@ This command runs the application in SSR Mode, using [react-router](https://reac
 
 Note: The `yarn preview` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn preview` at least once.
 
+If you are using SPA mode(achieved by setting VITE_ENABLE_SSR=false in the `.env`. files), you can use `npx serve build/client` to run the application in SPA mode.
+
 ### VSCode - Usage
 
 VSCode is our preferred IDE for development. To get the best experience, try installing the recommended extensions. The provided launch tasks will automatically configure the project for you and allow you to set breakpoints and debug your code. Continue to [VSCode - Recommended Extensions](#vscode---recommended-extensions) for more information.
@@ -270,7 +276,9 @@ Now that you are ready, you can proceed to [Workflow - Typical Development Workf
 
 #### Why is the forum not loading?
 
-The default value is pointing to your local machine. While we do have dockerfiles for the backend, we haven't gotten around to streamlining using the backend in a development setting for the frontend. To run the frontend locally, pointed to `zfgc.com`, run `yarn dev --mode=production`, and that will point to the production environment. This will get you up and running! \o/ Sometimes this issue may come up because you closed the server in the background, and the app is working off of cache state.
+If you ran `yarn dev`, or in VSCode ran `Debug zfgc.com (local)`, and the forum index is not loading, then the issue is that you are not running the backend on your machine. While we do have dockerfiles for the backend, we haven't gotten around to streamlining using the backend in a development setting for the frontend. To run the frontend locally, pointed to `zfgc.com`, run `yarn dev --mode=production`, and that will point to the production environment. Or if you're using VSCode, use the `Debug zfgc.com (production)` launch task to achieve the same thing. This will get you up and running! \o/
+
+Sometimes this issue may come up because you closed the server in the background, and the app is working off of cache state. Double check that you are running `vite`.
 
 #### Why does the `yarn check` command fail for Icon Components?
 

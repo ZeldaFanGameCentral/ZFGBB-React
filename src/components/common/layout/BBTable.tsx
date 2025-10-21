@@ -9,8 +9,11 @@ export default function BBTable<T extends object>({
   showHeader = true,
 }: BBTableProps<T>) {
   const getRowClassName = (row: T, index: number): string => {
-    const baseClass = "hover:bg-elevated transition-colors";
-    const stripeClass = index % 2 === 0 ? "bg-muted" : "bg-elevated";
+    const baseClass = "transition-colors";
+    const stripeClass =
+      index % 2 === 0
+        ? "bg-muted hover:bg-muted/60"
+        : "bg-elevated hover:bg-elevated/40";
     const customClass =
       typeof rowClassName === "function"
         ? rowClassName(row, index)

@@ -5,9 +5,18 @@
   "type": "module",
   "main": "src/plugin.ts",
   "files": [
-    "plugin.ts"
+    "src"
   ],
   "dependencies": {
     "vite": "catalog:"
+  },
+  "devDependencies": {
+    "@babel/generator": "^7.28.3",
+    "@babel/parser": "^7.28.4",
+    "@babel/traverse": "^7.28.4",
+    "@babel/types": "^7.28.4",
+    "@types/babel__generator": "^7",
+    "@types/babel__traverse": "^7",
+    "tailwind-merge": "^3.3.1"
   }
 }

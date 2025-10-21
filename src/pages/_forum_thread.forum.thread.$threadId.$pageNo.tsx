@@ -8,11 +8,9 @@ export default function ForumThreadPage({ params }: Route.ComponentProps) {
     `/thread/${threadId}?pageNo=${currentPage}&numPerPage=10`,
   );
 
-  if (!thread) return <>Loading...</>;
-
   return (
     <>
-      <ForumThread threadId={threadId!} pageNo={pageNo!} thread={thread!} />
+      <ForumThread pageNo={pageNo!} thread={thread!} />
     </>
   );
 }

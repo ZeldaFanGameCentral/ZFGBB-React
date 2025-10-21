@@ -1,17 +1,15 @@
 import type { User } from "../types/user";
-import parse from "html-react-parser/lib/index";
 
 const UserProfileMaster: React.FC = () => {
   const { userId } = useParams();
   const { data: user } = useBBQuery<User>(`/user-profile/${userId}`);
 
   return (
-    <div className="flex flex-col md:flex-row ">
-      {user ? (
-        <span className="lg:w-1/4">
-          <UserLeftPane user={user} />
-        </span>
-      ) : null}
+    <div className="flex flex-col md:flex-row">
+      <span className="lg:w-1/4">
+        <UserLeftPane user={user} />
+      </span>
+
       <div className="col-span-12 md:col-span-9 w-full 2xl:w-1/3">
         <BBAccordionWidget title="BIO INFORMATION" startExpanded>
           <form className="space-y-4">
@@ -78,10 +76,7 @@ const UserProfileMaster: React.FC = () => {
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
                 Signature
               </label>
-              <div>
-                {user?.bioInfo?.signatureParsed &&
-                  parse(user?.bioInfo?.signatureParsed)}
-              </div>
+              <UserSignature user={user} />
             </div>
           </form>
         </BBAccordionWidget>

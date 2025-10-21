@@ -74,7 +74,8 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     <UserContext.Provider value={user ? user : emptyUser}>
       <div id="root" className={currentTheme}>
         {children}
-        {import.meta.env.DEV ? (
+        {import.meta.env.DEV ||
+        import.meta.env.REACT_ZFGBB_FEATURE_FLAG_ENABLE_THEME_PICKER ? (
           <FloatingThemeSwitcher
             theme={currentTheme}
             setCurrentTheme={setCurrentTheme}

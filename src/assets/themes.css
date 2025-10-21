@@ -61,7 +61,7 @@
   .bb-code-quote .bb-code-quote-body {
     border: 0.2rem solid black;
     padding: 1rem;
-    @apply size-full overflow-auto;
+    @apply size-full overflow-auto bg-default/64; /* hi im steve, nintendo sixty-fouuuuuurrr LOLOL */
   }
 
   /* Theme Image Classes */

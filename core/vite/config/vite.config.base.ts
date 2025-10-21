@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv, type Plugin, type PluginOption } from "vite";
+import { defineConfig, type Plugin, type PluginOption } from "vite";
 import { reactRouter } from "@react-router/dev/vite";
 import tailwindcss from "@tailwindcss/vite";
 import rsc from "@vitejs/plugin-rsc";
@@ -7,10 +7,10 @@ import icons from "unplugin-icons/vite";
 import autoImport from "unplugin-auto-import/vite";
 import iconsResolver from "unplugin-icons/resolver";
 import { generateImagePaths } from "@zfgccp/vite-plugin-generate-image-paths";
+import { preprocessTwMerge } from "@zfgccp/vite-plugin-preprocess-twmerge";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode, isSsrBuild }) => {
-  const env = loadEnv(mode, process.cwd(), ["REACT_", "VITE_"]);
+export default defineConfig(({ isSsrBuild, command }) => {
   const plugins: Array<Plugin | Plugin[] | PluginOption | PluginOption[]> = [
     tailwindcss(),
     autoImport({
@@ -53,10 +53,10 @@ export default defineConfig(({ mode, isSsrBuild }) => {
         },
       ],
       dts: "build/types/auto-import.d.ts",
-      dtsMode: "overwrite",
+      dtsMode: command === "build" ? "overwrite" : "append",
       include: ["**/*.{ts,tsx,js,jsx}"],
       dirs: ["src/components/**", "src/types/**", "src/hooks", "src/shared/**"],
-      //viteOptimizeDeps: true,
+      viteOptimizeDeps: true,
       resolvers: [
         iconsResolver({
           prefix: "",
@@ -64,12 +64,15 @@ export default defineConfig(({ mode, isSsrBuild }) => {
         }),
       ],
     }),
-    icons({ compiler: "jsx", jsx: "react", autoInstall: true }),
   ];
 
   if (isSsrBuild) plugins.push(unstable_reactRouterRSC(), rsc());
   else plugins.push(reactRouter());
-  plugins.push(generateImagePaths());
+  plugins.push(
+    icons({ compiler: "jsx", jsx: "react", autoInstall: true }),
+    generateImagePaths(),
+  );
+  plugins.push(preprocessTwMerge());
 
   return {
     plugins,
