@@ -202,15 +202,13 @@ export function preprocessTwMerge(
       const constants = collectConstantBindings(program);
 
       traverseAST(program, (node) => {
-        if (node.type !== "JSXAttribute") return;
-
-        const jsxIdentifierThing = node.name;
         if (
-          jsxIdentifierThing?.type !== "JSXIdentifier" ||
-          jsxIdentifierThing.name !== "className"
+          node.type !== "JSXAttribute" ||
+          !node.value ||
+          node.name.name !== "className" ||
+          node.name.type !== "JSXIdentifier"
         )
           return;
-        if (!node.value) return;
 
         if (node.value.type === "Literal") {
           const literal = node.value;
