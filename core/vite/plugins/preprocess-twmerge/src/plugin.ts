@@ -14,7 +14,8 @@ export interface PreprocessTwMergeOptions {
   exclude?: RegExp;
   handleDynamicClassName?: boolean;
   twMergeImportSpecifier?: string;
-  oxcParserOptions?: ParserOptions;
+  oxcParserOptions?: Pick<ParserOptions, "lang" | "sourceType">;
+  debug?: boolean;
 }
 
 interface SourceEdit extends Span {
@@ -50,8 +51,7 @@ function traverseAST(
   for (const value of Object.values(node)) {
     if (Array.isArray(value))
       for (const child of value) traverseAST(child, onVisit, node);
-    else if (value && typeof value === "object" && "type" in value)
-      traverseAST(value, onVisit, node);
+    else traverseAST(value, onVisit, node);
   }
 }
 
@@ -99,60 +99,113 @@ function computeImportInsertionPoint(
 function evaluateExpression(
   expression: Node | null | undefined,
   constantBindings: Map<string, string>,
+  options: PreprocessTwMergeOptions,
 ): string | undefined {
   if (!expression) return;
 
   switch (expression.type) {
     case "Literal": {
-      return typeof expression.value === "string"
-        ? expression.value
-        : undefined;
-    }
-    case "TemplateLiteral": {
-      return expression.quasis
-        .map((part) => part.value.cooked ?? part.value.raw ?? "")
-        .join(" ");
-    }
-    case "BinaryExpression": {
-      if (expression.operator !== "+") return;
-      const left = evaluateExpression(expression.left, constantBindings);
-      const right = evaluateExpression(expression.right, constantBindings);
-      if (!left || !right) return;
-      return `${left} ${right}`.trim();
-    }
-    case "LogicalExpression": {
-      const left = evaluateExpression(expression.left, constantBindings);
-      const right = evaluateExpression(expression.right, constantBindings);
-      if (expression.operator === "&&") return right ?? "";
-      if (expression.operator === "||") return left ?? right;
-      return;
-    }
-    case "ConditionalExpression": {
-      const consequent = evaluateExpression(
-        expression.consequent,
-        constantBindings,
-      );
-      const alternate = evaluateExpression(
-        expression.alternate,
-        constantBindings,
-      );
-      if (consequent && alternate) return `${consequent} ${alternate}`.trim();
-      return consequent ?? alternate;
+      return String(expression.value);
     }
     case "Identifier": {
       return constantBindings.get(expression.name);
     }
+    case "TemplateLiteral": {
+      const classNames: string[] = [];
+
+      for (const [index, subQuasis] of expression.quasis.entries()) {
+        const subExpression = expression.expressions[index];
+        if (!subExpression || subQuasis.value.cooked?.trim()) continue;
+        const evaluated = evaluateExpression(
+          subExpression,
+          constantBindings,
+          options,
+        );
+        if (!evaluated) continue;
+
+        classNames.push(subQuasis.value.cooked!.trim());
+        classNames.push(evaluated);
+      }
+
+      if (classNames.length === 0) return;
+      return classNames.join(" ");
+    }
+
+    case "BinaryExpression": {
+      if (expression.operator !== "+") return;
+      const left = evaluateExpression(
+        expression.left,
+        constantBindings,
+        options,
+      );
+      const right = evaluateExpression(
+        expression.right,
+        constantBindings,
+        options,
+      );
+      if (!left || !right) return;
+      return `${left} ${right}`.trim();
+    }
+    case "LogicalExpression": {
+      const left = evaluateExpression(
+        expression.left,
+        constantBindings,
+        options,
+      );
+      const right = evaluateExpression(
+        expression.right,
+        constantBindings,
+        options,
+      );
+      if (expression.operator === "&&") return right ?? "";
+      if (expression.operator === "||") return left ?? right;
+      return;
+    }
+  }
+
+  if (!options.handleDynamicClassName) return;
+
+  switch (expression.type) {
+    case "ArrayExpression": {
+      return expression.elements
+        .map((subExpression) =>
+          evaluateExpression(subExpression, constantBindings, options),
+        )
+        .join(" ");
+    }
+    case "ObjectExpression": {
+      return expression.properties
+        .map((property) => {
+          if (property.type === "SpreadElement") {
+            return evaluateExpression(
+              property.argument,
+              constantBindings,
+              options,
+            );
+          } else {
+            return evaluateExpression(
+              property.value,
+              constantBindings,
+              options,
+            );
+          }
+        })
+        .join(" ");
+    }
   }
 }
 
-function collectConstantBindings(program: Program) {
+function collectConstantBindings(
+  program: Program,
+  options: PreprocessTwMergeOptions,
+) {
   const bindings = new Map<string, string>();
   traverseAST(program, (node) => {
     if (node.type !== "VariableDeclarator" || !node.init) return;
     const name = (node.id as unknown as JSXIdentifier)?.name;
     if (!name) return;
 
-    const value = evaluateExpression(node.init, bindings);
+    const value = evaluateExpression(node.init, bindings, options);
     if (value) bindings.set(name, value);
   });
 
@@ -165,6 +218,7 @@ const defaults: Required<PreprocessTwMergeOptions> = {
   handleDynamicClassName: false,
   twMergeImportSpecifier: "",
   oxcParserOptions: {},
+  debug: false,
 };
 
 export function preprocessTwMerge(
@@ -179,10 +233,7 @@ export function preprocessTwMerge(
       if (!options.include.test(fileId) || options.exclude.test(fileId)) return;
 
       const edits: SourceEdit[] = [];
-      const computedLanguage = fileId.replaceAll(
-        ".",
-        "",
-      ) as ParserOptions["lang"];
+      const computedLanguage = fileId.split(".").pop() as ParserOptions["lang"];
       const language =
         (options.oxcParserOptions?.lang ??
         ["js", "jsx", "ts", "tsx", "dts"].includes(computedLanguage ?? ""))
@@ -191,43 +242,28 @@ export function preprocessTwMerge(
 
       const parsedFile = parseSync(fileId, sourceCode, {
         lang: language,
-        sourceType: "module",
         range: true,
       });
       const { program, module: moduleInfo } = parsedFile;
-      const constants = collectConstantBindings(program);
+      const constants = collectConstantBindings(program, options);
 
       traverseAST(program, (node) => {
         if (
           node.type !== "JSXAttribute" ||
-          !node.value ||
           node.name.name !== "className" ||
-          node.name.type !== "JSXIdentifier"
-        )
-          return;
-
-        if (node.value.type === "Literal") {
-          const literal = node.value;
-          if (typeof literal.value !== "string") return;
-
-          const merged = twMerge(literal.value);
-          const quote = sourceCode[literal.start] ?? '"';
-          edits.push({
-            start: literal.start,
-            end: literal.end,
-            text: `${quote}${merged}${quote}`,
-          });
-          return;
-        }
-
-        if (
-          node.value.type !== "JSXExpressionContainer" ||
-          !options.handleDynamicClassName
+          node.name.type !== "JSXIdentifier" ||
+          !node.value
         )
           return;
 
         const container = node.value;
-        const evaluated = evaluateExpression(container.expression, constants);
+        const evaluated = evaluateExpression(
+          container.type === "JSXExpressionContainer"
+            ? container.expression
+            : container,
+          constants,
+          options,
+        );
 
         if (evaluated) {
           const merged = twMerge(evaluated);
@@ -239,7 +275,13 @@ export function preprocessTwMerge(
           return;
         }
 
-        if (!options.twMergeImportSpecifier) return;
+        if (options.debug)
+          console.warn(
+            `[vite-plugin-preprocess-twmerge] In [${fileId}]: cannot evaluate dynamic expression ${sourceCode.slice(container.start, container.end)}`,
+          );
+
+        if (!options.handleDynamicClassName && !options.twMergeImportSpecifier)
+          return;
 
         // fallback: wrap dynamic expression in twMerge()
         const inner = sourceCode.slice(container.start + 1, container.end - 1);
@@ -250,8 +292,11 @@ export function preprocessTwMerge(
         });
       });
 
+      if (!edits.length) return;
+
       if (
         options.handleDynamicClassName &&
+        options.twMergeImportSpecifier &&
         !hasTwMergeImport(parsedFile, options.twMergeImportSpecifier)
       ) {
         const insertPosition = computeImportInsertionPoint(
@@ -262,11 +307,10 @@ export function preprocessTwMerge(
         edits.push({
           start: insertPosition,
           end: insertPosition,
-          text: `import { ${options.twMergeImportSpecifier} } from 'tailwind-merge';`,
+          text: `import { ${options.twMergeImportSpecifier} } from "tailwind-merge";`,
         });
       }
 
-      if (edits.length === 0) return;
       const result = transform(fileId, applySourceEdits(sourceCode, edits), {
         lang: language,
         jsx: "preserve",
