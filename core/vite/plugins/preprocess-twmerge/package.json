@@ -17,6 +17,8 @@
     "@babel/types": "^7.28.5",
     "@types/babel__generator": "^7",
     "@types/babel__traverse": "^7",
+    "oxc-parser": "^0.95.0",
+    "oxc-transform": "^0.95.0",
     "tailwind-merge": "^3.3.1"
   }
 }
