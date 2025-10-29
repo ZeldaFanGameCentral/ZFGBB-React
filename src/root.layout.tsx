@@ -27,7 +27,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         </header>
 
         <header className="md:hidden bg-default border-b-2 border-default">
-          <div className="flex justify-center pt-2 min-h-[100px] min-w-[480px]">
+          <div className="flex justify-center pt-2 m-h-18 min-w-full items-center">
             <BBImage
               className="h-16 w-auto"
               src="images/logo.png"
