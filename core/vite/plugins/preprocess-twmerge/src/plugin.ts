@@ -1,6 +1,5 @@
 import type { Plugin } from "vite";
 import type { Program, Node, JSXIdentifier, Span } from "@oxc-project/types";
-
 import {
   parseSync,
   type ParseResult,
@@ -8,7 +7,6 @@ import {
   type ParserOptions,
 } from "oxc-parser";
 import { transform } from "oxc-transform";
-
 import { twMerge } from "tailwind-merge";
 
 export interface PreprocessTwMergeOptions {
@@ -16,6 +14,7 @@ export interface PreprocessTwMergeOptions {
   exclude?: RegExp;
   handleDynamicClassName?: boolean;
   twMergeImportSpecifier?: string;
+  oxcParserOptions?: ParserOptions;
 }
 
 interface SourceEdit extends Span {
@@ -24,7 +23,6 @@ interface SourceEdit extends Span {
 
 function applySourceEdits(sourceCode: string, edits: SourceEdit[]) {
   if (edits.length === 0) return sourceCode;
-
   const sortedEdits = edits.sort((a, b) => a.start - b.start);
   let output = "";
   let cursor = 0;
@@ -76,7 +74,6 @@ function computeImportInsertionPoint(
   moduleInfo?: EcmaScriptModule,
 ) {
   let position = 0;
-
   if (program.hashbang) {
     position = program.hashbang.end;
     if (sourceCode[position] !== "\n") position++;
@@ -111,13 +108,11 @@ function evaluateExpression(
         ? expression.value
         : undefined;
     }
-
     case "TemplateLiteral": {
       return expression.quasis
         .map((part) => part.value.cooked ?? part.value.raw ?? "")
         .join(" ");
     }
-
     case "BinaryExpression": {
       if (expression.operator !== "+") return;
       const left = evaluateExpression(expression.left, constantBindings);
@@ -125,7 +120,6 @@ function evaluateExpression(
       if (!left || !right) return;
       return `${left} ${right}`.trim();
     }
-
     case "LogicalExpression": {
       const left = evaluateExpression(expression.left, constantBindings);
       const right = evaluateExpression(expression.right, constantBindings);
@@ -133,7 +127,6 @@ function evaluateExpression(
       if (expression.operator === "||") return left ?? right;
       return;
     }
-
     case "ConditionalExpression": {
       const consequent = evaluateExpression(
         expression.consequent,
@@ -146,7 +139,6 @@ function evaluateExpression(
       if (consequent && alternate) return `${consequent} ${alternate}`.trim();
       return consequent ?? alternate;
     }
-
     case "Identifier": {
       return constantBindings.get(expression.name);
     }
@@ -155,17 +147,13 @@ function evaluateExpression(
 
 function collectConstantBindings(program: Program) {
   const bindings = new Map<string, string>();
-
   traverseAST(program, (node) => {
-    if (node.type !== "VariableDeclarator") return;
-
+    if (node.type !== "VariableDeclarator" || !node.init) return;
     const name = (node.id as unknown as JSXIdentifier)?.name;
-    if (!name || !node.init) return;
+    if (!name) return;
 
     const value = evaluateExpression(node.init, bindings);
-    if (!value) return;
-
-    bindings.set(name, value);
+    if (value) bindings.set(name, value);
   });
 
   return bindings;
@@ -176,6 +164,7 @@ const defaults: Required<PreprocessTwMergeOptions> = {
   exclude: /node_modules/,
   handleDynamicClassName: false,
   twMergeImportSpecifier: "",
+  oxcParserOptions: {},
 };
 
 export function preprocessTwMerge(
@@ -189,16 +178,23 @@ export function preprocessTwMerge(
     transform(sourceCode: string, fileId: string) {
       if (!options.include.test(fileId) || options.exclude.test(fileId)) return;
 
-      const language = fileId.replaceAll(".", "") as ParserOptions["lang"];
+      const edits: SourceEdit[] = [];
+      const computedLanguage = fileId.replaceAll(
+        ".",
+        "",
+      ) as ParserOptions["lang"];
+      const language =
+        (options.oxcParserOptions?.lang ??
+        ["js", "jsx", "ts", "tsx", "dts"].includes(computedLanguage ?? ""))
+          ? computedLanguage
+          : "js";
+
       const parsedFile = parseSync(fileId, sourceCode, {
         lang: language,
         sourceType: "module",
         range: true,
       });
-
       const { program, module: moduleInfo } = parsedFile;
-
-      const edits: SourceEdit[] = [];
       const constants = collectConstantBindings(program);
 
       traverseAST(program, (node) => {
