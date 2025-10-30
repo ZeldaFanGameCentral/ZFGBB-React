@@ -1,7 +1,7 @@
 import type { Program, JSXIdentifier } from "oxc-parser";
-import type { PreprocessTwMergeOptions } from "../options.js";
-import { evaluateExpression } from "./evaluate-expression.js";
-import { traverseAST } from "./traverse-ast.js";
+import type { PreprocessTwMergeOptions } from "../options.ts";
+import { evaluateExpression } from "./evaluate-expression.ts";
+import { traverseAST } from "./traverse-ast.ts";
 
 export function collectConstantBindings(
   program: Program,

@@ -1,14 +1,16 @@
 import type { Plugin } from "vite";
 import { parseSync, type ParseResult, type ParserOptions } from "oxc-parser";
 import { transform } from "oxc-transform";
-import { twMerge } from "tailwind-merge";
 
-import { traverseAST } from "./ast/traverse-ast.js";
-import type { PreprocessTwMergeOptions } from "./options.js";
-import { evaluateExpression } from "./ast/evaluate-expression.js";
-import { applySourceEdits, type SourceEdit } from "./ast/apply-source-edits.js";
-import { collectConstantBindings } from "./ast/collect-constant-bindings.js";
-import { computeImportInsertionPoint } from "./ast/compute-import-insertion-point.js";
+import type { PreprocessTwMergeOptions } from "./options.ts";
+import { traverseAST } from "./ast/traverse-ast.ts";
+
+import { applySourceEdits, type SourceEdit } from "./ast/apply-source-edits.ts";
+import { collectConstantBindings } from "./ast/collect-constant-bindings.ts";
+import { computeImportInsertionPoint } from "./ast/compute-import-insertion-point.ts";
+import { onVisitNode } from "./ast/on-visit-node.ts";
+
+export type { PreprocessTwMergeOptions } from "./options.ts";
 
 function hasTwMergeImport({ module }: ParseResult, importName: string) {
   const { staticImports } = module ?? {};
@@ -96,54 +98,57 @@ export function preprocessTwMerge(
       const { program, module: moduleInfo } = parsedFile;
       const constants = collectConstantBindings(program, options);
 
-      traverseAST(program, (node) => {
-        if (
-          node.type !== "JSXAttribute" ||
-          node.name.name !== "className" ||
-          node.name.type !== "JSXIdentifier" ||
-          !node.value
-        )
-          return; // We only care about className attributes in JSX attributes, so skip anything else
+      // traverseAST(program, (node) => {
+      //   if (
+      //     node.type !== "JSXAttribute" ||
+      //     node.name.type !== "JSXIdentifier" ||
+      //     node.name.name !== "className" ||
+      //     !node.value
+      //   )
+      //     return; // We only care about className attributes in JSX attributes, so skip anything else
 
-        const container = node.value;
-        const evaluated = evaluateExpression(
-          container.type === "JSXExpressionContainer"
-            ? container.expression
-            : container,
-          constants,
-          options,
-        );
+      //   const container = node.value;
+      //   const evaluated = evaluateExpression(
+      //     container.type === "JSXExpressionContainer"
+      //       ? container.expression
+      //       : container,
+      //     constants,
+      //     options,
+      //   );
 
-        // If the expression is not statically evaluable, it will be undefined or empty.
-        // If handleDynamicClassName is true, evaluateExpression will try to use additional logic to evaluate the expression.
-        // If twMergeImportSpecifier is set, it will try to import twMerge and use it, on fallback. Otherwise, it will just skip and do nothing.
-        if (evaluated) {
-          const merged = twMerge(evaluated);
-          edits.push({
-            start: container.start,
-            end: container.end,
-            text: `"${merged}"`,
-          });
-          return;
-        }
+      //   // If the expression is not statically evaluable, it will be undefined or empty.
+      //   // If handleDynamicClassName is true, evaluateExpression will try to use additional logic to evaluate the expression.
+      //   // If twMergeImportSpecifier is set, it will try to import twMerge and use it, on fallback. Otherwise, it will just skip and do nothing.
+      //   if (evaluated) {
+      //     const merged = twMerge(evaluated);
+      //     edits.push({
+      //       start: container.start,
+      //       end: container.end,
+      //       text: `"${merged}"`,
+      //     });
+      //     return;
+      //   }
 
-        if (options.debug)
-          console.warn(
-            `[vite-plugin-preprocess-twmerge] In [${fileId}]: cannot evaluate dynamic expression ${sourceCode.slice(container.start, container.end)}`,
-          );
+      //   if (options.debug)
+      //     console.warn(
+      //       `[vite-plugin-preprocess-twmerge] In [${fileId}]: cannot evaluate dynamic expression ${sourceCode.slice(container.start, container.end)}`,
+      //     );
 
-        if (!options.handleDynamicClassName && !options.twMergeImportSpecifier)
-          return;
+      //   if (!options.handleDynamicClassName && !options.twMergeImportSpecifier)
+      //     return;
 
-        // fallback: wrap dynamic expression in twMerge()
-        const inner = sourceCode.slice(container.start + 1, container.end - 1);
-        edits.push({
-          start: container.start,
-          end: container.end,
-          text: `{${options.twMergeImportSpecifier}(${inner})}`,
-        });
-      });
+      //   // fallback: wrap dynamic expression in twMerge()
+      //   const inner = sourceCode.slice(container.start + 1, container.end - 1);
+      //   edits.push({
+      //     start: container.start,
+      //     end: container.end,
+      //     text: `{${options.twMergeImportSpecifier}(${inner})}`,
+      //   });
+      // });
 
+      traverseAST(program, (node) =>
+        onVisitNode({ node, options, constants, edits, fileId, sourceCode }),
+      );
       if (!edits.length) return;
 
       if (

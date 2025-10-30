@@ -3,9 +3,26 @@
   "private": true,
   "version": "2025.10.0",
   "type": "module",
-  "main": "src/plugin.ts",
+  "main": "./src/plugin.ts",
+  "exports": {
+    ".": {
+      "import": "./src/plugin.ts",
+      "types": "./src/plugin.ts"
+    },
+    "./ast/*": {
+      "import": "./src/ast/*",
+      "types": "./src/ast/*"
+    },
+    "./options": {
+      "import": "./src/options.ts",
+      "types": "./src/options.ts"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
-    "src"
+    "src",
+    "src/ast",
+    "package.json"
   ],
   "dependencies": {
     "vite": "catalog:"

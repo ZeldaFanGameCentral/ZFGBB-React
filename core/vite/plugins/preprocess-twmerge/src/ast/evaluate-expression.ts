@@ -1,6 +1,13 @@
 import type { Node } from "@oxc-project/types";
-import type { PreprocessTwMergeOptions } from "../options.js";
+import type { PreprocessTwMergeOptions } from "../options.ts";
 
+/**
+ * Walks the AST and evaluates expressions that can be statically evaluated.
+ * @param expression The expression to evaluate.
+ * @param constantBindings A map of constant bindings for the current program.
+ * @param options @see {@link PreprocessTwMergeOptions}
+ * @returns The evaluated expression, or undefined/empty string if the expression cannot be statically evaluated.
+ */
 export function evaluateExpression(
   expression: Node | null | undefined,
   constantBindings: Map<string, string>,
