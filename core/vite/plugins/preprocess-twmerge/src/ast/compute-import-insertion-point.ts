@@ -14,7 +14,10 @@ export function computeImportInsertionPoint(
 
   const staticImports = moduleInfo?.staticImports ?? [];
   if (staticImports.length > 0) {
-    const lastImportEnd = Math.max(...staticImports.map((i) => i.end));
+    const lastImportEnd = Math.max(
+      staticImports.at(-1)?.end ?? 0,
+      staticImports.at(-2)?.end ?? 0,
+    );
     position = Math.max(position, lastImportEnd);
     if (sourceCode[position] !== "\n") position++;
     return position;

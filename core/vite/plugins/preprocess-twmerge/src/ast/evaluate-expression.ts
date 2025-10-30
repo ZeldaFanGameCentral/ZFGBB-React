@@ -29,7 +29,7 @@ export function evaluateExpression(
 
       for (const [index, subQuasis] of expression.quasis.entries()) {
         const subExpression = expression.expressions[index];
-        if (!subExpression || subQuasis.value.cooked?.trim()) continue;
+        if (!subExpression) continue;
         const evaluated = evaluateExpression(
           subExpression,
           constantBindings,
