@@ -13,7 +13,7 @@ export function evaluateExpression(
   constantBindings: Map<string, string>,
   options: PreprocessTwMergeOptions,
 ): string | undefined {
-  if (!expression) return;
+  if (!expression?.type) return;
 
   // FIXME: This code could inject the {className} expression back into the JSX attribute, rather than returning undefined or empty string.
   // This would make the ergonomics of the plugins behavior better, since it could do safer deep evaluation of the template expressions.
@@ -35,9 +35,9 @@ export function evaluateExpression(
           constantBindings,
           options,
         );
-        if (!evaluated) continue;
 
-        classNames.push(subQuasis.value.cooked!.trim());
+        if (!evaluated?.trim()) continue;
+        if (subQuasis.value.cooked) classNames.push(subQuasis.value.cooked);
         classNames.push(evaluated);
       }
 
