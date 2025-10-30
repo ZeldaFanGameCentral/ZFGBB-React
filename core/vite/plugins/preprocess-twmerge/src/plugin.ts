@@ -1,215 +1,26 @@
 import type { Plugin } from "vite";
-import type { Program, Node, JSXIdentifier, Span } from "@oxc-project/types";
-import {
-  parseSync,
-  type ParseResult,
-  type EcmaScriptModule,
-  type ParserOptions,
-} from "oxc-parser";
+import { parseSync, type ParseResult, type ParserOptions } from "oxc-parser";
 import { transform } from "oxc-transform";
 import { twMerge } from "tailwind-merge";
 
-export interface PreprocessTwMergeOptions {
-  include?: RegExp;
-  exclude?: RegExp;
-  handleDynamicClassName?: boolean;
-  twMergeImportSpecifier?: string;
-  oxcParserOptions?: Pick<ParserOptions, "lang" | "sourceType">;
-  debug?: boolean;
-}
-
-interface SourceEdit extends Span {
-  text: string;
-}
-
-function applySourceEdits(sourceCode: string, edits: SourceEdit[]) {
-  if (edits.length === 0) return sourceCode;
-  const sortedEdits = edits.sort((a, b) => a.start - b.start);
-  let output = "";
-  let cursor = 0;
-  let lastEditEnd = -1;
-
-  for (const edit of sortedEdits) {
-    if (edit.start < lastEditEnd)
-      throw new Error(`Overlapping edits near ${edit.start}-${edit.end}`);
-    output += sourceCode.slice(cursor, edit.start) + edit.text;
-    cursor = edit.end;
-    lastEditEnd = edit.end;
-  }
-
-  return output + sourceCode.slice(cursor);
-}
-
-function traverseAST(
-  node: Node | null | undefined,
-  onVisit: (node: Node, parent: Node | null) => void,
-  parent: Node | null = null,
-) {
-  if (!node || typeof node !== "object") return;
-  onVisit(node, parent);
-
-  for (const value of Object.values(node)) {
-    if (Array.isArray(value))
-      for (const child of value) traverseAST(child, onVisit, node);
-    else traverseAST(value, onVisit, node);
-  }
-}
+import { traverseAST } from "./ast/traverse-ast.js";
+import type { PreprocessTwMergeOptions } from "./options.js";
+import { evaluateExpression } from "./ast/evaluate-expression.js";
+import { applySourceEdits, type SourceEdit } from "./ast/apply-source-edits.js";
+import { collectConstantBindings } from "./ast/collect-constant-bindings.js";
+import { computeImportInsertionPoint } from "./ast/compute-import-insertion-point.js";
 
 function hasTwMergeImport({ module }: ParseResult, importName: string) {
   const { staticImports } = module ?? {};
   if (!staticImports?.length) return false;
 
   return staticImports.some(
-    (importDecl) =>
-      importDecl?.moduleRequest?.value === "tailwind-merge" &&
-      importDecl.entries?.some(
+    (importModules) =>
+      importModules?.moduleRequest?.value === "tailwind-merge" &&
+      importModules.entries?.some(
         (entry) => entry?.localName?.value === importName,
       ),
   );
-}
-
-function computeImportInsertionPoint(
-  sourceCode: string,
-  program: Program,
-  moduleInfo?: EcmaScriptModule,
-) {
-  let position = 0;
-  if (program.hashbang) {
-    position = program.hashbang.end;
-    if (sourceCode[position] !== "\n") position++;
-  }
-
-  const staticImports = moduleInfo?.staticImports ?? [];
-  if (staticImports.length > 0) {
-    const lastImportEnd = Math.max(...staticImports.map((i) => i.end));
-    position = Math.max(position, lastImportEnd);
-    if (sourceCode[position] !== "\n") position++;
-    return position;
-  }
-
-  for (const statement of program.body) {
-    if (statement.type !== "ExpressionStatement" || !statement.directive) break;
-    position = Math.max(position, statement.end);
-    if (sourceCode[position] !== "\n") position++;
-  }
-
-  return position;
-}
-
-function evaluateExpression(
-  expression: Node | null | undefined,
-  constantBindings: Map<string, string>,
-  options: PreprocessTwMergeOptions,
-): string | undefined {
-  if (!expression) return;
-
-  switch (expression.type) {
-    case "Literal": {
-      return String(expression.value);
-    }
-    case "Identifier": {
-      return constantBindings.get(expression.name);
-    }
-    case "TemplateLiteral": {
-      const classNames: string[] = [];
-
-      for (const [index, subQuasis] of expression.quasis.entries()) {
-        const subExpression = expression.expressions[index];
-        if (!subExpression || subQuasis.value.cooked?.trim()) continue;
-        const evaluated = evaluateExpression(
-          subExpression,
-          constantBindings,
-          options,
-        );
-        if (!evaluated) continue;
-
-        classNames.push(subQuasis.value.cooked!.trim());
-        classNames.push(evaluated);
-      }
-
-      if (classNames.length === 0) return;
-      return classNames.join(" ");
-    }
-
-    case "BinaryExpression": {
-      if (expression.operator !== "+") return;
-      const left = evaluateExpression(
-        expression.left,
-        constantBindings,
-        options,
-      );
-      const right = evaluateExpression(
-        expression.right,
-        constantBindings,
-        options,
-      );
-      if (!left || !right) return;
-      return `${left} ${right}`.trim();
-    }
-    case "LogicalExpression": {
-      const left = evaluateExpression(
-        expression.left,
-        constantBindings,
-        options,
-      );
-      const right = evaluateExpression(
-        expression.right,
-        constantBindings,
-        options,
-      );
-      if (expression.operator === "&&") return right ?? "";
-      if (expression.operator === "||") return left ?? right;
-      return;
-    }
-  }
-
-  if (!options.handleDynamicClassName) return;
-
-  switch (expression.type) {
-    case "ArrayExpression": {
-      return expression.elements
-        .map((subExpression) =>
-          evaluateExpression(subExpression, constantBindings, options),
-        )
-        .join(" ");
-    }
-    case "ObjectExpression": {
-      return expression.properties
-        .map((property) => {
-          if (property.type === "SpreadElement") {
-            return evaluateExpression(
-              property.argument,
-              constantBindings,
-              options,
-            );
-          } else {
-            return evaluateExpression(
-              property.value,
-              constantBindings,
-              options,
-            );
-          }
-        })
-        .join(" ");
-    }
-  }
-}
-
-function collectConstantBindings(
-  program: Program,
-  options: PreprocessTwMergeOptions,
-) {
-  const bindings = new Map<string, string>();
-  traverseAST(program, (node) => {
-    if (node.type !== "VariableDeclarator" || !node.init) return;
-    const name = (node.id as unknown as JSXIdentifier)?.name;
-    if (!name) return;
-
-    const value = evaluateExpression(node.init, bindings, options);
-    if (value) bindings.set(name, value);
-  });
-
-  return bindings;
 }
 
 const defaults: Required<PreprocessTwMergeOptions> = {
@@ -221,6 +32,44 @@ const defaults: Required<PreprocessTwMergeOptions> = {
   debug: false,
 };
 
+/**
+ * Preprocess twMerge
+ * @param userOptions For defaults, see {@link defaults} or {@link PreprocessTwMergeOptions}.
+ * @returns @see {@link Plugin}
+ * @see {@link PreprocessTwMergeOptions}
+ * @example
+ *
+ * <details>
+ * <caption>Basic usage</caption>
+ * ```ts
+ * import { preprocessTwMerge } from "vite-plugin-preprocess-twmerge";
+ * export default defineConfig({
+ *   plugins: [
+ *     preprocessTwMerge(),
+ *   ],
+ * });
+ * ```
+ * </details>
+ *
+ * @example
+ *
+ * <details>
+ * <caption>Dynamic className evaluation</caption>
+ * ```ts
+ * import { preprocessTwMerge } from "vite-plugin-preprocess-twmerge";
+ * export default defineConfig({
+ *   plugins: [
+ *     // Enable dynamic className evaluation - injects twMerge() into className={...} expressions that cannot be evaluated statically.
+ *     preprocessTwMerge({
+ *       handleDynamicClassName: true,
+ *       twMergeImportSpecifier: "twMerge",
+ *     }),
+ *   ],
+ * });
+ * ```
+ * </details>
+ *
+ */
 export function preprocessTwMerge(
   userOptions: PreprocessTwMergeOptions = {},
 ): Plugin {
@@ -254,7 +103,7 @@ export function preprocessTwMerge(
           node.name.type !== "JSXIdentifier" ||
           !node.value
         )
-          return;
+          return; // We only care about className attributes in JSX attributes, so skip anything else
 
         const container = node.value;
         const evaluated = evaluateExpression(
@@ -265,6 +114,9 @@ export function preprocessTwMerge(
           options,
         );
 
+        // If the expression is not statically evaluable, it will be undefined or empty.
+        // If handleDynamicClassName is true, evaluateExpression will try to use additional logic to evaluate the expression.
+        // If twMergeImportSpecifier is set, it will try to import twMerge and use it, on fallback. Otherwise, it will just skip and do nothing.
         if (evaluated) {
           const merged = twMerge(evaluated);
           edits.push({
@@ -299,6 +151,7 @@ export function preprocessTwMerge(
         options.twMergeImportSpecifier &&
         !hasTwMergeImport(parsedFile, options.twMergeImportSpecifier)
       ) {
+        // Adds the import { twMerge } from "tailwind-merge" statement to the top of the file.
         const insertPosition = computeImportInsertionPoint(
           sourceCode,
           program,
