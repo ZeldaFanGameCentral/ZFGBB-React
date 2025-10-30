@@ -12,12 +12,14 @@ export interface PreprocessTwMergeOptions {
    */
   exclude?: RegExp;
   /**
-   * Enable dynamic className evaluation - injects twMerge() into className={...} expressions that cannot be evaluated statically.
+   * Enable dynamic className evaluation - tries to evaluate expressions further that cannot be evaluated.
    * @default false
    */
   handleDynamicClassName?: boolean;
   /**
-   * Import specifier for twMerge()
+   * Import specifier for twMerge(). Setting this to something other than "" will
+   * enable dynamic className evaluation. All className={...} expressions that cannot be statically
+   * evaluated will be wrapped in twMerge() (or whatever import specifier is set).
    * @default ""
    * @example "twMerge"
    */

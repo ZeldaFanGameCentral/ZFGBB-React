@@ -97,7 +97,6 @@ export function preprocessTwMerge(
       );
       if (!edits.length) return;
       if (
-        options.handleDynamicClassName &&
         options.twMergeImportSpecifier &&
         !hasTwMergeImport(parsedFile, options.twMergeImportSpecifier)
       ) {

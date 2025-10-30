@@ -1,5 +1,6 @@
 {
   "name": "@zfgccp/vite-plugin-preprocess-twmerge",
+  "description": "A vite plugin will preprocess `tailwind-merge` on JSX components className attributes, so that it does not have to be done at runtime.",
   "private": true,
   "version": "2025.10.0",
   "type": "module",
@@ -17,12 +18,14 @@
       "import": "./src/options.ts",
       "types": "./src/options.ts"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./README.md": "./README.md"
   },
   "files": [
     "src",
     "src/ast",
-    "package.json"
+    "package.json",
+    "README.md"
   ],
   "dependencies": {
     "vite": "catalog:"
@@ -31,5 +34,8 @@
     "oxc-parser": "^0.95.0",
     "oxc-transform": "^0.95.0",
     "tailwind-merge": "^3.3.1"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

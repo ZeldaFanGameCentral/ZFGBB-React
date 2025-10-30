@@ -55,9 +55,7 @@ export function onVisitNode({
       `[vite-plugin-preprocess-twmerge] In [${fileId}]: cannot evaluate dynamic expression ${sourceCode.slice(container.start, container.end)}`,
     );
 
-  if (!options.handleDynamicClassName && !options.twMergeImportSpecifier)
-    return;
-
+  if (!options.twMergeImportSpecifier) return;
   // fallback: wrap dynamic expression in twMerge()
   const inner = sourceCode.slice(container.start + 1, container.end - 1);
   edits.push({
