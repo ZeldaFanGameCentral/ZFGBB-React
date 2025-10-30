@@ -39,10 +39,8 @@ const defaults: Required<PreprocessTwMergeOptions> = {
  * @param userOptions For defaults, see {@link defaults} or {@link PreprocessTwMergeOptions}.
  * @returns @see {@link Plugin}
  * @see {@link PreprocessTwMergeOptions}
- * @example
+ * @example <caption>Basic usage</caption>
  *
- * <details>
- * <caption>Basic usage</caption>
  * ```ts
  * import { preprocessTwMerge } from "vite-plugin-preprocess-twmerge";
  * export default defineConfig({
@@ -51,25 +49,21 @@ const defaults: Required<PreprocessTwMergeOptions> = {
  *   ],
  * });
  * ```
- * </details>
  *
- * @example
+ * @example <caption>Dynamic className evaluation</caption>
  *
- * <details>
- * <caption>Dynamic className evaluation</caption>
  * ```ts
  * import { preprocessTwMerge } from "vite-plugin-preprocess-twmerge";
  * export default defineConfig({
- *   plugins: [
- *     // Enable dynamic className evaluation - injects twMerge() into className={...} expressions that cannot be evaluated statically.
- *     preprocessTwMerge({
- *       handleDynamicClassName: true,
- *       twMergeImportSpecifier: "twMerge",
- *     }),
- *   ],
+ *  plugins: [
+ *    // Enable dynamic className evaluation - injects twMerge() into className={...} expressions that cannot be evaluated statically.
+ *    preprocessTwMerge({
+ *      handleDynamicClassName: true,
+ *      twMergeImportSpecifier: "twMerge",
+ *    }),
+ *  ],
  * });
  * ```
- * </details>
  *
  */
 export function preprocessTwMerge(
