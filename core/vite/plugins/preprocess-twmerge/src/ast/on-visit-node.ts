@@ -1,7 +1,7 @@
 import type { Node } from "@oxc-project/types";
 import type { PreprocessTwMergeOptions } from "../options.ts";
-import { evaluateExpression } from "./evaluate-expression.ts";
 import type { SourceEdit } from "./apply-source-edits.ts";
+import { evaluateExpression } from "./evaluate-expression.ts";
 
 import { twMerge } from "tailwind-merge";
 export interface OnVisitNodeOptions {
@@ -41,11 +41,11 @@ export function onVisitNode({
   // If handleDynamicClassName is true, evaluateExpression will try to use additional logic to evaluate the expression.
   // If twMergeImportSpecifier is set, it will try to import twMerge and use it, on fallback. Otherwise, it will just skip and do nothing.
   if (evaluated) {
-    const merged = twMerge(evaluated);
+    const text = `"${twMerge(evaluated)}"`;
     edits.push({
       start: container.start,
       end: container.end,
-      text: `"${merged}"`,
+      text,
     });
     return;
   }
