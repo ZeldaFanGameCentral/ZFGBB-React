@@ -3,12 +3,15 @@ import { parseSync, type ParseResult, type ParserOptions } from "oxc-parser";
 import { transform } from "oxc-transform";
 
 import type { PreprocessTwMergeOptions } from "./options.ts";
-import { traverseAST } from "./ast/traverse-ast.ts";
+import { traverseAST } from "./zelda-ancient-stone-tablets/traverse-ast.ts";
 
-import { applySourceEdits, type SourceEdit } from "./ast/apply-source-edits.ts";
-import { collectConstantBindings } from "./ast/collect-constant-bindings.ts";
-import { computeImportInsertionPoint } from "./ast/compute-import-insertion-point.ts";
-import { onVisitNode } from "./ast/on-visit-node.ts";
+import {
+  applySourceEdits,
+  type SourceEdit,
+} from "./zelda-ancient-stone-tablets/apply-source-edits.ts";
+import { collectConstantBindings } from "./zelda-ancient-stone-tablets/collect-constant-bindings.ts";
+import { computeImportInsertionPoint } from "./zelda-ancient-stone-tablets/compute-import-insertion-point.ts";
+import { onVisitNode } from "./zelda-ancient-stone-tablets/on-visit-node.ts";
 
 export type { PreprocessTwMergeOptions } from "./options.ts";
 
