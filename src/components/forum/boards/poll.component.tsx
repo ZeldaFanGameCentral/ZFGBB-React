@@ -22,7 +22,7 @@ const Poll: React.FC<{
     calculatePercent(poll);
   }, [poll]);
 
-  const [isXs, isSm] = useBreakpoints();
+  const {isMobile} = useBreakpoints();
 
   return (
     <Widget className="p-5">
@@ -35,7 +35,7 @@ const Poll: React.FC<{
             (ans) => ans.percentage !== undefined && ans.percentage !== null,
           )
           .map((ans) => (
-            <BBFlex direction={isXs || isSm ? "col" : "row"}>
+            <BBFlex direction={isMobile ? "col" : "row"}>
               <div className="md:w-sm lg:w-lg">
                 {ans.seqno + 1}. {ans.choiceText}: {ans.votes}
               </div>

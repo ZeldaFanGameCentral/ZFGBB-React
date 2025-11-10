@@ -16,5 +16,9 @@ export const useBreakpoints = () => {
   });
   const is2xl = useMediaQuery({ query: "(min-width: 1536px)" });
 
-  return [isXs, isSm, isMd, isLg, isXl, is2xl];
+  const isMobile = isXs || isSm;
+  const isTablet = isMd;
+  const isDesktop = isLg || isXl || is2xl;
+
+  return {isXs: isXs, isSm: isSm, isMd: isMd, isLg: isLg, isXl: isXl, is2xl: is2xl, isMobile: isMobile, isTablet: isTablet, isDesktop: isDesktop};
 };
