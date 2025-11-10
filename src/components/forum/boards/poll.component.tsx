@@ -2,7 +2,6 @@ import type React from "react";
 import type { PollInfo } from "../../../types/forum";
 import { useEffect } from "react";
 import Widget from "../../common/widgets/widget.component";
-import { useBreakpoints } from "../../common/layout/useBreakpoints";
 
 const calculatePercent = (poll: PollInfo) => {
   const totalVotes = poll.votes;
@@ -22,8 +21,6 @@ const Poll: React.FC<{
     calculatePercent(poll);
   }, [poll]);
 
-  const {isMobile} = useBreakpoints();
-
   return (
     <Widget className="p-5">
       <div className="mb-2">
@@ -35,7 +32,7 @@ const Poll: React.FC<{
             (ans) => ans.percentage !== undefined && ans.percentage !== null,
           )
           .map((ans) => (
-            <BBFlex direction={isMobile ? "col" : "row"}>
+            <BBFlex direction="row" className="sm:flex-col">
               <div className="md:w-sm lg:w-lg">
                 {ans.seqno + 1}. {ans.choiceText}: {ans.votes}
               </div>
