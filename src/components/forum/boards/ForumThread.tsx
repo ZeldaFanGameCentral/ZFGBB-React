@@ -96,6 +96,9 @@ const ForumThread: React.FC<ForumThreadProps> = ({
           />
         </div>
 
+        {thread.pollInfo && (
+          <Poll poll={thread.pollInfo} updateResults={() => {}} />
+        )}
         <BBWidget widgetTitle={thread?.threadName}>
           <div className="divide-y divide-default">
             {thread?.messages?.map((msg, index) => {
