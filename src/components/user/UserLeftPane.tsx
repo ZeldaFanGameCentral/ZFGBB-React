@@ -49,7 +49,7 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
             <span className="font-medium">{user?.displayName}</span>
           )}
           {user?.bioInfo?.customTitle && (
-            <MutedText>{user?.bioInfo?.customTitle}</MutedText>
+            <BBMutedText>{user?.bioInfo?.customTitle}</BBMutedText>
           )}
         </div>
       </div>
@@ -66,7 +66,7 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
 
         {!user && <AvatarSkeleton />}
 
-        <MutedText>{user?.bioInfo?.personalText}</MutedText>
+        <BBMutedText>{user?.bioInfo?.personalText}</BBMutedText>
         <div>
           (+{user?.bioInfo?.karmaGood}/-{user?.bioInfo?.karmaBad})
         </div>

@@ -1,7 +1,5 @@
 import type React from "react";
 import type { PollInfo } from "../../../types/forum";
-import { useEffect } from "react";
-import Widget from "../../common/widgets/widget.component";
 
 const calculatePercent = (poll: PollInfo) => {
   const totalVotes = poll.votes;
@@ -22,7 +20,7 @@ const Poll: React.FC<{
   }, [poll]);
 
   return (
-    <Widget className="p-5">
+    <BBWidget className="p-5">
       <div className="mb-2">
         <b>Poll: {poll.pollQuestion}</b>
       </div>
@@ -32,7 +30,7 @@ const Poll: React.FC<{
             (ans) => ans.percentage !== undefined && ans.percentage !== null,
           )
           .map((ans) => (
-            <BBFlex direction="row" className="sm:flex-col">
+            <BBFlex direction="col" className="md:flex-row">
               <div className="md:w-sm lg:w-lg">
                 {ans.seqno + 1}. {ans.choiceText}: {ans.votes}
               </div>
@@ -46,7 +44,7 @@ const Poll: React.FC<{
             </BBFlex>
           ))}
       </div>
-    </Widget>
+    </BBWidget>
   );
 };
 
