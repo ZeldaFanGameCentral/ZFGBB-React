@@ -59,6 +59,7 @@ export type Thread = BaseBB & {
   postCount: number;
   viewCount: number;
   pageCount: number;
+  pollInfo?: PollInfo;
 
   messages: Message[];
   latestMessage?: LatestMessage;
@@ -102,4 +103,30 @@ export type BBPermissionLabel = {
 export type BBLookup = {
   label: string;
   value: number;
+};
+
+export type PollChoice = BaseBB & {
+  pollId?: number;
+  choiceText?: string;
+  activeFlag: boolean;
+  votes: number;
+  seqno: number;
+  percentage: number;
+};
+
+export type PollInfo = BaseBB & {
+  pollQuestion?: string;
+  threadId: number;
+  votingLockedFlag: boolean;
+  expireTimeAsString: string;
+  hideResultsFlag: boolean;
+  changeVoteFlag: boolean;
+  createdUserId: number;
+  guestVoteFlag: boolean;
+  guestVoteCount: number;
+  resetPoll: boolean;
+  maxVotes: number;
+  votes: number;
+
+  answers: PollChoice[];
 };

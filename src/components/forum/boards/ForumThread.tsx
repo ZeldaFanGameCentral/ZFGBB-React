@@ -1,4 +1,5 @@
 import type { Thread } from "@/types/forum";
+import Poll from "./poll.component";
 
 export interface ForumThreadProps {
   pageNo: string;
@@ -96,6 +97,9 @@ const ForumThread: React.FC<ForumThreadProps> = ({
           />
         </div>
 
+        {thread?.pollInfo && (
+          <Poll poll={thread.pollInfo} updateResults={() => {}} />
+        )}
         <BBWidget widgetTitle={thread?.threadName}>
           <div className="divide-y divide-default">
             {thread?.messages?.map((msg, index) => {
