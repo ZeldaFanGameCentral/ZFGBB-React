@@ -36,7 +36,7 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
       <div
         className={`p-3 ${backgrounds.profileInfoContainer} border-b border-default shrink-0 min-h-[76px] flex items-start`}
       >
-        <div className="space-y-0.5 leading-tight font-medium truncate block max-w-[160px]">
+        <BBFlex direction="col" className="space-y-0.5 leading-tight font-medium truncate block max-w-[160px]">
           {user && user.id > 0 ? (
             <BBLink
               to={`/user/profile/${user.id}`}
@@ -51,10 +51,20 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
           {user?.bioInfo?.customTitle && (
             <BBMutedText>{user?.bioInfo?.customTitle}</BBMutedText>
           )}
+        </BBFlex>
+        <div className="ms-3 inline-block lg:hidden">
+          {user && (
+          <BBImage
+            src={avatarSrc}
+            alt="User avatar"
+            className="w-24 h-24 border border-default object-cover rounded-full size-12"
+            fallback={<AvatarSkeleton />}
+          />
+          )}
         </div>
       </div>
 
-      <div className="flex p-4 flex-col items-center justify-center">
+      <BBFlex direction="col" justify="center" align="center" className="hidden lg:flex p-4">
         {user && (
           <BBImage
             src={avatarSrc}
@@ -70,19 +80,19 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
         <div>
           (+{user?.bioInfo?.karmaGood}/-{user?.bioInfo?.karmaBad})
         </div>
-      </div>
+      </BBFlex>
 
       <div className="p-3 space-y-2 text-sm flex-1">
-        <div className="flex justify-between">
+        <BBFlex justify="between">
           <BBMutedText>Posts: {user?.bioInfo?.postCount}</BBMutedText>
-        </div>
-        <div className="flex justify-between">
+        </BBFlex>
+        <BBFlex justify="between">
           <BBMutedText>Joined: {user?.bioInfo?.dateRegistered}</BBMutedText>
-        </div>
-        <div className="flex justify-between">
+        </BBFlex>
+        <BBFlex justify="between">
           <BBMutedText>Status:</BBMutedText>
           <span></span>
-        </div>
+        </BBFlex>
       </div>
     </div>
   );
