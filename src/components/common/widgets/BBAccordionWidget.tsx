@@ -20,7 +20,9 @@ const BBAccordion: React.FC<BBAccordionProps> = ({
           className="cursor-pointer align-items-center"
           onClick={() => setExpanded((prev) => !prev)}
         >
-          <span className="inline-block">{expanded ? <Fa6SolidSquareMinus /> : <Fa6SolidSquarePlus />}</span>
+          <span className="inline-block">
+            {expanded ? <Fa6SolidSquareMinus /> : <Fa6SolidSquarePlus />}
+          </span>
           <span className="inline-block mx-3">{title}</span>
         </h5>
       </div>

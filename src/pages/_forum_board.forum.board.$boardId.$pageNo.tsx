@@ -95,10 +95,13 @@ function BoardTableComponent({
           </div>
 
           <div className="block md:hidden text-sm text-highlighted">
-            Latest Post by: <BBLink
-                to={`/user/profile/${thread.latestMessage?.ownerId}`}
-                prefetch="intent"
-              >{thread.latestMessage?.ownerName}</BBLink>
+            Latest Post by:{" "}
+            <BBLink
+              to={`/user/profile/${thread.latestMessage?.ownerId}`}
+              prefetch="intent"
+            >
+              {thread.latestMessage?.ownerName}
+            </BBLink>
           </div>
         </div>
       ),

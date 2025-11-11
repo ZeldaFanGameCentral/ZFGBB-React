@@ -36,7 +36,10 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
       <div
         className={`p-3 ${backgrounds.profileInfoContainer} border-b border-default shrink-0 min-h-[76px] flex items-start`}
       >
-        <BBFlex direction="col" className="space-y-0.5 leading-tight font-medium truncate block max-w-[160px]">
+        <BBFlex
+          direction="col"
+          className="space-y-0.5 leading-tight font-medium truncate block max-w-[160px]"
+        >
           {user && user.id > 0 ? (
             <BBLink
               to={`/user/profile/${user.id}`}
@@ -54,17 +57,22 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
         </BBFlex>
         <div className="ms-3 inline-block lg:hidden">
           {user && (
-          <BBImage
-            src={avatarSrc}
-            alt="User avatar"
-            className="w-24 h-24 border border-default object-cover rounded-full size-12"
-            fallback={<AvatarSkeleton />}
-          />
+            <BBImage
+              src={avatarSrc}
+              alt="User avatar"
+              className="w-24 h-24 border border-default object-cover rounded-full size-12"
+              fallback={<AvatarSkeleton />}
+            />
           )}
         </div>
       </div>
 
-      <BBFlex direction="col" justify="center" align="center" className="hidden lg:flex p-4">
+      <BBFlex
+        direction="col"
+        justify="center"
+        align="center"
+        className="hidden lg:flex p-4"
+      >
         {user && (
           <BBImage
             src={avatarSrc}
