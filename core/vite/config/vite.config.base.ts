@@ -84,5 +84,8 @@ export default defineConfig(({ isSsrBuild, command }) => {
       hmrPartialAccept: true,
       enableNativePlugin: true,
     },
+    optimizeDeps: {
+      include: ["react-router/dom"],
+    },
   };
 });
