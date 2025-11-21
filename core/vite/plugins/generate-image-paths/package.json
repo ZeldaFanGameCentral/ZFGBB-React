@@ -1,5 +1,5 @@
 {
-  "name": "@zfgccp/vite-plugin-generate-image-paths",
+  "name": "@zfgc/vite-plugin-generate-image-paths",
   "private": true,
   "version": "2025.10.0",
   "type": "module",

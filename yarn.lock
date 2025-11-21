@@ -3017,26 +3017,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zfgccp/vite-config-base@workspace:*, @zfgccp/vite-config-base@workspace:core/vite/config":
+"@zfgc/vite-config-base@workspace:*, @zfgc/vite-config-base@workspace:core/vite/config":
   version: 0.0.0-use.local
-  resolution: "@zfgccp/vite-config-base@workspace:core/vite/config"
+  resolution: "@zfgc/vite-config-base@workspace:core/vite/config"
   dependencies:
-    "@zfgccp/vite-plugin-preprocess-twmerge": "workspace:*"
+    "@zfgc/vite-plugin-preprocess-twmerge": "workspace:*"
     vite: "catalog:"
   languageName: unknown
   linkType: soft
 
-"@zfgccp/vite-plugin-generate-image-paths@workspace:*, @zfgccp/vite-plugin-generate-image-paths@workspace:core/vite/plugins/generate-image-paths":
+"@zfgc/vite-plugin-generate-image-paths@workspace:*, @zfgc/vite-plugin-generate-image-paths@workspace:core/vite/plugins/generate-image-paths":
   version: 0.0.0-use.local
-  resolution: "@zfgccp/vite-plugin-generate-image-paths@workspace:core/vite/plugins/generate-image-paths"
+  resolution: "@zfgc/vite-plugin-generate-image-paths@workspace:core/vite/plugins/generate-image-paths"
   dependencies:
     vite: "catalog:"
   languageName: unknown
   linkType: soft
 
-"@zfgccp/vite-plugin-preprocess-twmerge@workspace:*, @zfgccp/vite-plugin-preprocess-twmerge@workspace:core/vite/plugins/preprocess-twmerge":
+"@zfgc/vite-plugin-preprocess-twmerge@workspace:*, @zfgc/vite-plugin-preprocess-twmerge@workspace:core/vite/plugins/preprocess-twmerge":
   version: 0.0.0-use.local
-  resolution: "@zfgccp/vite-plugin-preprocess-twmerge@workspace:core/vite/plugins/preprocess-twmerge"
+  resolution: "@zfgc/vite-plugin-preprocess-twmerge@workspace:core/vite/plugins/preprocess-twmerge"
   dependencies:
     oxc-parser: "npm:^0.98.0"
     oxc-transform: "npm:^0.98.0"
@@ -3045,9 +3045,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zfgccp/zfgcbb-react@workspace:.":
+"@zfgc/zfgbb-react@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@zfgccp/zfgcbb-react@workspace:."
+  resolution: "@zfgc/zfgbb-react@workspace:."
   dependencies:
     "@iconify-json/fa6-regular": "npm:^1.2.4"
     "@iconify-json/fa6-solid": "npm:^1.2.4"
@@ -3065,8 +3065,8 @@ __metadata:
     "@types/react": "npm:^19.2.6"
     "@types/react-dom": "npm:^19.2.3"
     "@vitejs/plugin-rsc": "npm:^0.5.1"
-    "@zfgccp/vite-config-base": "workspace:*"
-    "@zfgccp/vite-plugin-generate-image-paths": "workspace:*"
+    "@zfgc/vite-config-base": "workspace:*"
+    "@zfgc/vite-plugin-generate-image-paths": "workspace:*"
     html-react-parser: "npm:^5.2.10"
     isbot: "npm:^5.1.32"
     prettier: "npm:^3.6.2"

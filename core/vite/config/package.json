@@ -1,5 +1,5 @@
 {
-  "name": "@zfgccp/vite-config-base",
+  "name": "@zfgc/vite-config-base",
   "private": true,
   "version": "2025.10.0",
   "type": "module",
@@ -8,7 +8,7 @@
     "vite.config.base.ts"
   ],
   "dependencies": {
-    "@zfgccp/vite-plugin-preprocess-twmerge": "workspace:*",
+    "@zfgc/vite-plugin-preprocess-twmerge": "workspace:*",
     "vite": "catalog:"
   }
 }

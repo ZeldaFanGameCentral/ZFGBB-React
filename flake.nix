@@ -1,5 +1,5 @@
 {
-  description = "ZFGCBB-React";
+  description = "ZFGBB-React";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";

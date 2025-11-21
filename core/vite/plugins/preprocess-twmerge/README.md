@@ -1,4 +1,4 @@
-# @zfgccp/vite-plugin-preprocess-twmerge
+# @zfgc/vite-plugin-preprocess-twmerge
 
 A vite plugin will preprocess `tailwind-merge` on JSX components className attributes, so that it does not have to be done at runtime.
 
@@ -7,7 +7,7 @@ This vite plugin requires [Node.js](https://nodejs.org) 22 or later, as it depen
 ## Usage
 
 ```ts
-import { preprocessTwMerge } from "@zfgccp/vite-plugin-preprocess-twmerge";
+import { preprocessTwMerge } from "@zfgc/vite-plugin-preprocess-twmerge";
 
 export default defineConfig({
   plugins: [preprocessTwMerge()],
@@ -17,7 +17,7 @@ export default defineConfig({
 You can also pass in options to the plugin:
 
 ```ts
-import { preprocessTwMerge } from "@zfgccp/vite-plugin-preprocess-twmerge";
+import { preprocessTwMerge } from "@zfgc/vite-plugin-preprocess-twmerge";
 
 export default defineConfig({
   plugins: [
