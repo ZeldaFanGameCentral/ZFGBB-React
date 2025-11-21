@@ -14,7 +14,7 @@ const calculatePercent = (poll: PollInfo) => {
 const Poll: React.FC<{
   poll: PollInfo;
   updateResults: (poll: PollInfo) => void;
-}> = ({ poll, updateResults }) => {
+}> = ({ poll }) => {
   useEffect(() => {
     calculatePercent(poll);
   }, [poll]);
@@ -36,7 +36,7 @@ const Poll: React.FC<{
               </div>
               <div>
                 <div
-                  className="mx-3 rounded-xs bg-[var(--text-color-dimmed)] h-[1rem] inline-block"
+                  className="mx-3 rounded-xs bg-(--text-color-dimmed) h-4 inline-block"
                   style={{ width: `${(ans.percentage * 2).toFixed(0)}px` }}
                 ></div>
                 &nbsp;{Math.round(ans.percentage).toFixed(0)}%

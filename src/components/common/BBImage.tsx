@@ -71,14 +71,14 @@ function lazyImageLoader(src: SrcPath, ass: AsComponent = "img") {
     // FIXME: Move the link preload to an earlier stage of the render lifecycle, so that we can better utilize caching.
     return (
       <>
-        {props.loading === "eager" ? (
+        {/* {props.loading === "eager" ? (
           <link
             rel="preload"
             href={resolvedSrc}
             crossOrigin="anonymous"
             as="image"
           />
-        ) : null}
+        ) : null} */}
         <Component {...(props as object)} src={resolvedSrc} />
       </>
     );

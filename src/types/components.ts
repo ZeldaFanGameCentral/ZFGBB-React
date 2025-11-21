@@ -1,23 +1,4 @@
-interface BBTableColumn<T> {
-  key: keyof T | string;
-  label: string;
-  className?: string;
-  hideOnMobile?: boolean;
-  hideOnTablet?: boolean;
-  render?: (value: T[keyof T], row: T, index: number) => React.ReactNode;
-}
-
-interface BBTableProps<T> {
-  columns: BBTableColumn<T>[];
-  data: T[];
-  className?: string;
-  headerClassName?: string;
-  rowClassName?: string | ((row: T, index: number) => string);
-  onRowClick?: (row: T, index: number) => void;
-  emptyMessage?: string;
-  showHeader?: boolean;
-}
-
+/// <reference types="vite-plugin-pwa/react" />
 type ThemeStandardBackgroundTypes =
   | "default"
   | "muted"
@@ -25,6 +6,7 @@ type ThemeStandardBackgroundTypes =
   | "accented"
   | "transparent";
 
+// oxlint-disable-next-line no-unused-vars
 type ThemeBackgroundClass =
   | `bg-${ThemeStandardBackgroundTypes}`
   | (`bg-${string}` & {});
