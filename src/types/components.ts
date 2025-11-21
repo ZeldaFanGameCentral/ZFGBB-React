@@ -1,3 +1,4 @@
+/// <reference types="vite-plugin-pwa/react" />
 type ThemeStandardBackgroundTypes =
   | "default"
   | "muted"

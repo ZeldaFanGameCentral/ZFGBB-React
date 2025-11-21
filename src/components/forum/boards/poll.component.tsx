@@ -14,7 +14,7 @@ const calculatePercent = (poll: PollInfo) => {
 const Poll: React.FC<{
   poll: PollInfo;
   updateResults: (poll: PollInfo) => void;
-}> = ({ poll, updateResults }) => {
+}> = ({ poll }) => {
   useEffect(() => {
     calculatePercent(poll);
   }, [poll]);
