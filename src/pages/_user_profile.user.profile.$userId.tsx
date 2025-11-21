@@ -5,12 +5,12 @@ const UserProfileMaster: React.FC = () => {
   const { data: user } = useBBQuery<User>(`/user-profile/${userId}`);
 
   return (
-    <div className="flex flex-col lg:flex-row">
-      <span className="w-full xl:w-1/3 2xl:w-1/6">
+    <div className="flex flex-col md:flex-row">
+      <span className="w-full  md:w-1/4">
         <UserLeftPane user={user} />
       </span>
 
-      <div className="col-span-12 md:col-span-9 w-full 2xl:w-1/3">
+      <div className="col-span-12 md:col-span-9 w-full grow">
         <BBAccordionWidget title="BIO INFORMATION" startExpanded>
           <form className="space-y-4">
             <BBFlex
