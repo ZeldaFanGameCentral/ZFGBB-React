@@ -9,7 +9,7 @@ export default function ComponentSandboxLayout() {
         <BBFlex>
           <div>
             <h2>BBFlex</h2>
-            <BBFlex className="border-1 border-red-500">
+            <BBFlex className="border border-red-500">
               <BBFlex>
                 <span>BBFlex</span>
               </BBFlex>

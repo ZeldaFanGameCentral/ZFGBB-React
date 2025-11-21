@@ -1,3 +1,4 @@
+import type { BBTableColumn } from "@/components/common/layout/BBTable";
 import type { BoardSummary } from "../../../types/forum";
 
 interface BoardSummaryViewProps {
@@ -156,6 +157,9 @@ const BoardSummaryView: React.FC<BoardSummaryViewProps> = ({ subBoards }) => {
       emptyMessage="No boards available"
       showHeader={false}
       rowClassName="py-2 px-4"
+      rowOuterFlexOptions={{
+        gap: "gap-4",
+      }}
     />
   );
 };
