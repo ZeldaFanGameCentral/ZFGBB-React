@@ -77,7 +77,7 @@ export function preprocessTwMerge(
   return {
     name: "vite-plugin-preprocess-twmerge",
     enforce: "pre",
-    transform(sourceCode: string, fileId: string) {
+    async transform(sourceCode: string, fileId: string) {
       if (!options.include.test(fileId) || options.exclude.test(fileId)) return;
 
       const edits: SourceEdit[] = [];
@@ -116,11 +116,15 @@ export function preprocessTwMerge(
         });
       }
 
-      const result = transform(fileId, applySourceEdits(sourceCode, edits), {
-        lang: language,
-        jsx: "preserve",
-        sourcemap: true,
-      });
+      const result = await transform(
+        fileId,
+        applySourceEdits(sourceCode, edits),
+        {
+          lang: language,
+          jsx: "preserve",
+          sourcemap: true,
+        },
+      );
 
       if (result.errors?.length)
         console.warn(
