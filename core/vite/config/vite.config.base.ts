@@ -6,6 +6,8 @@ import { unstable_reactRouterRSC } from "@react-router/dev/vite";
 import icons from "unplugin-icons/vite";
 import autoImport from "unplugin-auto-import/vite";
 import iconsResolver from "unplugin-icons/resolver";
+import { VitePWA } from "vite-plugin-pwa";
+
 import { generateImagePaths } from "@zfgccp/vite-plugin-generate-image-paths";
 import { preprocessTwMerge } from "@zfgccp/vite-plugin-preprocess-twmerge";
 
@@ -63,6 +65,48 @@ export default defineConfig(({ isSsrBuild, command }) => {
           strict: true,
         }),
       ],
+    }),
+
+    VitePWA({
+      outDir: "build/client",
+      injectRegister: "inline",
+      strategies: "generateSW",
+      registerType: "autoUpdate",
+      selfDestroying: true,
+      devOptions: {
+        enabled: false,
+        type: "module",
+      },
+      includeAssets: ["favicon.ico"],
+      manifest: {
+        name: "ZFGC.com",
+        short_name: "ZFGC.com",
+        theme_color: "#000000",
+        start_url: "/",
+        display: "browser",
+        icons: [
+          {
+            src: "pwa-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "/pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+          {
+            src: "pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any maskable",
+          },
+        ],
+      },
+      workbox: {
+        navigateFallback: "/index.html",
+        cleanupOutdatedCaches: true,
+      },
     }),
   ];
 

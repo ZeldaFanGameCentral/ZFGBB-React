@@ -18,7 +18,7 @@ export default function BBFlex({
   justify = "start",
   align = "start",
   wrap = false,
-  gap = "0",
+  gap = "",
 }: BBFlexProps) {
   const flexDirection = direction === "col" ? "flex-col" : "flex-row";
   const justifyContent = {

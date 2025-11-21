@@ -7,9 +7,9 @@
   "references": [
     {
       "path": "./generate-image-paths"
-    },
-    {
-      "path": "./preprocess-twmerge"
     }
+    // {
+    //   "path": "./preprocess-twmerge"
+    // }
   ]
 }

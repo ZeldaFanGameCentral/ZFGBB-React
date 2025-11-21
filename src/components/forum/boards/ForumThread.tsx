@@ -125,7 +125,8 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                         <BBFlex
                           justify="between"
                           align="center"
-                          className="gap-2 overflow-hidden min-w-0 size-fit whitespace-nowrap"
+                          gap="gap-2"
+                          className="overflow-hidden min-w-0 size-fit whitespace-nowrap"
                           wrap={false}
                         >
                           <div className="text-sm">

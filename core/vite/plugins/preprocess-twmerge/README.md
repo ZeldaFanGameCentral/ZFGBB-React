@@ -1,6 +1,8 @@
 # @zfgccp/vite-plugin-preprocess-twmerge
 
-This plugin will preprocess tailwind merge on React components, so that it does not have to be done at runtime.
+A vite plugin will preprocess `tailwind-merge` on JSX components className attributes, so that it does not have to be done at runtime.
+
+This vite plugin requires [Node.js](https://nodejs.org) 22 or later, as it depends on the strippable types.
 
 ## Usage
 
@@ -12,36 +14,51 @@ export default defineConfig({
 });
 ```
 
+You can also pass in options to the plugin:
+
+```ts
+import { preprocessTwMerge } from "@zfgccp/vite-plugin-preprocess-twmerge";
+
+export default defineConfig({
+  plugins: [
+    preprocessTwMerge({
+      // Enables additional processing of className expressions, to attempt to retrieve the actual className value.
+      handleDynamicClassName: true,
+      /// Enables wrapping dynamic className expressions in twMerge()
+      twMergeImportSpecifier: "twMerge",
+    }),
+  ],
+});
+```
+
 ## Options
 
-### `include`
+The [options](./src/options.ts) are all optional, as the defaults are sane and safe to use.
 
-Type: `RegExp`
+By default, this plugin will only attempt statically evaluatable expressions, and will not attempt to evaluate dynamic expressions, or wrap them in twMerge(). You choose to enable either behavior by setting the options.
 
-Default: `/\.(jsx|tsx)$/`
+### `include` (default: `/\.(jsx|tsx)$/`)
 
-The pattern to match files to preprocess.
+Include files matching this regular expression
 
-### `exclude`
+### `exclude` (default: `/node_modules/`)
 
-Type: `RegExp`
+Exclude files matching this regular expression
 
-Default: `/node_modules/`
+### `handleDynamicClassName` (default: `false`)
 
-The pattern to exclude files from preprocessing.
+Enable dynamic className evaluation - tries to evaluate expressions further that cannot be evaluated.
 
-### `handleDynamicClassName`
+### `twMergeImportSpecifier` (default: `""`)
 
-Type: `boolean`
+Import specifier for twMerge(). Setting this to something other than "" will
+enable dynamic className evaluation. All className={...} expressions that cannot be statically
+evaluated will be wrapped in twMerge() (or whatever import specifier is set).
 
-Default: `false`
+### `oxcParserOptions` (default: `{}`)
 
-Whether to handle dynamic class name expressions. i.e. `className={...}`.
+OXC parser options
 
-### `twMergeImportSepcifier`
+### `debug` (default: `false`)
 
-Type: `string`
-
-Default: `""`
-
-The specifier to import twMerge from. If set, it will auto-import twMerge and use it to merge class names for detected dynamic class name expressions that cannot be evaluated at build time.
+Enable debug mode
