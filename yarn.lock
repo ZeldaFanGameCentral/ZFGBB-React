@@ -1305,6 +1305,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@dxup/unimport@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@dxup/unimport@npm:0.1.2"
+  checksum: 10c0/acb379a689fec511559b6b5314f029b6360522ea6a8ae9f69acb00c065f17d13c371131b3b3713df1c3d4a64e05ccf4048464b269b3d478a0d59b182c800b3be
+  languageName: node
+  linkType: hard
+
 "@emnapi/core@npm:^1.5.0":
   version: 1.5.0
   resolution: "@emnapi/core@npm:1.5.0"
@@ -3049,6 +3056,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zfgc/zfgbb-react@workspace:."
   dependencies:
+    "@dxup/unimport": "npm:^0.1.2"
     "@iconify-json/fa6-regular": "npm:^1.2.4"
     "@iconify-json/fa6-solid": "npm:^1.2.4"
     "@prettier/plugin-oxc": "npm:^0.0.5"

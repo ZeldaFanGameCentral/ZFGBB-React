@@ -26,7 +26,8 @@
     "moduleResolution": "bundler",
     "composite": true,
     "jsx": "react-jsx",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "plugins": [{ "name": "@dxup/unimport" }]
   },
   "exclude": ["node_modules"]
 }

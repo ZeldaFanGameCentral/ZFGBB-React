@@ -30,6 +30,7 @@
     "react-router": "^7.9.6"
   },
   "devDependencies": {
+    "@dxup/unimport": "^0.1.2",
     "@iconify-json/fa6-regular": "^1.2.4",
     "@iconify-json/fa6-solid": "^1.2.4",
     "@prettier/plugin-oxc": "^0.0.5",
