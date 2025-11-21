@@ -17,11 +17,13 @@ const BBAccordion: React.FC<BBAccordionProps> = ({
     <div className="m-8">
       <div className="bg-default border-2 border-default p-3">
         <h5
-          className="cursor-pointer "
+          className="cursor-pointer align-items-center"
           onClick={() => setExpanded((prev) => !prev)}
         >
-          {expanded ? <Fa6SolidSquareMinus /> : <Fa6SolidSquarePlus />}
-          {title}
+          <span className="inline-block">
+            {expanded ? <Fa6SolidSquareMinus /> : <Fa6SolidSquarePlus />}
+          </span>
+          <span className="inline-block mx-3">{title}</span>
         </h5>
       </div>
       {expanded && <div className="m-2">{children}</div>}

@@ -6,23 +6,31 @@ const UserProfileMaster: React.FC = () => {
 
   return (
     <div className="flex flex-col md:flex-row">
-      <span className="lg:w-1/4">
+      <span className="w-full  md:w-1/4">
         <UserLeftPane user={user} />
       </span>
 
-      <div className="col-span-12 md:col-span-9 w-full 2xl:w-1/3">
+      <div className="col-span-12 md:col-span-9 w-full grow">
         <BBAccordionWidget title="BIO INFORMATION" startExpanded>
           <form className="space-y-4">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center">
+            <BBFlex
+              direction="col"
+              align="start"
+              className="sm:flex-row sm:items-center"
+            >
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
                 Display Name
               </label>
               <span className="flex-1/2">
                 <BBInput value={user?.displayName || ""} disabled={true} />
               </span>
-            </div>
+            </BBFlex>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center">
+            <BBFlex
+              direction="col"
+              align="start"
+              className="sm:flex-row sm:items-center"
+            >
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
                 Personal Text
               </label>
@@ -32,9 +40,13 @@ const UserProfileMaster: React.FC = () => {
                   disabled={true}
                 />
               </span>
-            </div>
+            </BBFlex>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center">
+            <BBFlex
+              direction="col"
+              align="start"
+              className="sm:flex-row sm:items-center"
+            >
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
                 Custom Title
               </label>
@@ -44,9 +56,13 @@ const UserProfileMaster: React.FC = () => {
                   disabled={true}
                 />
               </span>
-            </div>
+            </BBFlex>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center">
+            <BBFlex
+              direction="col"
+              align="start"
+              className="sm:flex-row sm:items-center"
+            >
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
                 Date of Birth
               </label>
@@ -58,9 +74,13 @@ const UserProfileMaster: React.FC = () => {
                   value={user?.bioInfo?.birthDate || ""}
                 />
               </span>
-            </div>
+            </BBFlex>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center">
+            <BBFlex
+              direction="col"
+              align="start"
+              className="sm:flex-row sm:items-center"
+            >
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
                 Gender
               </label>
@@ -70,7 +90,7 @@ const UserProfileMaster: React.FC = () => {
                 <option value="3">Non-binary/Other</option>
                 <option value="4">Prefer not to say</option>
               </select>
-            </div>
+            </BBFlex>
 
             <div className="flex flex-col">
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
