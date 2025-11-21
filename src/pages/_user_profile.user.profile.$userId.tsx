@@ -15,7 +15,7 @@ const UserProfileMaster: React.FC = () => {
           <form className="space-y-4">
             <BBFlex
               direction="col"
-              align="items-start"
+              align="start"
               className="sm:flex-row sm:items-center"
             >
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
@@ -28,7 +28,7 @@ const UserProfileMaster: React.FC = () => {
 
             <BBFlex
               direction="col"
-              align="items-start"
+              align="start"
               className="sm:flex-row sm:items-center"
             >
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
@@ -44,7 +44,7 @@ const UserProfileMaster: React.FC = () => {
 
             <BBFlex
               direction="col"
-              align="items-start"
+              align="start"
               className="sm:flex-row sm:items-center"
             >
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
@@ -60,7 +60,7 @@ const UserProfileMaster: React.FC = () => {
 
             <BBFlex
               direction="col"
-              align="items-start"
+              align="start"
               className="sm:flex-row sm:items-center"
             >
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
@@ -78,7 +78,7 @@ const UserProfileMaster: React.FC = () => {
 
             <BBFlex
               direction="col"
-              align="items-start"
+              align="start"
               className="sm:flex-row sm:items-center"
             >
               <label className="block text-md font-medium mb-1 flex-auto md:flex-1/2">
