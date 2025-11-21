@@ -1,3 +1,4 @@
+import type { BBTableColumn } from "@/components/common/layout/BBTable";
 import type { Board, Thread } from "../types/forum";
 
 function BoardTablePaginatorComponent({
@@ -203,6 +204,7 @@ function BoardTableComponent({
       data={[]}
       emptyMessage="Loading..."
       headerClassName="hidden md:block"
+      rowOuterFlexOptions={{ gap: "gap-4" }}
     />
   ) : (
     <BBTable
@@ -210,6 +212,7 @@ function BoardTableComponent({
       data={board?.unStickyThreads || []}
       emptyMessage="No threads available"
       headerClassName="hidden md:block"
+      rowOuterFlexOptions={{ gap: "gap-4" }}
     />
   );
 }

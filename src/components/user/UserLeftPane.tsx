@@ -30,20 +30,23 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
   }, [user]);
 
   return (
-    <div
-      className={`flex flex-1 flex-col shrink ${backgrounds.avatarContainer} h-full`}
+    <BBFlex
+      align="stretch"
+      direction="col"
+      className={`${backgrounds.avatarContainer ?? ""} h-full w-full truncate`}
     >
-      <div
-        className={`p-3 ${backgrounds.profileInfoContainer} border-b border-default shrink-0 min-h-[76px] flex items-start`}
+      <BBFlex
+        align="stretch"
+        className={`p-3 ${backgrounds.profileInfoContainer ?? ""} border-b border-default shrink-0 min-h-[76px]`}
       >
         <BBFlex
           direction="col"
-          className="space-y-0.5 leading-tight font-medium truncate block max-w-[160px]"
+          className="space-y-0.5 leading-tight font-medium truncate max-w-40"
         >
           {user && user.id > 0 ? (
             <BBLink
               to={`/user/profile/${user.id}`}
-              className="font-medium"
+              className="font-medium truncate w-full"
               prefetch="intent"
             >
               {user?.displayName}
@@ -52,26 +55,18 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
             <span className="font-medium">{user?.displayName}</span>
           )}
           {user?.bioInfo?.customTitle && (
-            <BBMutedText>{user?.bioInfo?.customTitle}</BBMutedText>
+            <BBMutedText className="truncate w-full">
+              {user?.bioInfo?.customTitle}
+            </BBMutedText>
           )}
         </BBFlex>
-        <div className="ms-3 inline-block lg:hidden">
-          {user && (
-            <BBImage
-              src={avatarSrc}
-              alt="User avatar"
-              className="w-24 h-24 border border-default object-cover rounded-full size-12"
-              fallback={<AvatarSkeleton />}
-            />
-          )}
-        </div>
-      </div>
+      </BBFlex>
 
       <BBFlex
         direction="col"
-        justify="center"
         align="center"
-        className="hidden lg:flex p-4"
+        justify="center"
+        className="p-4  text-center"
       >
         {user && (
           <BBImage
@@ -84,25 +79,20 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
 
         {!user && <AvatarSkeleton />}
 
-        <BBMutedText>{user?.bioInfo?.personalText}</BBMutedText>
+        <BBMutedText className="truncate w-full">
+          {user?.bioInfo?.personalText}
+        </BBMutedText>
         <div>
           (+{user?.bioInfo?.karmaGood}/-{user?.bioInfo?.karmaBad})
         </div>
       </BBFlex>
 
-      <div className="p-3 space-y-2 text-sm flex-1">
-        <BBFlex justify="between">
-          <BBMutedText>Posts: {user?.bioInfo?.postCount}</BBMutedText>
-        </BBFlex>
-        <BBFlex justify="between">
-          <BBMutedText>Joined: {user?.bioInfo?.dateRegistered}</BBMutedText>
-        </BBFlex>
-        <BBFlex justify="between">
-          <BBMutedText>Status:</BBMutedText>
-          <span></span>
-        </BBFlex>
-      </div>
-    </div>
+      <BBFlex direction="col" align="stretch" className="p-3 space-y-2 text-sm">
+        <BBMutedText>Posts: {user?.bioInfo?.postCount}</BBMutedText>
+        <BBMutedText>Joined: {user?.bioInfo?.dateRegistered}</BBMutedText>
+        <BBMutedText>Status:</BBMutedText>
+      </BBFlex>
+    </BBFlex>
   );
 };
 

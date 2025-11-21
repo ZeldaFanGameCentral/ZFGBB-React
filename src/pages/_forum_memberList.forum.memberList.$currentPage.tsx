@@ -1,3 +1,4 @@
+import type { BBTableColumn } from "@/components/common/layout/BBTable";
 import type { User } from "../types/user";
 
 const MemberListContainer: React.FC = () => {
@@ -70,6 +71,7 @@ const MemberListContainer: React.FC = () => {
         columns={columns}
         data={memberList || []}
         emptyMessage="Sure looks like a ghost town hahahahaha! 👻"
+        rowOuterFlexOptions={{ gap: "gap-4" }}
       />
 
       {memberList && !isLoading && (

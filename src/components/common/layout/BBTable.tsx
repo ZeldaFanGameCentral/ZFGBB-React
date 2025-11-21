@@ -1,9 +1,34 @@
+import type { BBFlexProps } from "./BBFlex";
+
+export interface BBTableColumn<T> {
+  key: keyof T | string;
+  label: string;
+  className?: string;
+  hideOnMobile?: boolean;
+  hideOnTablet?: boolean;
+  render?: (value: T[keyof T], row: T, index: number) => React.ReactNode;
+}
+
+// oxlint-disable-next-line no-unused-vars
+export interface BBTableProps<T> {
+  columns: BBTableColumn<T>[];
+  data: T[];
+  className?: string;
+  headerClassName?: string;
+  rowClassName?: string | ((row: T, index: number) => string);
+  rowOuterFlexOptions?: Omit<BBFlexProps, "children">;
+  onRowClick?: (row: T, index: number) => void;
+  emptyMessage?: string;
+  showHeader?: boolean;
+}
+
 export default function BBTable<T extends object>({
   columns,
   data,
   className = "",
   headerClassName = "",
   rowClassName = "",
+  rowOuterFlexOptions = {},
   onRowClick,
   emptyMessage = "No data available",
   showHeader = true,
@@ -59,7 +84,7 @@ export default function BBTable<T extends object>({
               className={getRowClassName(row, index)}
               onClick={() => onRowClick?.(row, index)}
             >
-              <BBFlex align="center">
+              <BBFlex align="center" {...rowOuterFlexOptions}>
                 {columns.map((column) => (
                   <div
                     key={String(column.key)}
