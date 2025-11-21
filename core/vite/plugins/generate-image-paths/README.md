@@ -1,4 +1,4 @@
-# @zfgccp/vite-plugin-generate-image-paths
+# @zfgc/vite-plugin-generate-image-paths
 
 This plugin generates image paths for the [BBImage](../../../../src//components/common/BBImage.tsx) component. Generates TypeScript type defintiions for asset paths
 that can be used for making the src attribute type-safe of the actual images that are available.
@@ -6,14 +6,14 @@ that can be used for making the src attribute type-safe of the actual images tha
 ## Installation
 
 ```bash
-yarn add -D @zfgccp/vite-plugin-generate-image-paths
+yarn add -D @zfgc/vite-plugin-generate-image-paths
 ```
 
 ## Usage
 
 ```ts
 import { defineConfig } from "vite";
-import { generateImagePaths } from "@zfgccp/vite-plugin-generate-image-paths";
+import { generateImagePaths } from "@zfgc/vite-plugin-generate-image-paths";
 
 export default defineConfig({
   plugins: [

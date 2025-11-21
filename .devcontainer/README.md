@@ -1,6 +1,6 @@
-# ZFGCBB-React Dev Container
+# ZFGBB-React Dev Container
 
-This is a [dev container](https://code.visualstudio.com/docs/devcontainers/containers) for ZFGCBB-React. It includes the following:
+This is a [dev container](https://code.visualstudio.com/docs/devcontainers/containers) for ZFGBB-React. It includes the following:
 
 - Node.js
 - Yarn
@@ -14,7 +14,7 @@ This is a [dev container](https://code.visualstudio.com/docs/devcontainers/conta
 2. Open the Command Palette (Ctrl+Shift+P).
 3. Type in `Dev Containers: Reopen in Container`.
 4. Select "Dev Containers: Reopen in Container".
-5. Wait for the container to start. It will set everything up for you and run ZFGCBB-React in watch mode, so you can start coding.
+5. Wait for the container to start. It will set everything up for you and run ZFGBB-React in watch mode, so you can start coding.
 
 ## Files
 

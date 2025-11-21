@@ -8,8 +8,8 @@ import autoImport from "unplugin-auto-import/vite";
 import iconsResolver from "unplugin-icons/resolver";
 import { VitePWA } from "vite-plugin-pwa";
 
-import { generateImagePaths } from "@zfgccp/vite-plugin-generate-image-paths";
-import { preprocessTwMerge } from "@zfgccp/vite-plugin-preprocess-twmerge";
+import { generateImagePaths } from "@zfgc/vite-plugin-generate-image-paths";
+import { preprocessTwMerge } from "@zfgc/vite-plugin-preprocess-twmerge";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ isSsrBuild, command }) => {

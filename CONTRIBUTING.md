@@ -47,7 +47,7 @@ Follow the steps below to get started with the project.
 3. Clone the repository
 
    ```bash
-   git clone https://github.com/ZFGCCP/ZFGCBB-React.git
+   git clone https://github.com/ZeldaFanGameCentral/ZFGBB-React.git
    ```
 
 4. Now, you can either continue with [Quick Start (With VSCode Dev Container)](#quick-start-with-vscode-dev-container) or [Quick Start](#quick-start), if you prefer to use your local machine for development.
@@ -89,7 +89,7 @@ If you are not using VScode, then continue reading.
 
 ### Quick Start (With VSCode Dev Container)
 
-There is a [dev container](./.devcontainer/README.md) for ZFGCBB-React. It is currently the easiest way to get started, so you can ignore the rest of this document if you just want to get started quickly.
+There is a [dev container](./.devcontainer/README.md) for ZFGBB-React. It is currently the easiest way to get started, so you can ignore the rest of this document if you just want to get started quickly.
 
 1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [VS Code Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 2. Open the repository in VS Code.
@@ -112,8 +112,8 @@ If this is your first time contributing to this project, or cloning the reposito
 
 1. Read the [Code of Conduct](CODE_OF_CONDUCT.md).
    1. If you do not agree with the Code of Conduct, please do not contribute to this project. Feel free to fork the repository and create your own version of the project.
-   2. Check the [Projects Board](https://github.com/users/ZFGCCP/projects/4) for open issues that you can help with.
-2. If you are not part of the ZFGCCP organization, you will need to fork this repository.
+   2. Check the [Projects Board](https://github.com/users/ZeldaFanGameCentral/projects/4) for open issues that you can help with.
+2. If you are not part of the ZeldaFanGameCentral organization, you will need to fork this repository.
 3. When making commits, please sign your commits with `git commit -s`, to certify that you have the rights to submit the work under the [Developer Certificate of Origin](https://developercertificate.org/).
    1. GitHub has a decent [help article](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits) on signing commits. You can use this to help you sign your commits.
 4. Make sure you are on the `development` branch. `git switch development && git pull`.
@@ -131,13 +131,13 @@ If this is your first time contributing to this project, or cloning the reposito
       1. If you are not a team member, you will need to fork the repository to create a branch.
          1. To fork the repository, click the "Fork" button in the top right corner of the repository page.
          2. Once you have forked the repository, if you created the branch locally, you can push the branch to your forked repository by creating the origin remote and pushing the branch.
-            1. `git remote add origin https://github.com/your-username/ZFGCBB-React.git` just make sure to replace `your-username` with your GitHub username.
+            1. `git remote add origin https://github.com/your-username/ZFGBB-React.git` just make sure to replace `your-username` with your GitHub username.
    4. If you are a team member, you can create the branch directly on GitHub.
 6. Working on your changes: Use your IDE of choice to edit files and save changes. We recommend using [VSCode](#vscode---usage) for development.
    1. Make sure to run `yarn install` every time you check out a branch.
       1. To understand the commands, see the [package.json](#packagejson---provided-packagejson-scripts) provided scripts section. But for now, we recommend just continuing through the guide.
-   2. Use the `yarn dev` command to start the development server. But before you do, continue reading until you reach `Step 6.iii - Use the "yarn format" command to format the code using Prettier`, due to a current limitation with running the development server in local only mode. `yarn` dev by itself will expect you to be running the [backend](https://github.com/ZFGCCP/ZFGCBB) locally. If you are not, please read the next steps.
-      1. For now, if cloning the [backend](https://github.com/ZFGCCP/ZFGCBB) is too much of a hassle, you can use the following to instead use the production instance.
+   2. Use the `yarn dev` command to start the development server. But before you do, continue reading until you reach `Step 6.iii - Use the "yarn format" command to format the code using Prettier`, due to a current limitation with running the development server in local only mode. `yarn` dev by itself will expect you to be running the [backend](https://github.com/ZeldaFanGameCentral/ZFGBB) locally. If you are not, please read the next steps.
+      1. For now, if cloning the [backend](https://github.com/ZeldaFanGameCentral/ZFGBB) is too much of a hassle, you can use the following to instead use the production instance.
          1. In command line, run `yarn dev --mode=production` command to start the development server on `zfgc.com` or `Debug zfgc.com (local)` in VSCode.
          2. In VSCode, you can use `Debug zfgc.com (production)`. See the VSCode usage [reference](#vscode---usage) for more information on how to use VS Code.
    3. Use the `yarn format` command to format the code using Prettier.
@@ -149,7 +149,7 @@ If this is your first time contributing to this project, or cloning the reposito
       2. Consult the [package.json](#packagejson---provided-packagejson-scripts) section for more development information, and help.
    7. Stage and commit your changes.
    8. Push your changes to your branch on GitHub.
-7. [Create a new pull request](https://github.com/ZFGCCP/ZFGCBB-React/compare) and request a review from one of the maintainers.
+7. [Create a new pull request](https://github.com/ZeldaFanGameCentral/ZFGBB-React/compare) and request a review from one of the maintainers.
    1. Add a bullet point list of changes you made.
    2. Mention the issue number you are working on.
       1. If there is no issue, you can create one.

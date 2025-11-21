@@ -46,12 +46,11 @@ export default () => {
               <main className="mt-4">
                 <p>
                   Slowly the site is coming back together. We could use your
-                  help! If you're interested, check out the repo on GitHub and
-                  join the ZFGC Community Project (ZFGCCP) effort in rewriting
-                  the site!
+                  help! If you're interested, check out the repo on GitHub for
+                  ZFGC.com! \o/
                   <br />
                   <BBLink
-                    to="https://github.com/ZFGCCP/ZFGCBB-React"
+                    to="https://github.com/ZeldaFanGameCentral/ZFGBB-React"
                     target="_blank"
                     className="text-highlighted"
                   >

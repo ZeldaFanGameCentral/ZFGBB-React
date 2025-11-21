@@ -1,6 +1,6 @@
-# @zfgccp/vite-config-base
+# @zfgc/vite-config-base
 
-This is a base Vite config for ZFGCBB-React. It includes the following:
+This is a base Vite config for ZFGBB-React. It includes the following:
 
 - React Router
   - React Server Components configured.
@@ -15,14 +15,14 @@ This is used in the main [vite.config.ts](../../../vite.config.ts) file.
 ## Installation
 
 ```bash
-yarn add -D @zfgccp/vite-config-base
+yarn add -D @zfgc/vite-config-base
 ```
 
 ## Usage
 
 ```ts
 import { defineConfig } from "vite";
-import baseConfig from "@zfgccp/vite-config-base";
+import baseConfig from "@zfgc/vite-config-base";
 
 export default defineConfig(baseConfig());
 ```

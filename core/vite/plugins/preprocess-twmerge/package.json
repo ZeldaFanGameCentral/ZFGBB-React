@@ -1,5 +1,5 @@
 {
-  "name": "@zfgccp/vite-plugin-preprocess-twmerge",
+  "name": "@zfgc/vite-plugin-preprocess-twmerge",
   "description": "A vite plugin will preprocess `tailwind-merge` on JSX components className attributes, so that it does not have to be done at runtime.",
   "private": true,
   "version": "2025.10.0",
