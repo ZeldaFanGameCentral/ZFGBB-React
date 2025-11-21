@@ -1,3 +1,4 @@
+name: "[reusable]: Deploy ZFGC.com"
 on:
   workflow_call:
     inputs:

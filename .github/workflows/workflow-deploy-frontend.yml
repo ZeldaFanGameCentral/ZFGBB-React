@@ -30,7 +30,7 @@ env:
 
 jobs:
   build:
-    uses: ZFGCCP/github-common/.github/workflows/workflow-reactjs-reusable-build.yml@main
+    uses: ZeldaFanGameCentral/github-common/.github/workflows/workflow-reactjs-reusable-build.yml@main
     with:
       environment: ${{ github.event.inputs.environment || github.ref_name }}
       deployment_target: "github-pages"

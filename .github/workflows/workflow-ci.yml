@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   build:
-    uses: ZFGCCP/github-common/.github/workflows/workflow-reactjs-reusable-build.yml@main
+    uses: ZeldaFanGameCentral/github-common/.github/workflows/workflow-reactjs-reusable-build.yml@main
     with:
       environment: ${{ github.head_ref }}
 
@@ -33,4 +33,4 @@ jobs:
       pull-requests: write
     steps:
       - name: Check if run is triggered by dependabot
-        uses: ZFGCCP/github-common/actions/auto-approve-dependabot@main
+        uses: ZeldaFanGameCentral/github-common/actions/auto-approve-dependabot@main
