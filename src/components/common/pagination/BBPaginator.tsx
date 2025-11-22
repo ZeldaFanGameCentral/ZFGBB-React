@@ -33,7 +33,7 @@ export default function BBPaginator({
             currentPage === i
               ? "bg-elevated text-highlighted"
               : "bg-muted  hover:bg-elevated"
-          } ${i > 4 ? "hidden sm:inline-flex" : ""}`}
+          }`}
           onClick={() => onPageChange(i)}
         >
           {i}
@@ -45,7 +45,7 @@ export default function BBPaginator({
       pages.unshift(
         <span
           key="start-ellipsis"
-          className={`px-3 py-2 text-muted ${numPages > 4 ? "hidden sm:inline-flex" : ""}`}
+          className={`px-3 py-2 text-muted hidden sm:inline-flex`}
         >
           ...
         </span>,
@@ -55,7 +55,7 @@ export default function BBPaginator({
       pages.push(
         <span
           key="end-ellipsis"
-          className={`px-3 py-2 text-muted ${numPages > 4 ? "hidden sm:inline-flex" : ""}`}
+          className={`px-3 py-2 text-muted hidden sm:inline-flex`}
         >
           ...
         </span>,
@@ -90,7 +90,7 @@ export default function BBPaginator({
           </button>
         )}
         {pages}
-        {currentPage !== numPages && (
+        {(!maxPageCount || currentPage !== numPages) && (
           <button
             className="px-3 py-2 text-sm border border-default bg-muted  hover:bg-elevated"
             onClick={() => shiftPage(1)}
