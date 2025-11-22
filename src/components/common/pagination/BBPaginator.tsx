@@ -33,7 +33,7 @@ export default function BBPaginator({
             currentPage === i
               ? "bg-elevated text-highlighted"
               : "bg-muted  hover:bg-elevated"
-          }`}
+          } ${i > 4 ? "hidden sm:inline-flex" : ""}`}
           onClick={() => onPageChange(i)}
         >
           {i}
@@ -43,14 +43,20 @@ export default function BBPaginator({
 
     if (startPage > 1 && numPages > maxToRender) {
       pages.unshift(
-        <span key="start-ellipsis" className="px-3 py-2 text-muted">
+        <span
+          key="start-ellipsis"
+          className={`px-3 py-2 text-muted ${numPages > 4 ? "hidden sm:inline-flex" : ""}`}
+        >
           ...
         </span>,
       );
     }
     if (endPage < numPages) {
       pages.push(
-        <span key="end-ellipsis" className="px-3 py-2 text-muted">
+        <span
+          key="end-ellipsis"
+          className={`px-3 py-2 text-muted ${numPages > 4 ? "hidden sm:inline-flex" : ""}`}
+        >
           ...
         </span>,
       );
