@@ -1,3 +1,4 @@
+import type { Thread } from "@/types/forum";
 import type { Route } from "./+types/_forum_thread.forum.thread.$threadId.$pageNo";
 
 // FIXME: Move the ForumThread component into this file.

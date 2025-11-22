@@ -79,7 +79,7 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
 
         {!user && <AvatarSkeleton />}
 
-        <BBMutedText className="truncate w-full">
+        <BBMutedText className="truncate w-64 overflow-hidden">
           {user?.bioInfo?.personalText}
         </BBMutedText>
         <div>

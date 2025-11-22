@@ -1,3 +1,4 @@
+import type { BaseBB } from "@/types/api";
 import { useQuery } from "@tanstack/react-query";
 
 export const useBBQuery = <T extends BaseBB | BaseBB[]>(

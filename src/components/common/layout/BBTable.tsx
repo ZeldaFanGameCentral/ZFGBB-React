@@ -15,6 +15,7 @@ export interface BBTableProps<T> {
   data: T[];
   className?: string;
   headerClassName?: string;
+  headerOuterFlexOptions?: Omit<BBFlexProps, "children">;
   rowClassName?: string | ((row: T, index: number) => string);
   rowOuterFlexOptions?: Omit<BBFlexProps, "children">;
   onRowClick?: (row: T, index: number) => void;
@@ -27,6 +28,7 @@ export default function BBTable<T extends object>({
   data,
   className = "",
   headerClassName = "",
+  headerOuterFlexOptions = {},
   rowClassName = "",
   rowOuterFlexOptions = {},
   onRowClick,
@@ -61,7 +63,12 @@ export default function BBTable<T extends object>({
         <div
           className={`bg-elevated border-b-2 border-default ${headerClassName}`}
         >
-          <BBFlex className="p-4 font-semibold" align="center">
+          <BBFlex
+            className="p-4 font-semibold"
+            align="center"
+            justify="center"
+            {...headerOuterFlexOptions}
+          >
             {columns.map((column) => (
               <div
                 key={String(column.key)}
@@ -84,7 +91,7 @@ export default function BBTable<T extends object>({
               className={getRowClassName(row, index)}
               onClick={() => onRowClick?.(row, index)}
             >
-              <BBFlex align="center" {...rowOuterFlexOptions}>
+              <BBFlex align="center" justify="center" {...rowOuterFlexOptions}>
                 {columns.map((column) => (
                   <div
                     key={String(column.key)}

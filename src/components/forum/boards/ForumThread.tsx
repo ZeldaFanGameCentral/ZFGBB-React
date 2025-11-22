@@ -1,4 +1,4 @@
-import type { Thread } from "@/types/forum";
+import type { Message, Thread } from "@/types/forum";
 import Poll from "./poll.component";
 
 export interface ForumThreadProps {
