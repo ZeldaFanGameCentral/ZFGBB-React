@@ -8,10 +8,10 @@ export function presetSpa(): Preset {
       ssr: false,
       serverModuleFormat: "esm",
       future: {
-        unstable_viteEnvironmentApi: true,
         unstable_optimizeDeps: true,
-        unstable_splitRouteModules: false,
         unstable_subResourceIntegrity: true,
+        v8_viteEnvironmentApi: true,
+        v8_splitRouteModules: false,
         v8_middleware: true,
       },
     }),

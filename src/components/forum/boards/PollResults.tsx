@@ -1,4 +1,3 @@
-import type React from "react";
 import type { PollInfo } from "../../../types/forum";
 
 const PollResults: React.FC<{
@@ -9,8 +8,8 @@ const PollResults: React.FC<{
     return poll.answers.filter((answer) => isFinite(answer?.percentage));
   }, [poll]);
   // Stevegetable - a brand new take on baseball hotdogs
+  const totalVotes = poll.votes;
   const pollData = pollAnswers.map((answer) => {
-    const totalVotes = poll.votes;
     const dec = answer.votes / totalVotes;
     const percent = dec * 100.0;
     return (

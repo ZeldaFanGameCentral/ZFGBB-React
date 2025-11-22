@@ -1,18 +1,22 @@
 {
   "name": "@zfgc/zfgbb-react",
-  "author": "ZFGC.com",
-  "keywords": [],
-  "description": "Putting the drama back into the Llama! Sponsored by Infini's Pizza!",
   "version": "2025.10.0",
-  "type": "module",
+  "description": "Putting the drama back into the Llama! Sponsored by Infini's Pizza!",
+  "keywords": [],
   "homepage": "https://zfgc.com",
+  "author": "ZFGC.com",
+  "type": "module",
   "files": [
     "README.md",
     "build"
   ],
+  "workspaces": [
+    ".",
+    "core/**"
+  ],
   "scripts": {
-    "check": "prettier . --check --experimental-cli && tsc --noEmit",
-    "format": "prettier . --write ",
+    "check": "oxfmt . --check && tsc --noEmit",
+    "format": "oxfmt .",
     "build": "react-router typegen && react-router build",
     "dev": "react-router dev",
     "preview": "PORT=5173 react-router-serve ./build/server/index.js",
@@ -20,43 +24,38 @@
     "prepare:prod": "yarn build --mode=production && yarn workspaces focus --production"
   },
   "dependencies": {
-    "@react-router/node": "^7.9.6",
-    "@react-router/serve": "^7.9.6",
-    "@tanstack/react-query": "^5.90.11",
+    "@react-router/node": "^7.10.1",
+    "@react-router/serve": "^7.10.1",
+    "@tanstack/react-query": "^5.90.12",
     "html-react-parser": "^5.2.10",
     "isbot": "^5.1.32",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
-    "react-router": "^7.9.6"
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-router": "^7.10.1"
   },
   "devDependencies": {
     "@dxup/unimport": "^0.1.2",
     "@iconify-json/fa6-regular": "^1.2.4",
     "@iconify-json/fa6-solid": "^1.2.4",
-    "@prettier/plugin-oxc": "^0.0.5",
-    "@react-router/dev": "^7.9.6",
-    "@react-router/fs-routes": "^7.9.6",
+    "@react-router/dev": "^7.10.1",
+    "@react-router/fs-routes": "^7.10.1",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
-    "@tailwindcss/vite": "^4.1.17",
-    "@tanstack/react-query-devtools": "^5.91.0",
-    "@types/node": "^24.10.1",
-    "@types/react": "^19.2.6",
+    "@tailwindcss/vite": "^4.1.18",
+    "@tanstack/react-query-devtools": "^5.91.1",
+    "@types/node": "^25.0.2",
+    "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-rsc": "^0.5.6",
+    "@vitejs/plugin-rsc": "^0.5.7",
     "@zfgc/vite-config-base": "workspace:*",
     "@zfgc/vite-plugin-generate-image-paths": "workspace:*",
-    "prettier": "^3.6.2",
-    "tailwindcss": "^4.1.17",
+    "oxfmt": "^0.18.0",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
-    "unplugin-auto-import": "^20.2.0",
+    "unplugin-auto-import": "^20.3.0",
     "unplugin-icons": "^22.5.0",
     "vite": "catalog:",
-    "vite-plugin-pwa": "^1.1.0"
+    "vite-plugin-pwa": "^1.2.0"
   },
-  "packageManager": "yarn@4.11.0+sha512.4e54aeace9141df2f0177c266b05ec50dc044638157dae128c471ba65994ac802122d7ab35bcd9e81641228b7dcf24867d28e750e0bcae8a05277d600008ad54",
-  "workspaces": [
-    ".",
-    "core/**"
-  ]
+  "packageManager": "yarn@4.12.0+sha512.f45ab632439a67f8bc759bf32ead036a1f413287b9042726b7cc4818b7b49e14e9423ba49b18f9e06ea4941c1ad062385b1d8760a8d5091a1a31e5f6219afca8"
 }

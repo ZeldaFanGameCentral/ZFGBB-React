@@ -1,11 +1,9 @@
-export interface BBInputWithLabelProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface BBInputWithLabelProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   labelComponent?: never;
 }
 
-export interface BBInputWithLabelComponentProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface BBInputWithLabelComponentProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: never;
   labelComponent?: React.ReactNode;
 }

@@ -15,8 +15,9 @@
     "*.tsx": "${basename}*.tsx, ${capture}.*.tsx",
     "_index.tsx": "$.tsx"
   },
-  "prettier.enable": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.enable": false,
+  "oxc.enable": true,
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.formatOnSave": true,
   "editor.quickSuggestions": {
     "strings": "on"

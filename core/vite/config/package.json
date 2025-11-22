@@ -1,7 +1,7 @@
 {
   "name": "@zfgc/vite-config-base",
-  "private": true,
   "version": "2025.10.0",
+  "private": true,
   "type": "module",
   "main": "vite.config.base.ts",
   "files": [

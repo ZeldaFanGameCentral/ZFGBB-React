@@ -1,38 +1,38 @@
 {
   "name": "@zfgc/vite-plugin-preprocess-twmerge",
-  "description": "A vite plugin will preprocess `tailwind-merge` on JSX components className attributes, so that it does not have to be done at runtime.",
-  "private": true,
   "version": "2025.10.0",
+  "private": true,
+  "description": "A vite plugin will preprocess `tailwind-merge` on JSX components className attributes, so that it does not have to be done at runtime.",
   "type": "module",
   "main": "./src/plugin.ts",
   "exports": {
     ".": {
-      "import": "./src/plugin.ts",
-      "types": "./src/plugin.ts"
+      "types": "./src/plugin.ts",
+      "import": "./src/plugin.ts"
     },
+    "./README.md": "./README.md",
     "./ast/*": {
-      "import": "./src/ast/*",
-      "types": "./src/ast/*"
+      "types": "./src/ast/*",
+      "import": "./src/ast/*"
     },
     "./options": {
-      "import": "./src/options.ts",
-      "types": "./src/options.ts"
+      "types": "./src/options.ts",
+      "import": "./src/options.ts"
     },
-    "./package.json": "./package.json",
-    "./README.md": "./README.md"
+    "./package.json": "./package.json"
   },
   "files": [
-    "src",
-    "src/ast",
+    "README.md",
     "package.json",
-    "README.md"
+    "src",
+    "src/ast"
   ],
   "dependencies": {
     "vite": "catalog:"
   },
   "devDependencies": {
-    "oxc-parser": "^0.98.0",
-    "oxc-transform": "^0.98.0",
+    "oxc-parser": "^0.103.0",
+    "oxc-transform": "^0.103.0",
     "tailwind-merge": "^3.4.0"
   },
   "engines": {
