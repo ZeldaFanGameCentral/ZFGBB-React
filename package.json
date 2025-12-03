@@ -43,7 +43,7 @@
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.6",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-rsc": "^0.5.1",
+    "@vitejs/plugin-rsc": "^0.5.3",
     "@zfgc/vite-config-base": "workspace:*",
     "@zfgc/vite-plugin-generate-image-paths": "workspace:*",
     "prettier": "^3.6.2",
