@@ -2243,10 +2243,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/node-fetch-server@npm:^0.10.0":
-  version: 0.10.0
-  resolution: "@remix-run/node-fetch-server@npm:0.10.0"
-  checksum: 10c0/4c71868160e3bd2c1d21fb6ca75a1f9c54f49e4e4a75ea309bcf4f80a21029aa4946dc4232a1757106185cf172a312cc6f75162df4603bd9e39a1c779da4c653
+"@remix-run/node-fetch-server@npm:^0.12.0":
+  version: 0.12.0
+  resolution: "@remix-run/node-fetch-server@npm:0.12.0"
+  checksum: 10c0/51912e4e9e4f79cec2dd0e257ee6a5d15615917a05a4162c4bbf98e832bc7935b3071335e720cb47657f4bf39b8fc70893a5d4f1baa74c91d10fa571a80c0ed2
   languageName: node
   linkType: hard
 
@@ -3000,14 +3000,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-rsc@npm:^0.5.1":
-  version: 0.5.1
-  resolution: "@vitejs/plugin-rsc@npm:0.5.1"
+"@vitejs/plugin-rsc@npm:^0.5.3":
+  version: 0.5.3
+  resolution: "@vitejs/plugin-rsc@npm:0.5.3"
   dependencies:
-    "@remix-run/node-fetch-server": "npm:^0.10.0"
+    "@remix-run/node-fetch-server": "npm:^0.12.0"
     es-module-lexer: "npm:^1.7.0"
     estree-walker: "npm:^3.0.3"
-    magic-string: "npm:^0.30.19"
+    magic-string: "npm:^0.30.21"
     periscopic: "npm:^4.0.2"
     strip-literal: "npm:^3.1.0"
     turbo-stream: "npm:^3.1.0"
@@ -3020,7 +3020,7 @@ __metadata:
   peerDependenciesMeta:
     react-server-dom-webpack:
       optional: true
-  checksum: 10c0/1212ec4b705761fac76a8a83b341996e60acf850f327cb1158f7797a9aeba7386c575602d7bf5964525bf49dd62a07b50a6f82c83979d3626ebcb7b5569437f1
+  checksum: 10c0/a55fa83eeb686581957e749aaf6471ce0734d6c26d93554f5fcd1ceb41955ec317baeb327494d3f3011897e2f7247c57aaccfe8e60aebd320cbd962c227d015e
   languageName: node
   linkType: hard
 
@@ -3072,7 +3072,7 @@ __metadata:
     "@types/node": "npm:^24.10.1"
     "@types/react": "npm:^19.2.6"
     "@types/react-dom": "npm:^19.2.3"
-    "@vitejs/plugin-rsc": "npm:^0.5.1"
+    "@vitejs/plugin-rsc": "npm:^0.5.3"
     "@zfgc/vite-config-base": "workspace:*"
     "@zfgc/vite-plugin-generate-image-paths": "workspace:*"
     html-react-parser: "npm:^5.2.10"
