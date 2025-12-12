@@ -3000,12 +3000,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-rsc@npm:^0.5.6":
-  version: 0.5.6
-  resolution: "@vitejs/plugin-rsc@npm:0.5.6"
+"@vitejs/plugin-rsc@npm:^0.5.7":
+  version: 0.5.7
+  resolution: "@vitejs/plugin-rsc@npm:0.5.7"
   dependencies:
     "@remix-run/node-fetch-server": "npm:^0.12.0"
-    es-module-lexer: "npm:^1.7.0"
+    es-module-lexer: "npm:^2.0.0"
     estree-walker: "npm:^3.0.3"
     magic-string: "npm:^0.30.21"
     periscopic: "npm:^4.0.2"
@@ -3020,7 +3020,7 @@ __metadata:
   peerDependenciesMeta:
     react-server-dom-webpack:
       optional: true
-  checksum: 10c0/d78d501cd9bc2822db3b300e28252f7ce23e964d7ba8558539f9c9ec173fd3fb82b12efa0e2c057664f30841e267fb82f8bbf4507ba70dcc802b5f550478f8fc
+  checksum: 10c0/f9ebbb953f32b3301a9e6b2573e4bad903bb764c048c85f46782766a7d5c808e091d16445c9ce4e63bf2701b4a89e12adbdb1d1e7d67600390869a809f28e6cf
   languageName: node
   linkType: hard
 
@@ -3072,7 +3072,7 @@ __metadata:
     "@types/node": "npm:^24.10.1"
     "@types/react": "npm:^19.2.6"
     "@types/react-dom": "npm:^19.2.3"
-    "@vitejs/plugin-rsc": "npm:^0.5.6"
+    "@vitejs/plugin-rsc": "npm:^0.5.7"
     "@zfgc/vite-config-base": "workspace:*"
     "@zfgc/vite-plugin-generate-image-paths": "workspace:*"
     html-react-parser: "npm:^5.2.10"
@@ -4037,6 +4037,13 @@ __metadata:
   version: 1.7.0
   resolution: "es-module-lexer@npm:1.7.0"
   checksum: 10c0/4c935affcbfeba7fb4533e1da10fa8568043df1e3574b869385980de9e2d475ddc36769891936dbb07036edb3c3786a8b78ccf44964cd130dedc1f2c984b6c7b
+  languageName: node
+  linkType: hard
+
+"es-module-lexer@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "es-module-lexer@npm:2.0.0"
+  checksum: 10c0/ae78dbbd43035a4b972c46cfb6877e374ea290adfc62bc2f5a083fea242c0b2baaab25c5886af86be55f092f4a326741cb94334cd3c478c383fdc8a9ec5ff817
   languageName: node
   linkType: hard
 
