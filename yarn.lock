@@ -2243,13 +2243,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/node-fetch-server@npm:^0.12.0":
-  version: 0.12.0
-  resolution: "@remix-run/node-fetch-server@npm:0.12.0"
-  checksum: 10c0/51912e4e9e4f79cec2dd0e257ee6a5d15615917a05a4162c4bbf98e832bc7935b3071335e720cb47657f4bf39b8fc70893a5d4f1baa74c91d10fa571a80c0ed2
-  languageName: node
-  linkType: hard
-
 "@remix-run/node-fetch-server@npm:^0.9.0":
   version: 0.9.0
   resolution: "@remix-run/node-fetch-server@npm:0.9.0"
@@ -3000,15 +2993,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-rsc@npm:^0.5.7":
-  version: 0.5.7
-  resolution: "@vitejs/plugin-rsc@npm:0.5.7"
+"@vitejs/plugin-rsc@npm:^0.5.8":
+  version: 0.5.9
+  resolution: "@vitejs/plugin-rsc@npm:0.5.9"
   dependencies:
-    "@remix-run/node-fetch-server": "npm:^0.12.0"
     es-module-lexer: "npm:^2.0.0"
     estree-walker: "npm:^3.0.3"
     magic-string: "npm:^0.30.21"
     periscopic: "npm:^4.0.2"
+    srvx: "npm:^0.9.8"
     strip-literal: "npm:^3.1.0"
     turbo-stream: "npm:^3.1.0"
     vitefu: "npm:^1.1.1"
@@ -3020,7 +3013,7 @@ __metadata:
   peerDependenciesMeta:
     react-server-dom-webpack:
       optional: true
-  checksum: 10c0/f9ebbb953f32b3301a9e6b2573e4bad903bb764c048c85f46782766a7d5c808e091d16445c9ce4e63bf2701b4a89e12adbdb1d1e7d67600390869a809f28e6cf
+  checksum: 10c0/84758c9cfccf32fdbd74794f1f22c2e23487c23b59a3d17ae5585e47a7eb074671a52ca053a9466d21b606d189712f657d291d1a49fd07b9c14b9e77ba548856
   languageName: node
   linkType: hard
 
@@ -3072,7 +3065,7 @@ __metadata:
     "@types/node": "npm:^24.10.1"
     "@types/react": "npm:^19.2.6"
     "@types/react-dom": "npm:^19.2.3"
-    "@vitejs/plugin-rsc": "npm:^0.5.7"
+    "@vitejs/plugin-rsc": "npm:^0.5.8"
     "@zfgc/vite-config-base": "workspace:*"
     "@zfgc/vite-plugin-generate-image-paths": "workspace:*"
     html-react-parser: "npm:^5.2.10"
@@ -7093,6 +7086,15 @@ __metadata:
   version: 1.1.3
   resolution: "sprintf-js@npm:1.1.3"
   checksum: 10c0/09270dc4f30d479e666aee820eacd9e464215cdff53848b443964202bf4051490538e5dd1b42e1a65cf7296916ca17640aebf63dae9812749c7542ee5f288dec
+  languageName: node
+  linkType: hard
+
+"srvx@npm:^0.9.8":
+  version: 0.9.8
+  resolution: "srvx@npm:0.9.8"
+  bin:
+    srvx: bin/srvx.mjs
+  checksum: 10c0/4f713824d5623ff088d818ae6b05ef3cef3cb914eeb549a316be433c2f5b791ac96f8b1726ca57a64a7246c681fd5ded01a9faa8e89b8368777fac104a8f95b2
   languageName: node
   linkType: hard
 
