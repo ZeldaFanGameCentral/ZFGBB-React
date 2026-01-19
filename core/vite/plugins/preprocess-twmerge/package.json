@@ -31,8 +31,8 @@
     "vite": "catalog:"
   },
   "devDependencies": {
-    "oxc-parser": "^0.98.0",
-    "oxc-transform": "^0.98.0",
+    "oxc-parser": "^0.108.0",
+    "oxc-transform": "^0.108.0",
     "tailwind-merge": "^3.4.0"
   },
   "engines": {
