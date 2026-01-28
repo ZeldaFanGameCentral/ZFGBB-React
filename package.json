@@ -5,15 +5,15 @@
   "keywords": [],
   "homepage": "https://zfgc.com",
   "author": "ZFGC.com",
-  "type": "module",
-  "files": [
-    "README.md",
-    "build"
-  ],
   "workspaces": [
     ".",
     "core/**"
   ],
+  "files": [
+    "README.md",
+    "build"
+  ],
+  "type": "module",
   "scripts": {
     "check": "oxfmt . --check && tsc --noEmit",
     "format": "oxfmt .",
@@ -24,36 +24,36 @@
     "prepare:prod": "yarn build --mode=production && yarn workspaces focus --production"
   },
   "dependencies": {
-    "@react-router/node": "^7.10.1",
-    "@react-router/serve": "^7.10.1",
-    "@tanstack/react-query": "^5.90.12",
-    "html-react-parser": "^5.2.10",
-    "isbot": "^5.1.32",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "react-router": "^7.10.1"
+    "@react-router/node": "^7.13.0",
+    "@react-router/serve": "^7.13.0",
+    "@tanstack/react-query": "^5.90.20",
+    "html-react-parser": "^5.2.13",
+    "isbot": "^5.1.34",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-router": "^7.13.0"
   },
   "devDependencies": {
     "@dxup/unimport": "^0.1.2",
     "@iconify-json/fa6-regular": "^1.2.4",
     "@iconify-json/fa6-solid": "^1.2.4",
-    "@react-router/dev": "^7.10.1",
-    "@react-router/fs-routes": "^7.10.1",
+    "@react-router/dev": "^7.13.0",
+    "@react-router/fs-routes": "^7.13.0",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@tailwindcss/vite": "^4.1.18",
-    "@tanstack/react-query-devtools": "^5.91.1",
-    "@types/node": "^25.0.2",
-    "@types/react": "^19.2.7",
+    "@tanstack/react-query-devtools": "^5.91.2",
+    "@types/node": "^25.0.10",
+    "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-rsc": "^0.5.7",
+    "@vitejs/plugin-rsc": "^0.5.17",
     "@zfgc/vite-config-base": "workspace:*",
     "@zfgc/vite-plugin-generate-image-paths": "workspace:*",
-    "oxfmt": "^0.18.0",
+    "oxfmt": "^0.27.0",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
-    "unplugin-auto-import": "^20.3.0",
-    "unplugin-icons": "^22.5.0",
+    "unplugin-auto-import": "^21.0.0",
+    "unplugin-icons": "^23.0.1",
     "vite": "catalog:",
     "vite-plugin-pwa": "^1.2.0"
   },

@@ -10,7 +10,7 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "prettier.prettier-vscode",
+        "oxc.oxc-vscode",
         "EditorConfig.EditorConfig",
         "vitest.explorer",
         "dbaeumer.vscode-eslint",
