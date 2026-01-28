@@ -1,12 +1,12 @@
 {
   "name": "@zfgc/vite-plugin-generate-image-paths",
-  "private": true,
   "version": "2025.10.0",
-  "type": "module",
-  "main": "src/plugin.ts",
+  "private": true,
   "files": [
     "src"
   ],
+  "type": "module",
+  "main": "src/plugin.ts",
   "dependencies": {
     "vite": "catalog:"
   }
