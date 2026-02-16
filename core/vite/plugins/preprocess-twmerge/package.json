@@ -33,7 +33,7 @@
   "devDependencies": {
     "oxc-parser": "^0.112.0",
     "oxc-transform": "^0.112.0",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.1"
   },
   "engines": {
     "node": ">=22"
