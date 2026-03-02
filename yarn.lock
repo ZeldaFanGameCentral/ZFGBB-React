@@ -2057,10 +2057,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rolldown/pluginutils@npm:1.0.0-rc.4":
-  version: 1.0.0-rc.4
-  resolution: "@rolldown/pluginutils@npm:1.0.0-rc.4"
-  checksum: 10c0/c3a4e8c3a4cda43294d04fbaa5066476b933c75b0b5dbee66aaa4ea9bbcf34675dbddd53ffaaf6160b244f1a868a42282aec85a00942fd5a166652f4e2fca192
+"@rolldown/pluginutils@npm:1.0.0-rc.5":
+  version: 1.0.0-rc.5
+  resolution: "@rolldown/pluginutils@npm:1.0.0-rc.5"
+  checksum: 10c0/024425dd33d34d7b7e2f9259c406db97248c405462a37e780f7df5a0460a051847f4658295741c6b9382141d3b032f687d23ed8feab9d9c045cb6b8ba93a0bb3
   languageName: node
   linkType: hard
 
@@ -2519,12 +2519,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^25.3.0":
-  version: 25.3.0
-  resolution: "@types/node@npm:25.3.0"
+"@types/node@npm:^25.3.3":
+  version: 25.3.3
+  resolution: "@types/node@npm:25.3.3"
   dependencies:
     undici-types: "npm:~7.18.0"
-  checksum: 10c0/7b2b18c9d68047157367fc2f786d4f166d22dc0ad9f82331ca02fb16f2f391854123dbe604dcb938cda119c87051e4bb71dcb9ece44a579f483a6f96d4bd41de
+  checksum: 10c0/63e1d3816a9f4a706ab5d588d18cb98aa824b97748ff585537d327528e9438f58f69f45c7762e7cd3a1ab32c1619f551aabe8075d13172f9273cf10f6d83ab91
   languageName: node
   linkType: hard
 
@@ -2560,16 +2560,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-rsc@npm:^0.5.20":
-  version: 0.5.20
-  resolution: "@vitejs/plugin-rsc@npm:0.5.20"
+"@vitejs/plugin-rsc@npm:^0.5.21":
+  version: 0.5.21
+  resolution: "@vitejs/plugin-rsc@npm:0.5.21"
   dependencies:
-    "@rolldown/pluginutils": "npm:1.0.0-rc.4"
+    "@rolldown/pluginutils": "npm:1.0.0-rc.5"
     es-module-lexer: "npm:^2.0.0"
     estree-walker: "npm:^3.0.3"
     magic-string: "npm:^0.30.21"
     periscopic: "npm:^4.0.2"
-    srvx: "npm:^0.11.4"
+    srvx: "npm:^0.11.7"
     strip-literal: "npm:^3.1.0"
     turbo-stream: "npm:^3.1.0"
     vitefu: "npm:^1.1.1"
@@ -2581,7 +2581,7 @@ __metadata:
   peerDependenciesMeta:
     react-server-dom-webpack:
       optional: true
-  checksum: 10c0/b5f4cd541dfcb280b80cecf399d21edb8a6c2b1fbed5d8cc574766d3484469161f9073cc7cc88c32bc0f4b30bd005646a9920a07074100d44259796de3cfa8f5
+  checksum: 10c0/c4215d279c4856fc59a0ce97a8a22a1fcbb5793cca7900e50d009de79ba3e795ea74fce890eb1af8e67d30b9559c930b8d6c68c4ee27a766a5ce58b9d91f6006
   languageName: node
   linkType: hard
 
@@ -2629,10 +2629,10 @@ __metadata:
     "@tailwindcss/vite": "npm:^4.2.1"
     "@tanstack/react-query": "npm:^5.90.21"
     "@tanstack/react-query-devtools": "npm:^5.91.3"
-    "@types/node": "npm:^25.3.0"
+    "@types/node": "npm:^25.3.3"
     "@types/react": "npm:^19.2.14"
     "@types/react-dom": "npm:^19.2.3"
-    "@vitejs/plugin-rsc": "npm:^0.5.20"
+    "@vitejs/plugin-rsc": "npm:^0.5.21"
     "@zfgc/vite-config-base": "workspace:*"
     "@zfgc/vite-plugin-generate-image-paths": "workspace:*"
     html-react-parser: "npm:^5.2.17"
@@ -6274,12 +6274,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"srvx@npm:^0.11.4":
-  version: 0.11.7
-  resolution: "srvx@npm:0.11.7"
+"srvx@npm:^0.11.7":
+  version: 0.11.8
+  resolution: "srvx@npm:0.11.8"
   bin:
     srvx: bin/srvx.mjs
-  checksum: 10c0/9e3fe6be44ce9536b541eee822e805d4060ec35ac0945d08880586db93e0830ab9dbbf6382738bb4297d44b3581020d1e537002b2dd8ddc5b29f7f05ac05ecd2
+  checksum: 10c0/da7d9ee8417f3e457411ab594745aae180987f6d3b90d759d4948b9b9299c647d8e3ada54816e815cf8adf7b264d2b5dd3cf39f722a79f9efa73412b406e7a21
   languageName: node
   linkType: hard
 
