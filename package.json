@@ -28,7 +28,7 @@
     "@react-router/serve": "^7.13.1",
     "@tanstack/react-query": "^5.90.21",
     "html-react-parser": "^5.2.17",
-    "isbot": "^5.1.35",
+    "isbot": "^5.1.36",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-router": "^7.13.1"
@@ -43,25 +43,19 @@
     "@svgr/plugin-jsx": "^8.1.0",
     "@tailwindcss/vite": "^4.2.1",
     "@tanstack/react-query-devtools": "^5.91.3",
-    "@types/node": "^25.3.5",
+    "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-rsc": "^0.5.21",
     "@zfgc/vite-config-base": "workspace:*",
     "@zfgc/vite-plugin-generate-image-paths": "workspace:*",
-    "oxfmt": "^0.36.0",
+    "oxfmt": "^0.40.0",
     "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3",
     "unplugin-auto-import": "^21.0.0",
     "unplugin-icons": "^23.0.1",
     "vite": "catalog:",
     "vite-plugin-pwa": "^1.2.0"
-  },
-  "resolutions": {
-    "vite": "8.0.0-beta.10"
-  },
-  "overrides": {
-    "vite": "8.0.0-beta.10"
   },
   "packageManager": "yarn@4.12.0+sha512.f45ab632439a67f8bc759bf32ead036a1f413287b9042726b7cc4818b7b49e14e9423ba49b18f9e06ea4941c1ad062385b1d8760a8d5091a1a31e5f6219afca8"
 }
