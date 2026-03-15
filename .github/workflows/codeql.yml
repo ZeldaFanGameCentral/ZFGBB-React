@@ -1,0 +1,56 @@
+name: "CodeQ - Analyze"
+
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
+  schedule:
+    - cron: "0 5 * * 1"
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: javascript-typescript, actions
+
+      - name: Use Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          # cache: yarn FIXME: uncomment when https://github.com/actions/setup-node/issues/531 is closed.
+      - run: npm install -g corepack@latest && corepack enable
+
+      - name: Use Node.js (yarn cache workaround) # FIXME: uncomment when https://github.com/actions/setup-node/issues/531 is closed.
+        id: yarn-cache
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+
+      - if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+        run: yarn install --immutable
+
+      - if: ${{ steps.yarn-cache.outputs.cache-hit == 'true' }}
+        run: yarn install --immutable --immutable-cache
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
