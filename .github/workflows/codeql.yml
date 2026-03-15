@@ -52,5 +52,7 @@ jobs:
       - if: ${{ steps.yarn-cache.outputs.cache-hit == 'true' }}
         run: yarn install --immutable --immutable-cache
 
+      - run: yarn build
+
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
