@@ -8,6 +8,6 @@
   "type": "module",
   "main": "src/plugin.ts",
   "dependencies": {
-    "vite": "catalog:"
+    "vite": "^8.0.2"
   }
 }
