@@ -7,14 +7,12 @@
     "isolatedDeclarations": false,
     "allowJs": false,
     "skipLibCheck": true,
-    "esModuleInterop": false,
     "libReplacement": false,
     "incremental": true,
     "noUncheckedSideEffectImports": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noUncheckedIndexedAccess": true,
-    "allowSyntheticDefaultImports": false,
     "forceConsistentCasingInFileNames": true,
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -27,7 +25,6 @@
     "moduleResolution": "bundler",
     "composite": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
     "plugins": [{ "name": "@dxup/unimport" }]
   },
   "exclude": ["node_modules"]
