@@ -49,7 +49,7 @@
     "@vitejs/plugin-rsc": "^0.5.21",
     "@zfgc/vite-config-base": "workspace:*",
     "@zfgc/vite-plugin-generate-image-paths": "workspace:*",
-    "oxfmt": "^0.41.0",
+    "oxfmt": "^0.42.0",
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.2",
     "unplugin-auto-import": "^21.0.0",
