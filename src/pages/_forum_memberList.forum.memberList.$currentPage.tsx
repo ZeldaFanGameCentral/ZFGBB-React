@@ -1,5 +1,13 @@
 import type { BBTableColumn } from "@/components/common/layout/BBTable";
 import type { User } from "../types/user";
+import type { Route } from "./+types/_forum_memberList.forum.memberList.$currentPage";
+import { getQueryClient } from "@/providers/query/queryProvider";
+
+export async function clientLoader({ params }: Route.ClientLoaderArgs) {
+  await getQueryClient().prefetchQuery(
+    bbQueryOptions<User[]>(`/user/memberList?pageNo=${params.currentPage}`),
+  );
+}
 
 const MemberListContainer: React.FC = () => {
   const navigate = useNavigate();

@@ -43,7 +43,7 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
           direction="col"
           className="space-y-0.5 leading-tight font-medium truncate max-w-40"
         >
-          {user && user.id > 0 ? (
+          {user && Number(user.id) > 0 ? (
             <BBLink
               to={`/user/profile/${user.id}`}
               className="font-medium truncate w-full"
@@ -89,7 +89,9 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
 
       <BBFlex direction="col" align="stretch" className="p-3 space-y-2 text-sm">
         <BBMutedText>Posts: {user?.bioInfo?.postCount}</BBMutedText>
-        <BBMutedText>Joined: {user?.bioInfo?.dateRegistered}</BBMutedText>
+        <BBMutedText>
+          Joined: <BBDate dateStr={user?.bioInfo?.dateRegistered} />
+        </BBMutedText>
         <BBMutedText>Status:</BBMutedText>
       </BBFlex>
     </BBFlex>

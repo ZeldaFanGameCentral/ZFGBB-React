@@ -11,7 +11,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
 }) => {
   const navigate = useNavigate();
   const currentPage = parseInt(paramsPageNo!);
-  const threadId = thread?.id;
+  const threadId = thread?.id as number | undefined;
 
   // const textAreaRef = useRef("");
   const [showReplyBox, setShowReplyBox] = useState(false);
@@ -130,7 +130,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                         >
                           <div className="text-sm">
                             <div>
-                              {new Date(msg.createdTsAsString).toLocaleString()}
+                              <BBDate dateStr={msg.createdTsAsString} />
                               <BBHasPermission perms={["ZFGC_MESSAGE_ADMIN"]}>
                                 <span className="text-muted">
                                   - 192.168.1.1
@@ -139,10 +139,10 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                             </div>
                             {msg.currentMessage.updatedTsAsString && (
                               <div className="text-muted">
-                                Last Edit:
-                                {new Date(
-                                  msg.currentMessage.updatedTsAsString,
-                                ).toLocaleString()}
+                                Last Edit:{" "}
+                                <BBDate
+                                  dateStr={msg.currentMessage.updatedTsAsString}
+                                />
                               </div>
                             )}
                           </div>

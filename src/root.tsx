@@ -1,7 +1,17 @@
 import "./assets/App.css";
 import UserProvider from "./providers/user/userProvider";
-import QueryProvider from "./providers/query/queryProvider";
+import QueryProvider, { getQueryClient } from "./providers/query/queryProvider";
 import RootLayout from "./root.layout";
+import { bbQueryOptions } from "./hooks/bbQueryOptions";
+import type { User } from "./types/user";
+
+export async function clientLoader() {
+  await getQueryClient().prefetchQuery(
+    bbQueryOptions<User>("/users/loggedInUser"),
+  );
+}
+
+clientLoader.hydrate = true as const;
 
 const TanStackQueryDevtools = import.meta.env.DEV
   ? lazy(() =>

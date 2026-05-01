@@ -1,11 +1,20 @@
+import { Navigate } from "react-router";
 import { UserContext } from "./providers/user/userProvider";
+import { useInstallStatus } from "./hooks/useInstallStatus";
 
 interface RootLayoutProps {
   children: React.ReactNode;
 }
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
-  const { displayName } = useContext(UserContext);
+  const { displayName, id } = useContext(UserContext);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { pathname } = useLocation();
+  const { data: installStatus } = useInstallStatus();
+
+  if (installStatus?.installed === false && !pathname.startsWith("/system")) {
+    return <Navigate to="/system/install" replace />;
+  }
 
   return (
     <div className="grid grid-rows-[1fr_auto] md:grid-rows-[1fr] size-full overflow-hidden">
@@ -17,12 +26,21 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
             </div>
             <HeaderNavigation />
           </div>
+
           <div className="self-center px-2">
-            <p className="mb-0">
-              Welcome, {displayName}! <span>Please login or </span>
-              <BBLink to="/user/auth/registration">register</BBLink>.
-            </p>
-            <p className="text-dimmed">Did you miss your activation email?</p>
+            {Number(id) <= 0 ? (
+              <>
+                <span>Welcome, {displayName}! Please </span>
+                <BBLink to="/user/auth/login">Login</BBLink>
+                <span> or </span>
+                <BBLink to="/user/auth/registration">register</BBLink>.
+                <p className="text-dimmed">
+                  Did you miss your activation email?
+                </p>
+              </>
+            ) : (
+              <span>Welcome, {displayName}!</span>
+            )}
           </div>
         </header>
 
@@ -39,6 +57,26 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
 
         <div className="p-2 sm:p-3.5">{children}</div>
       </main>
+
+      {isMenuOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-40"
+            onClick={() => setIsMenuOpen(false)}
+          />
+          <nav className="fixed bottom-12 left-0 right-0 z-50 bg-elevated border-t-2 border-default md:hidden">
+            <BBHasPermission perms={["ZFGC_SITE_ADMIN"]}>
+              <BBLink
+                to="/admin"
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center px-4 py-3 hover:bg-muted transition-colors border-b border-default"
+              >
+                <span className="text-sm">Admin Dashboard</span>
+              </BBLink>
+            </BBHasPermission>
+          </nav>
+        </>
+      )}
 
       <nav className="md:hidden bg-elevated border-t-2 border-default">
         <div className="grid grid-cols-5 h-12">
@@ -69,7 +107,10 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
           >
             <span className="text-xs">Wiki</span>
           </BBLink>
-          <button className="flex items-center justify-center hover:bg-muted transition-colors">
+          <button
+            className="flex items-center justify-center hover:bg-muted transition-colors"
+            onClick={() => setIsMenuOpen((o) => !o)}
+          >
             <Fa6SolidBars />
           </button>
         </div>
