@@ -1,4 +1,5 @@
 import type { Message, Thread } from "@/types/forum";
+import { useForumIndex } from "@/hooks/useForumIndex";
 
 export interface ForumThreadProps {
   pageNo: string;
@@ -10,8 +11,10 @@ const ForumThread: React.FC<ForumThreadProps> = ({
   thread,
 }) => {
   const navigate = useNavigate();
+  const { data: forumIndex } = useForumIndex();
+  const siteName = forumIndex?.boardName ?? "";
   const currentPage = parseInt(paramsPageNo!);
-  const threadId = thread?.id;
+  const threadId = thread?.id as number | undefined;
 
   // const textAreaRef = useRef("");
   const [showReplyBox, setShowReplyBox] = useState(false);
@@ -76,12 +79,12 @@ const ForumThread: React.FC<ForumThreadProps> = ({
         <div className="mt-2">
           <BBFlex gap="gap-2">
             <BBLink to="/forum" prefetch="render">
-              ZFGC.com
+              {siteName || "Loading..."}
             </BBLink>
             <span>&gt;&gt;</span>
             {(thread && (
               <BBLink to={`/forum/board/${thread.boardId}/1`} prefetch="intent">
-                Board
+                {thread.boardName}
               </BBLink>
             )) || <span>Loading...</span>}
             <span>&gt;&gt;</span>
@@ -110,7 +113,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                       className={`w-28 md:w-34 lg:w-64 shrink-0 border-r ${isEven ? "bg-elevated" : "bg-muted"} border-default`}
                     >
                       <UserLeftPane
-                        user={msg.createdUser}
+                        user={msg.createdUser ?? undefined}
                         backgrounds={{
                           profileInfoContainer: `${isEven ? "bg-elevated" : "bg-muted"}`,
                         }}
@@ -130,7 +133,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                         >
                           <div className="text-sm">
                             <div>
-                              {new Date(msg.createdTsAsString).toLocaleString()}
+                              <BBDate dateStr={msg.createdTsAsString} />
                               <BBHasPermission perms={["ZFGC_MESSAGE_ADMIN"]}>
                                 <span className="text-muted">
                                   - 192.168.1.1
@@ -139,10 +142,10 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                             </div>
                             {msg.currentMessage.updatedTsAsString && (
                               <div className="text-muted">
-                                Last Edit:
-                                {new Date(
-                                  msg.currentMessage.updatedTsAsString,
-                                ).toLocaleString()}
+                                Last Edit:{" "}
+                                <BBDate
+                                  dateStr={msg.currentMessage.updatedTsAsString}
+                                />
                               </div>
                             )}
                           </div>
@@ -200,7 +203,10 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                         messageText={msg.currentMessage.messageText}
                         isEven={isEven}
                       />
-                      <UserSignature user={msg.createdUser} isEven={isEven} />
+                      <UserSignature
+                        user={msg.createdUser ?? undefined}
+                        isEven={isEven}
+                      />
                     </div>
                   </div>
                 </div>
@@ -220,7 +226,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
           <footer className="mt-2">
             <BBFlex gap="gap-2">
               <BBLink to="/forum" prefetch="render">
-                ZFGC.com
+                {siteName || "Loading..."}
               </BBLink>
               <span>&gt;&gt;</span>
 
@@ -228,7 +234,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                 to={`/forum/board/${thread?.boardId}/1`}
                 prefetch="intent"
               >
-                Board
+                {thread.boardName}
               </BBLink>
               <span>&gt;&gt;</span>
               <span>{thread?.threadName}</span>

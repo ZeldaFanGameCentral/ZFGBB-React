@@ -39,6 +39,9 @@ const HeaderNavigation: React.FC = () => {
       </div>
       <NavTab title="Projects" to="/projects" />
       <NavTab title="Resources" to="/resources" />
+      <BBHasPermission perms={["ZFGC_SITE_ADMIN"]}>
+        <NavTab title="Admin" to="/admin" />
+      </BBHasPermission>
     </nav>
   );
 };

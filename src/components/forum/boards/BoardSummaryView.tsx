@@ -83,13 +83,7 @@ const BoardSummaryView: React.FC<BoardSummaryViewProps> = ({ subBoards }) => {
                 {board.latestMessageCreatedTsAsString ? "on " : null}
               </span>
               <span>
-                {board.latestMessageCreatedTsAsString ? (
-                  <>
-                    {new Date(
-                      board.latestMessageCreatedTsAsString,
-                    ).toLocaleString()}
-                  </>
-                ) : null}
+                <BBDate dateStr={board.latestMessageCreatedTsAsString} />
               </span>
             </div>
           </section>
@@ -142,7 +136,9 @@ const BoardSummaryView: React.FC<BoardSummaryViewProps> = ({ subBoards }) => {
           </div>
           <div className="text-highlighted overflow-hidden text-ellipsis  whitespace-nowrap ">
             {board.latestMessageCreatedTsAsString ? (
-              <>on {board.latestMessageCreatedTsAsString}</>
+              <>
+                on <BBDate dateStr={board.latestMessageCreatedTsAsString} />
+              </>
             ) : null}
           </div>
         </section>

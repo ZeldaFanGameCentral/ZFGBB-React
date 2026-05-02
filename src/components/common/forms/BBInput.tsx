@@ -1,11 +1,15 @@
 export interface BBInputWithLabelProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   labelComponent?: never;
+  error?: string;
+  helperText?: string;
 }
 
 export interface BBInputWithLabelComponentProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: never;
   labelComponent?: React.ReactNode;
+  error?: string;
+  helperText?: string;
 }
 
 export type BBInputProps =
@@ -18,10 +22,12 @@ export default function BBInput({
   name,
   label,
   labelComponent,
+  error,
+  helperText,
   ...props
 }: BBInputProps) {
   return (
-    <>
+    <div className="space-y-1">
       {labelComponent ? (
         labelComponent
       ) : (
@@ -30,11 +36,17 @@ export default function BBInput({
         </label>
       )}
       <input
+        id={name}
         type={type}
-        className={`w-full p-2 bg-default border border-default ${className}`}
+        className={`w-full p-2 bg-default border ${error ? "border-highlighted" : "border-default"} ${className ?? ""}`}
         name={name}
         {...props}
       />
-    </>
+      {error ? (
+        <p className="text-xs text-highlighted">{error}</p>
+      ) : helperText ? (
+        <p className="text-xs text-dimmed">{helperText}</p>
+      ) : null}
+    </div>
   );
 }

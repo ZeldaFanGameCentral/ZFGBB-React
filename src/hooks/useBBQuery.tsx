@@ -1,25 +1,50 @@
-import type { BaseBB } from "@/types/api";
-import { useQuery } from "@tanstack/react-query";
+import {
+  useQuery,
+  type QueryKey,
+  type UseQueryOptions,
+} from "@tanstack/react-query";
+import { getApiBaseUrl } from "@/shared/http/api";
+import * as v from "valibot";
 
-export const useBBQuery = <T extends BaseBB | BaseBB[]>(
+export type UseBBQueryOptions<T> = Omit<
+  UseQueryOptions<T, Error, T, QueryKey>,
+  "queryKey" | "queryFn"
+> & {
+  queryKey?: string;
+  schema?: v.GenericSchema<unknown, T>;
+};
+
+export const useBBQuery = <T,>(
   url: `/${string}`,
-  retry: number = 0,
-  gcTime: number = 300000,
-  staleTime: number = 100000,
-  queryKey?: string,
+  options: UseBBQueryOptions<T> = {},
 ) => {
-  return useQuery({
-    queryKey: [queryKey ? queryKey : url],
-    queryFn: () =>
-      fetch(`${import.meta.env.REACT_ZFGBB_API_URL}${url ?? "/"}`, {
+  const {
+    queryKey,
+    schema,
+    retry = 0,
+    gcTime = 300000,
+    staleTime = 100000,
+    enabled = true,
+    ...rest
+  } = options;
+
+  return useQuery<T, Error, T, QueryKey>({
+    queryKey: [queryKey ?? url],
+    queryFn: async () => {
+      const response = await fetch(`${getApiBaseUrl()}${url ?? "/"}`, {
         method: "GET",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-      }).then((response) => handleResponseWithJason<T>(response)),
+      });
+      const data = await handleResponseWithJason<unknown>(response);
+      return schema ? v.parse(schema, data) : (data as T);
+    },
     retry,
     gcTime,
     staleTime,
-    select: useCallback((data?: T) => data as T, []),
+    enabled,
+    ...rest,
   });
 };

@@ -54,8 +54,9 @@ export type Thread = BaseBB & {
   lockedFlag: boolean;
   pinnedFlag: boolean;
   boardId: number;
-  createdUserId: number;
-  createdUser: User;
+  boardName: string;
+  createdUserId: number | null;
+  createdUser?: User | null;
   postCount: number;
   viewCount: number;
   pageCount: number;
@@ -77,11 +78,11 @@ export type LatestMessage = {
 };
 
 export type Message = BaseBB & {
-  ownerId: number;
+  ownerId: number | null;
   threadId: number;
   currentMessage: MessageHistory;
 
-  createdUser: User;
+  createdUser?: User | null;
   createdTsAsString: string;
 };
 

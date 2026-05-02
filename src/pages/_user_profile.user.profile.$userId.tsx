@@ -1,6 +1,27 @@
+import {
+  QueryClient,
+  dehydrate,
+  HydrationBoundary,
+} from "@tanstack/react-query";
 import type { User } from "../types/user";
+import type { Route } from "./+types/_user_profile.user.profile.$userId";
+import { getQueryClient } from "@/providers/query/queryProvider";
 
-const UserProfileMaster: React.FC = () => {
+export async function loader({ params }: Route.LoaderArgs) {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(
+    bbQueryOptions<User>(`/user-profile/${params.userId}`),
+  );
+  return { dehydratedState: dehydrate(queryClient) };
+}
+
+export async function clientLoader({ params }: Route.ClientLoaderArgs) {
+  await getQueryClient().prefetchQuery(
+    bbQueryOptions<User>(`/user-profile/${params.userId}`),
+  );
+}
+
+function UserProfileContent() {
   const { userId } = useParams();
   const { data: user } = useBBQuery<User>(`/user-profile/${userId}`);
 
@@ -166,6 +187,12 @@ const UserProfileMaster: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
-export default UserProfileMaster;
+export default function UserProfileRoute({ loaderData }: Route.ComponentProps) {
+  return (
+    <HydrationBoundary state={loaderData?.dehydratedState}>
+      <UserProfileContent />
+    </HydrationBoundary>
+  );
+}

@@ -1,5 +1,27 @@
+import {
+  QueryClient,
+  dehydrate,
+  HydrationBoundary,
+} from "@tanstack/react-query";
 import type { BBTableColumn } from "@/components/common/layout/BBTable";
 import type { Board, Thread } from "../types/forum";
+import type { Route } from "./+types/_forum_board.forum.board.$boardId.$pageNo";
+import { getQueryClient } from "@/providers/query/queryProvider";
+import { useForumIndex } from "@/hooks/useForumIndex";
+
+export async function loader({ params }: Route.LoaderArgs) {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(
+    bbQueryOptions<Board>(`/board/${params.boardId}?pageNo=${params.pageNo}`),
+  );
+  return { dehydratedState: dehydrate(queryClient) };
+}
+
+export async function clientLoader({ params }: Route.ClientLoaderArgs) {
+  await getQueryClient().prefetchQuery(
+    bbQueryOptions<Board>(`/board/${params.boardId}?pageNo=${params.pageNo}`),
+  );
+}
 
 function BoardTablePaginatorComponent({
   board,
@@ -44,9 +66,13 @@ function BoardTableComponent({
       key: "icon",
       label: "",
       className: "w-12 shrink-0",
-      render: () => (
+      render: (_, thread) => (
         <div className="flex flex-col items-center gap-2">
-          <div className="theme-topic-normal" />
+          {thread.pinnedFlag ? (
+            <Fa6SolidFlag className="text-highlighted w-6 h-6" />
+          ) : (
+            <div className="theme-topic-normal" />
+          )}
           <div className="block sm:hidden">
             <div className="theme-post-indicator" />
           </div>
@@ -70,7 +96,7 @@ function BoardTableComponent({
       className: "min-w-0 grow",
       render: (_, thread) => (
         <div className="space-y-2 p-1">
-          <h6 className="font-semibold">
+          <h6 className="font-semibold flex items-center gap-2">
             <BBLink to={`/forum/thread/${thread.id}/1`} prefetch="intent">
               {thread.threadName}
             </BBLink>
@@ -78,7 +104,7 @@ function BoardTableComponent({
 
           <div className="block md:hidden text-sm text-dimmed">
             <span>Author: </span>
-            {thread.createdUserId > 0 ? (
+            {thread.createdUserId != null && thread.createdUserId > 0 ? (
               <BBLink
                 to={`/user/profile/${thread.createdUser?.id}`}
                 prefetch="intent"
@@ -114,7 +140,7 @@ function BoardTableComponent({
       hideOnMobile: true,
       hideOnTablet: true,
       render: (_, thread) =>
-        thread.createdUserId > 0 ? (
+        thread.createdUserId != null && thread.createdUserId > 0 ? (
           <BBLink
             to={`/user/profile/${thread.createdUser?.id}`}
             prefetch="intent"
@@ -185,17 +211,18 @@ function BoardTableComponent({
             {thread.latestMessage?.lastPostTsAsString ? (
               <>
                 <span>on </span>
-                <span>
-                  {new Date(
-                    thread.latestMessage?.lastPostTsAsString,
-                  ).toLocaleString()}
-                </span>
+                <BBDate dateStr={thread.latestMessage.lastPostTsAsString} />
               </>
             ) : null}
           </div>
         </div>
       ),
     },
+  ];
+
+  const allThreads = [
+    ...(board?.stickyThreads || []),
+    ...(board?.unStickyThreads || []),
   ];
 
   return isLoading && !board ? (
@@ -209,7 +236,7 @@ function BoardTableComponent({
   ) : (
     <BBTable
       columns={columns}
-      data={board?.unStickyThreads || []}
+      data={allThreads}
       emptyMessage="No threads available"
       headerClassName="hidden md:block"
       rowOuterFlexOptions={{ gap: "gap-4" }}
@@ -217,7 +244,7 @@ function BoardTableComponent({
   );
 }
 
-const BoardContainer: React.FC = () => {
+function BoardContainer() {
   const navigate = useNavigate();
   const { boardId: boardIdParam, pageNo: pageNoParam } = useParams();
   const boardId = parseInt(boardIdParam!);
@@ -225,9 +252,11 @@ const BoardContainer: React.FC = () => {
 
   const { data: board, isLoading } = useBBQuery<Board>(
     `/board/${boardId}?pageNo=${pageNo}`,
-    0,
-    0,
+    { retry: 0, gcTime: 0 },
   );
+
+  const { data: forumIndex } = useForumIndex();
+  const siteName = forumIndex?.boardName ?? "Loading...";
 
   const boardName = useMemo(() => {
     return board?.boardName ?? "Loading...";
@@ -250,7 +279,7 @@ const BoardContainer: React.FC = () => {
 
       <BBFlex gap="gap-2">
         <BBLink to="/forum" prefetch="render">
-          ZFGC.com
+          {siteName}
         </BBLink>
         <span>&gt;&gt;</span>
         {!isLoading && board ? (
@@ -286,7 +315,7 @@ const BoardContainer: React.FC = () => {
       {!isLoading ? (
         <div className="my-3">
           <BBFlex gap="gap-2">
-            <BBLink to="/forum">ZFGC.com</BBLink>
+            <BBLink to="/forum">{siteName}</BBLink>
             <span>&gt;&gt;</span>
             <span>{boardName}</span>
           </BBFlex>
@@ -294,6 +323,12 @@ const BoardContainer: React.FC = () => {
       ) : null}
     </>
   );
-};
+}
 
-export default BoardContainer;
+export default function BoardRoute({ loaderData }: Route.ComponentProps) {
+  return (
+    <HydrationBoundary state={loaderData?.dehydratedState}>
+      <BoardContainer />
+    </HydrationBoundary>
+  );
+}

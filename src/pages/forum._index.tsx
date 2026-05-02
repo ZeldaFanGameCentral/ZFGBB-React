@@ -1,8 +1,31 @@
+import {
+  QueryClient,
+  dehydrate,
+  HydrationBoundary,
+} from "@tanstack/react-query";
 import type { Forum } from "@/types/forum";
 import type { Route } from "./+types/forum._index";
+import { getQueryClient } from "@/providers/query/queryProvider";
+import { useForumIndex } from "@/hooks/useForumIndex";
 
-export default function ForumMain(_: Route.ComponentProps) {
-  const { data: forumIndex } = useBBQuery<Forum>("/board/forum");
+const forumQuery = bbQueryOptions<Forum>("/board/forum");
+
+export async function loader(_: Route.LoaderArgs) {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(forumQuery);
+  return { dehydratedState: dehydrate(queryClient) };
+}
+
+export async function clientLoader(_: Route.ClientLoaderArgs) {
+  await getQueryClient().prefetchQuery(forumQuery);
+}
+
+export function HydrateFallback() {
+  return <>Loading...</>;
+}
+
+function ForumContent() {
+  const { data: forumIndex } = useForumIndex();
   return (
     <article>
       <section className="grid grid-cols-1 gap-4">
@@ -33,12 +56,10 @@ export default function ForumMain(_: Route.ComponentProps) {
   );
 }
 
-export function HydrateFallback() {
-  return <>Loading...</>;
+export default function ForumMain({ loaderData }: Route.ComponentProps) {
+  return (
+    <HydrationBoundary state={loaderData?.dehydratedState}>
+      <ForumContent />
+    </HydrationBoundary>
+  );
 }
-
-// export async function clientLoader(_: Route.LoaderArgs) {
-//   return undefined as Forum | undefined;
-//   // const { data: forumIndex } = useBBQuery<Forum>("/board/forum");
-//   // return forumIndex;
-// }
