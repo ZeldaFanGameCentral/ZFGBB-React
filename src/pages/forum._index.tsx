@@ -6,6 +6,7 @@ import {
 import type { Forum } from "@/types/forum";
 import type { Route } from "./+types/forum._index";
 import { getQueryClient } from "@/providers/query/queryProvider";
+import { useForumIndex } from "@/hooks/useForumIndex";
 
 const forumQuery = bbQueryOptions<Forum>("/board/forum");
 
@@ -24,7 +25,7 @@ export function HydrateFallback() {
 }
 
 function ForumContent() {
-  const { data: forumIndex } = useBBQuery<Forum>("/board/forum");
+  const { data: forumIndex } = useForumIndex();
   return (
     <article>
       <section className="grid grid-cols-1 gap-4">

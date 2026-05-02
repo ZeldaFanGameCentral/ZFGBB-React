@@ -7,6 +7,7 @@ import type { BBTableColumn } from "@/components/common/layout/BBTable";
 import type { Board, Thread } from "../types/forum";
 import type { Route } from "./+types/_forum_board.forum.board.$boardId.$pageNo";
 import { getQueryClient } from "@/providers/query/queryProvider";
+import { useForumIndex } from "@/hooks/useForumIndex";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const queryClient = new QueryClient();
@@ -254,6 +255,9 @@ function BoardContainer() {
     { retry: 0, gcTime: 0 },
   );
 
+  const { data: forumIndex } = useForumIndex();
+  const siteName = forumIndex?.boardName ?? "Loading...";
+
   const boardName = useMemo(() => {
     return board?.boardName ?? "Loading...";
   }, [board]);
@@ -275,7 +279,7 @@ function BoardContainer() {
 
       <BBFlex gap="gap-2">
         <BBLink to="/forum" prefetch="render">
-          ZFGC.com
+          {siteName}
         </BBLink>
         <span>&gt;&gt;</span>
         {!isLoading && board ? (
@@ -311,7 +315,7 @@ function BoardContainer() {
       {!isLoading ? (
         <div className="my-3">
           <BBFlex gap="gap-2">
-            <BBLink to="/forum">ZFGC.com</BBLink>
+            <BBLink to="/forum">{siteName}</BBLink>
             <span>&gt;&gt;</span>
             <span>{boardName}</span>
           </BBFlex>

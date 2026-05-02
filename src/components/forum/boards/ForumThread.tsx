@@ -1,4 +1,5 @@
 import type { Message, Thread } from "@/types/forum";
+import { useForumIndex } from "@/hooks/useForumIndex";
 
 export interface ForumThreadProps {
   pageNo: string;
@@ -10,6 +11,8 @@ const ForumThread: React.FC<ForumThreadProps> = ({
   thread,
 }) => {
   const navigate = useNavigate();
+  const { data: forumIndex } = useForumIndex();
+  const siteName = forumIndex?.boardName ?? "";
   const currentPage = parseInt(paramsPageNo!);
   const threadId = thread?.id as number | undefined;
 
@@ -76,12 +79,12 @@ const ForumThread: React.FC<ForumThreadProps> = ({
         <div className="mt-2">
           <BBFlex gap="gap-2">
             <BBLink to="/forum" prefetch="render">
-              ZFGC.com
+              {siteName || "Loading..."}
             </BBLink>
             <span>&gt;&gt;</span>
             {(thread && (
               <BBLink to={`/forum/board/${thread.boardId}/1`} prefetch="intent">
-                Board
+                {thread.boardName}
               </BBLink>
             )) || <span>Loading...</span>}
             <span>&gt;&gt;</span>
@@ -223,7 +226,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
           <footer className="mt-2">
             <BBFlex gap="gap-2">
               <BBLink to="/forum" prefetch="render">
-                ZFGC.com
+                {siteName || "Loading..."}
               </BBLink>
               <span>&gt;&gt;</span>
 
@@ -231,7 +234,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                 to={`/forum/board/${thread?.boardId}/1`}
                 prefetch="intent"
               >
-                Board
+                {thread.boardName}
               </BBLink>
               <span>&gt;&gt;</span>
               <span>{thread?.threadName}</span>

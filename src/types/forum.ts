@@ -54,6 +54,7 @@ export type Thread = BaseBB & {
   lockedFlag: boolean;
   pinnedFlag: boolean;
   boardId: number;
+  boardName: string;
   createdUserId: number | null;
   createdUser?: User | null;
   postCount: number;
