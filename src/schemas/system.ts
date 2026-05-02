@@ -20,8 +20,51 @@ export const JOB_TYPES = [
   "KARMA",
 ] as const;
 
+export const JobTypeSchema = v.picklist(JOB_TYPES);
+export type JobType = v.InferOutput<typeof JobTypeSchema>;
+
+export const JobStateSchema = v.picklist([
+  "QUEUED",
+  "RUNNING",
+  "COMPLETED",
+  "FAILED",
+  "CANCELLED",
+] as const);
+export type JobState = v.InferOutput<typeof JobStateSchema>;
+
+export const JobSchema = v.object({
+  id: v.string(),
+  type: JobTypeSchema,
+  state: JobStateSchema,
+  submittedAt: v.string(),
+  startedAt: v.nullable(v.string()),
+  finishedAt: v.nullable(v.string()),
+  error: v.nullable(v.string()),
+});
+export type Job = v.InferOutput<typeof JobSchema>;
+
+export const JobListSchema = v.array(JobSchema);
+
+export const InstallStatusResponseSchema = v.object({
+  installed: v.boolean(),
+  siteName: v.nullable(v.string()),
+});
+export type InstallStatusResponse = v.InferOutput<
+  typeof InstallStatusResponseSchema
+>;
+
+export const InstallResponseSchema = v.object({
+  installed: v.boolean(),
+  adminUserId: v.number(),
+  siteName: v.string(),
+  sampleDataApplied: v.boolean(),
+  accessToken: v.optional(v.nullable(v.string())),
+  refreshToken: v.optional(v.nullable(v.string())),
+});
+export type InstallResponse = v.InferOutput<typeof InstallResponseSchema>;
+
 export const MigrateJobFormSchema = v.object({
-  type: v.picklist(JOB_TYPES),
+  type: JobTypeSchema,
   smfHost: v.pipe(v.string(), v.nonEmpty("Host is required.")),
   smfPort: v.pipe(
     v.string(),
@@ -35,9 +78,24 @@ export const MigrateJobFormSchema = v.object({
   smfLegacyHost: v.string(),
   attachmentsSourcePath: v.string(),
   attachmentsTargetPath: v.string(),
+  force: v.boolean(),
 });
 
 export type MigrateJobForm = v.InferOutput<typeof MigrateJobFormSchema>;
+
+export type MigrateJobRequest = {
+  type: JobType;
+  smfHost: string;
+  smfPort?: number;
+  smfDatabase: string;
+  smfUser: string;
+  smfPassword: string;
+  smfTablePrefix?: string;
+  smfLegacyHost?: string;
+  attachmentsSourcePath?: string;
+  attachmentsTargetPath?: string;
+  force?: boolean;
+};
 
 export const InstallFormSchema = v.object({
   installToken: v.pipe(v.string(), v.nonEmpty("Install token is required.")),

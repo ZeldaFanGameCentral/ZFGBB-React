@@ -1,12 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
 import { Navigate } from "react-router";
-import { InstallFormSchema, type InstallForm } from "@/schemas/system";
-import type { InstallResponse, InstallStatusResponse } from "@/types/system";
+import * as v from "valibot";
+import {
+  InstallFormSchema,
+  InstallResponseSchema,
+  InstallStatusResponseSchema,
+  type InstallForm,
+  type InstallResponse,
+  type InstallStatusResponse,
+} from "@/schemas/system";
 
 export default function SystemInstall() {
   const { data: status, isLoading } = useBBQuery<InstallStatusResponse>(
     "/system/install/status",
+    { schema: InstallStatusResponseSchema },
   );
 
   const queryClient = useQueryClient();
@@ -23,7 +31,8 @@ export default function SystemInstall() {
         },
         body: JSON.stringify(body),
       });
-      return handleResponseWithJason<InstallResponse>(response);
+      const data = await handleResponseWithJason<unknown>(response);
+      return v.parse(InstallResponseSchema, data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/system/install/status"] });

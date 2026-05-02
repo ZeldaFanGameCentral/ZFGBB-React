@@ -251,8 +251,7 @@ function BoardContainer() {
 
   const { data: board, isLoading } = useBBQuery<Board>(
     `/board/${boardId}?pageNo=${pageNo}`,
-    0,
-    0,
+    { retry: 0, gcTime: 0 },
   );
 
   const boardName = useMemo(() => {

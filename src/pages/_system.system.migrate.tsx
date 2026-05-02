@@ -3,11 +3,13 @@ import { useForm } from "@tanstack/react-form";
 import { UserContext } from "@/providers/user/userProvider";
 import {
   JOB_TYPES,
+  JobListSchema,
   MigrateJobFormSchema,
+  type Job,
   type MigrateJobForm,
+  type MigrateJobRequest,
 } from "@/schemas/system";
 import type { BaseBB } from "@/types/api";
-import type { Job, MigrateJobRequest } from "@/types/system";
 
 function stateClass(state: Job["state"]): string {
   switch (state) {
@@ -86,15 +88,15 @@ export default function SystemMigrate() {
 
   const [pollJobs, setPollJobs] = useState(false);
 
-  const { data: jobs, refetch } = useBBQuery<Job[]>(
-    "/system/migrate/jobs",
-    0,
-    0,
-    0,
-    "migrate-jobs",
-    2000,
-    isSiteAdmin && pollJobs,
-  );
+  const { data: jobs, refetch } = useBBQuery<Job[]>("/system/migrate/jobs", {
+    retry: 0,
+    gcTime: 0,
+    staleTime: 0,
+    queryKey: "migrate-jobs",
+    refetchInterval: 2000,
+    enabled: isSiteAdmin && pollJobs,
+    schema: JobListSchema,
+  });
 
   const startJobMutation = useMutation<unknown, Error, MigrateJobRequest>({
     mutationFn: async (body) => {
@@ -121,6 +123,7 @@ export default function SystemMigrate() {
       smfLegacyHost: "",
       attachmentsSourcePath: "",
       attachmentsTargetPath: "",
+      force: false,
     } as MigrateJobForm,
     validators: {
       onBlur: MigrateJobFormSchema,
@@ -138,6 +141,7 @@ export default function SystemMigrate() {
         smfLegacyHost: value.smfLegacyHost || undefined,
         attachmentsSourcePath: value.attachmentsSourcePath || undefined,
         attachmentsTargetPath: value.attachmentsTargetPath || undefined,
+        force: value.force || undefined,
       };
       await startJobMutation.mutateAsync(body);
     },
@@ -222,6 +226,11 @@ export default function SystemMigrate() {
                 Start
               </BBSubmit>
             </div>
+            <BBCheckboxField
+              name="force"
+              label="Force re-migration"
+              helperText="Re-update existing rows even when migration_hash hasn't changed. Use when re-running after a config change (legacy host, table prefix) so already-migrated entities get refreshed."
+            />
           </div>
         </BBWidget>
       </BBForm>

@@ -1,5 +1,13 @@
-import type { InstallStatusResponse } from "@/types/system";
+import {
+  InstallStatusResponseSchema,
+  type InstallStatusResponse,
+} from "@/schemas/system";
 
 export const useInstallStatus = () => {
-  return useBBQuery<InstallStatusResponse>("/system/install/status", 0, 0, 0);
+  return useBBQuery<InstallStatusResponse>("/system/install/status", {
+    retry: 0,
+    gcTime: 0,
+    staleTime: 0,
+    schema: InstallStatusResponseSchema,
+  });
 };
