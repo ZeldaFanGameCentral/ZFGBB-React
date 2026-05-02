@@ -1,75 +1,66 @@
-import { useQueryClient } from "@tanstack/react-query";
-import type { AuthCredentials } from "@/types/auth";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "@tanstack/react-form";
+import { LoginFormSchema, type LoginForm } from "@/schemas/auth";
 import type { User } from "@/types/user";
 
 export default function UserLogin() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [stayLoggedIn, setStayLoggedIn] = useState(false);
-
-  const loginMutation = useBBMutation<AuthCredentials, User>(
-    () => [
-      "/users/auth/login",
-      { username, password, grant_type: "password", scope: "all" },
-    ],
-    () => {
+  const loginMutation = useMutation<User, Error, LoginForm>({
+    mutationFn: async (values) => {
+      const response = await fetch(`${getApiBaseUrl()}/users/auth/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: values.username,
+          password: values.password,
+          grant_type: "password",
+          scope: "all",
+        }),
+      });
+      return handleResponseWithJason<User>(response);
+    },
+    onSuccess: () => {
       queryClient.invalidateQueries();
       navigate("/");
     },
-  );
+  });
+
+  const form = useForm({
+    defaultValues: {
+      username: "",
+      password: "",
+      stayLoggedIn: false,
+    } as LoginForm,
+    validators: {
+      onBlur: LoginFormSchema,
+      onSubmit: LoginFormSchema,
+    },
+    onSubmit: async ({ value }) => {
+      await loginMutation.mutateAsync(value);
+    },
+  });
 
   return (
     <BBWidget widgetTitle="Login">
       <div className="p-4 space-y-4 max-w-sm mx-auto">
-        {loginMutation.isError && (
-          <p className="text-highlighted text-sm">
-            Invalid username or password.
-          </p>
-        )}
-        <BBForm>
-          <div className="space-y-3">
-            <BBInput
-              label="Username:"
-              name="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <BBInput
-              label="Password:"
-              name="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <div className="flex items-center gap-2">
-              <input
-                id="stayLoggedIn"
-                type="checkbox"
-                checked={stayLoggedIn}
-                onChange={(e) => setStayLoggedIn(e.target.checked)}
-              />
-              <label
-                htmlFor="stayLoggedIn"
-                className="text-sm font-medium text-muted"
-              >
-                Always stay logged in
-              </label>
-            </div>
-            <button
-              type="button"
-              className="w-full p-2 bg-accented border border-default"
-              disabled={
-                loginMutation.isPending || !username.trim() || !password.trim()
-              }
-              onClick={() => loginMutation.mutate()}
-            >
-              {loginMutation.isPending ? "Logging in..." : "Login"}
-            </button>
-          </div>
+        <BBForm
+          form={form}
+          errorMessage={
+            loginMutation.isError ? "Invalid username or password." : null
+          }
+        >
+          <BBField label="Username:" name="username" autoComplete="username" />
+          <BBField
+            label="Password:"
+            name="password"
+            type="password"
+            autoComplete="current-password"
+          />
+          <BBCheckboxField name="stayLoggedIn" label="Always stay logged in" />
+          <BBSubmit pendingChildren="Logging in...">Login</BBSubmit>
         </BBForm>
         <div className="text-sm text-dimmed space-y-1 pt-1 border-t border-default">
           <p>

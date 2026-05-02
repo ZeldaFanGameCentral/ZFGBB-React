@@ -1,4 +1,6 @@
-import type { RegistrationRequest } from "@/types/auth";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "@tanstack/react-form";
+import { RegistrationFormSchema, type RegistrationForm } from "@/schemas/auth";
 import type { User } from "@/types/user";
 
 function AgreementText() {
@@ -75,27 +77,41 @@ function AgreementText() {
 export default function UserRegistration() {
   const navigate = useNavigate();
 
-  const [userName, setUserName] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [agreed, setAgreed] = useState(false);
+  const registrationMutation = useMutation<User, Error, RegistrationForm>({
+    mutationFn: async (values) => {
+      const response = await fetch(`${getApiBaseUrl()}/users/register`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userName: values.userName,
+          displayName: values.displayName,
+          email: values.email,
+          password: values.password,
+        }),
+      });
+      return handleResponseWithJason<User>(response);
+    },
+    onSuccess: () => navigate("/user/auth/login"),
+  });
 
-  const passwordMismatch =
-    confirmPassword.length > 0 && password !== confirmPassword;
-  const canSubmit =
-    agreed &&
-    userName.trim() &&
-    displayName.trim() &&
-    email.trim() &&
-    password.trim() &&
-    !passwordMismatch;
-
-  const registrationMutation = useBBMutation<RegistrationRequest, User>(
-    () => ["/users/register", { userName, displayName, email, password }],
-    () => navigate("/user/auth/login"),
-  );
+  const form = useForm({
+    defaultValues: {
+      userName: "",
+      displayName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      agreed: false,
+    } as unknown as RegistrationForm,
+    validators: {
+      onBlur: RegistrationFormSchema,
+      onSubmit: RegistrationFormSchema,
+    },
+    onSubmit: async ({ value }) => {
+      await registrationMutation.mutateAsync(value);
+    },
+  });
 
   if (registrationMutation.isSuccess) {
     return (
@@ -109,104 +125,65 @@ export default function UserRegistration() {
   }
 
   return (
-    <div className="space-y-4">
+    <BBForm
+      form={form}
+      className="space-y-4"
+      errorMessage={
+        registrationMutation.isError
+          ? "Registration failed. The username or email may already be in use."
+          : null
+      }
+    >
       <BBWidget widgetTitle="Register — Required Information">
         <div className="p-4 space-y-4">
-          {registrationMutation.isError && (
-            <p className="text-highlighted text-sm">
-              Registration failed. The username or email may already be in use.
-            </p>
-          )}
-          <BBForm>
-            <div className="space-y-4">
-              <div className="space-y-1">
-                <BBInput
-                  label="Choose username:"
-                  name="userName"
-                  type="text"
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
-                />
-                <p className="text-xs text-dimmed">
-                  Used to log in to your account.
-                </p>
-              </div>
-              <div className="space-y-1">
-                <BBInput
-                  label="Display name:"
-                  name="displayName"
-                  type="text"
-                  value={displayName}
-                  onChange={(e) => setDisplayName(e.target.value)}
-                />
-                <p className="text-xs text-dimmed">Shown on your posts.</p>
-              </div>
-              <div className="space-y-1">
-                <BBInput
-                  label="Email:"
-                  name="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <p className="text-xs text-dimmed">
-                  Must be a valid email address.
-                </p>
-              </div>
-              <BBInput
-                label="Choose password:"
-                name="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <div className="space-y-1">
-                <BBInput
-                  label="Verify password:"
-                  name="confirmPassword"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-                {passwordMismatch && (
-                  <p className="text-xs text-highlighted">
-                    The two passwords you entered are not the same.
-                  </p>
-                )}
-              </div>
-            </div>
-          </BBForm>
+          <BBField
+            label="Choose username:"
+            name="userName"
+            autoComplete="username"
+            helperText="Used to log in to your account."
+          />
+          <BBField
+            label="Display name:"
+            name="displayName"
+            helperText="Shown on your posts."
+          />
+          <BBField
+            label="Email:"
+            name="email"
+            type="email"
+            autoComplete="email"
+            helperText="Must be a valid email address."
+          />
+          <BBField
+            label="Choose password:"
+            name="password"
+            type="password"
+            autoComplete="new-password"
+          />
+          <BBField
+            label="Verify password:"
+            name="confirmPassword"
+            type="password"
+            autoComplete="new-password"
+          />
         </div>
       </BBWidget>
 
       <BBWidget>
         <div className="p-4 space-y-4">
           <AgreementText />
-          <div className="flex items-center gap-2">
-            <input
-              id="regagree"
-              type="checkbox"
-              checked={agreed}
-              onChange={(e) => setAgreed(e.target.checked)}
-            />
-            <label htmlFor="regagree" className="text-sm font-bold text-muted">
-              I Agree
-            </label>
-          </div>
-          <button
-            type="button"
-            className="w-full p-2 bg-accented border border-default disabled:opacity-50"
-            disabled={!canSubmit || registrationMutation.isPending}
-            onClick={() => registrationMutation.mutate()}
-          >
-            {registrationMutation.isPending ? "Registering..." : "Register"}
-          </button>
+          <BBCheckboxField
+            name="agreed"
+            label="I Agree"
+            labelClassName="text-sm font-bold text-muted"
+          />
+          <BBSubmit pendingChildren="Registering...">Register</BBSubmit>
           <p className="text-sm text-dimmed text-center">
             Already have an account?{" "}
             <BBLink to="/user/auth/login">Login</BBLink>
           </p>
         </div>
       </BBWidget>
-    </div>
+    </BBForm>
   );
 }

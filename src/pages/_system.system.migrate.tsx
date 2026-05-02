@@ -1,26 +1,13 @@
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "@tanstack/react-form";
 import { UserContext } from "@/providers/user/userProvider";
+import {
+  JOB_TYPES,
+  MigrateJobFormSchema,
+  type MigrateJobForm,
+} from "@/schemas/system";
 import type { BaseBB } from "@/types/api";
-import type { Job, JobType, MigrateJobRequest } from "@/types/system";
-
-const JOB_TYPES: JobType[] = [
-  "MIGRATE_SMF_INSTALLATION",
-  "USERS",
-  "CATEGORIES",
-  "BOARDS",
-  "THREADS",
-  "MESSAGES",
-  "IPS",
-  "MESSAGE_HISTORY",
-  "USER_BIO_INFO",
-  "ATTACHMENTS",
-  "ATTACHMENT_FILES",
-  "BBCODE_REWRITE",
-  "USER_CONTACT_INFO",
-  "POLLS",
-  "POLL_CHOICES",
-  "USER_POLL_CHOICES",
-  "KARMA",
-];
+import type { Job, MigrateJobRequest } from "@/types/system";
 
 function stateClass(state: Job["state"]): string {
   switch (state) {
@@ -86,22 +73,17 @@ function JobRow({
   );
 }
 
+const JOB_TYPE_OPTIONS = JOB_TYPES.map((type) => ({
+  value: type,
+  label: type,
+}));
+
 export default function SystemMigrate() {
   const user = useContext(UserContext);
   const isSiteAdmin = user.permissions?.some(
     (p) => p.permissionCode === "ZFGC_SITE_ADMIN",
   );
 
-  const [smfHost, setSmfHost] = useState("");
-  const [smfPort, setSmfPort] = useState(3306);
-  const [smfDatabase, setSmfDatabase] = useState("");
-  const [smfUser, setSmfUser] = useState("");
-  const [smfPassword, setSmfPassword] = useState("");
-  const [attachmentsSourcePath, setAttachmentsSourcePath] = useState("");
-  const [attachmentsTargetPath, setAttachmentsTargetPath] = useState("");
-  const [selectedType, setSelectedType] = useState<JobType>(
-    "MIGRATE_SMF_INSTALLATION",
-  );
   const [pollJobs, setPollJobs] = useState(false);
 
   const { data: jobs, refetch } = useBBQuery<Job[]>(
@@ -114,22 +96,52 @@ export default function SystemMigrate() {
     isSiteAdmin && pollJobs,
   );
 
-  const startJobMutation = useBBMutation<MigrateJobRequest, BaseBB>(
-    () => [
-      "/system/migrate/jobs",
-      {
-        type: selectedType,
-        smfHost,
-        smfPort,
-        smfDatabase,
-        smfUser,
-        smfPassword,
-        attachmentsSourcePath: attachmentsSourcePath || undefined,
-        attachmentsTargetPath: attachmentsTargetPath || undefined,
-      },
-    ],
-    () => setPollJobs(true),
-  );
+  const startJobMutation = useMutation<unknown, Error, MigrateJobRequest>({
+    mutationFn: async (body) => {
+      const response = await fetch(`${getApiBaseUrl()}/system/migrate/jobs`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      return handleResponseWithJason<unknown>(response);
+    },
+    onSuccess: () => setPollJobs(true),
+  });
+
+  const form = useForm({
+    defaultValues: {
+      type: "MIGRATE_SMF_INSTALLATION",
+      smfHost: "",
+      smfPort: "3306",
+      smfDatabase: "",
+      smfUser: "",
+      smfPassword: "",
+      smfTablePrefix: "",
+      smfLegacyHost: "",
+      attachmentsSourcePath: "",
+      attachmentsTargetPath: "",
+    } as MigrateJobForm,
+    validators: {
+      onBlur: MigrateJobFormSchema,
+      onSubmit: MigrateJobFormSchema,
+    },
+    onSubmit: async ({ value }) => {
+      const body: MigrateJobRequest = {
+        type: value.type,
+        smfHost: value.smfHost,
+        smfPort: Number(value.smfPort),
+        smfDatabase: value.smfDatabase,
+        smfUser: value.smfUser,
+        smfPassword: value.smfPassword,
+        smfTablePrefix: value.smfTablePrefix || undefined,
+        smfLegacyHost: value.smfLegacyHost || undefined,
+        attachmentsSourcePath: value.attachmentsSourcePath || undefined,
+        attachmentsTargetPath: value.attachmentsTargetPath || undefined,
+      };
+      await startJobMutation.mutateAsync(body);
+    },
+  });
 
   if (!isSiteAdmin) {
     return (
@@ -141,110 +153,78 @@ export default function SystemMigrate() {
     );
   }
 
-  const canStart =
-    smfHost.trim() &&
-    smfDatabase.trim() &&
-    smfUser.trim() &&
-    smfPassword.trim();
-
   return (
     <div className="space-y-4">
-      <BBWidget widgetTitle="SMF Database Connection">
-        <div className="p-4 space-y-3">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <BBInput
-              label="Host"
-              name="smfHost"
-              type="text"
-              placeholder="localhost"
-              value={smfHost}
-              onChange={(e) => setSmfHost(e.target.value)}
-            />
-            <BBInput
-              label="Port"
-              name="smfPort"
-              type="number"
-              value={smfPort}
-              onChange={(e) => setSmfPort(Number(e.target.value))}
-            />
-            <BBInput
-              label="Database"
-              name="smfDatabase"
-              type="text"
-              value={smfDatabase}
-              onChange={(e) => setSmfDatabase(e.target.value)}
-            />
-            <BBInput
-              label="Username"
-              name="smfUser"
-              type="text"
-              value={smfUser}
-              onChange={(e) => setSmfUser(e.target.value)}
-            />
-            <BBInput
-              label="Password"
-              name="smfPassword"
-              type="password"
-              value={smfPassword}
-              onChange={(e) => setSmfPassword(e.target.value)}
-            />
+      <BBForm
+        form={form}
+        className="space-y-4"
+        errorMessage={
+          startJobMutation.isError
+            ? ((startJobMutation.error as Error)?.message ??
+              "Failed to start job.")
+            : null
+        }
+      >
+        <BBWidget widgetTitle="SMF Database Connection">
+          <div className="p-4 space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <BBField label="Host" name="smfHost" placeholder="localhost" />
+              <BBField label="Port" name="smfPort" type="number" />
+              <BBField label="Database" name="smfDatabase" />
+              <BBField label="Username" name="smfUser" />
+              <BBField label="Password" name="smfPassword" type="password" />
+              <BBField
+                label="Table prefix"
+                name="smfTablePrefix"
+                placeholder="smf_"
+                helperText="Whatever prefix you chose during SMF install. Defaults to smf_ if blank."
+              />
+              <BBField
+                label="Legacy host"
+                name="smfLegacyHost"
+                placeholder="zfgc.com"
+                helperText="The host that appears in URLs inside SMF post bodies (e.g. localhost:8090 for a local install). zfgc.com is always rewritten; this adds an additional host."
+              />
+            </div>
+            <div className="space-y-3 pt-2 border-t border-default">
+              <p className="text-xs text-dimmed">
+                Attachment paths are server filesystem paths. Leave blank if not
+                migrating attachments.
+              </p>
+              <BBField
+                label="Attachments source path"
+                name="attachmentsSourcePath"
+                placeholder="/path/to/smf/attachments"
+              />
+              <BBField
+                label="Attachments target path"
+                name="attachmentsTargetPath"
+                placeholder="/path/to/zfgbb/attachments"
+              />
+            </div>
           </div>
-          <div className="space-y-3 pt-2 border-t border-default">
-            <p className="text-xs text-dimmed">
-              Attachment paths are server filesystem paths. Leave blank if not
-              migrating attachments.
-            </p>
-            <BBInput
-              label="Attachments source path"
-              name="attachmentsSourcePath"
-              type="text"
-              placeholder="/path/to/smf/attachments"
-              value={attachmentsSourcePath}
-              onChange={(e) => setAttachmentsSourcePath(e.target.value)}
-            />
-            <BBInput
-              label="Attachments target path"
-              name="attachmentsTargetPath"
-              type="text"
-              placeholder="/path/to/zfgbb/attachments"
-              value={attachmentsTargetPath}
-              onChange={(e) => setAttachmentsTargetPath(e.target.value)}
-            />
-          </div>
-        </div>
-      </BBWidget>
+        </BBWidget>
 
-      <BBWidget widgetTitle="Start Migration Job">
-        <div className="p-4 space-y-3">
-          <div className="flex gap-3">
-            <select
-              className="flex-1 p-2 bg-default border border-default"
-              value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value as JobType)}
-            >
-              {JOB_TYPES.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-            <button
-              type="button"
-              className="px-4 py-2 bg-accented border border-default disabled:opacity-50"
-              disabled={startJobMutation.isPending || !canStart}
-              onClick={() => startJobMutation.mutate()}
-            >
-              {startJobMutation.isPending ? "Starting..." : "Start"}
-            </button>
+        <BBWidget widgetTitle="Start Migration Job">
+          <div className="p-4 space-y-3">
+            <div className="flex gap-3 items-end">
+              <div className="flex-1">
+                <BBSelectField
+                  name="type"
+                  label="Job type"
+                  options={JOB_TYPE_OPTIONS}
+                />
+              </div>
+              <BBSubmit
+                pendingChildren="Starting..."
+                className="px-4 py-2 bg-accented border border-default disabled:opacity-50"
+              >
+                Start
+              </BBSubmit>
+            </div>
           </div>
-          {startJobMutation.isError && (
-            <p className="text-highlighted text-sm">
-              {(startJobMutation.error as Error)?.message ??
-                "Failed to start job."}
-            </p>
-          )}
-        </div>
-      </BBWidget>
+        </BBWidget>
+      </BBForm>
 
       <BBWidget widgetTitle="Jobs">
         {!jobs || jobs.length === 0 ? (

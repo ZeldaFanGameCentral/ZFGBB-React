@@ -3,7 +3,7 @@ export default function SearchLayout() {
   return (
     <article>
       <section className="col-12 my-2">
-        <BBForm>
+        <BBForm role="search">
           <BBInput
             label="Search"
             className="w-full p-3 bg-default border border-default  resize-y focus:outline-none focus:ring-2 focus:ring-accented"

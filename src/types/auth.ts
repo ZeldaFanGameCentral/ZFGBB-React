@@ -14,13 +14,6 @@ export type LoginResponse = BaseBB & {
   user: User;
 };
 
-export type RegistrationRequest = BaseBB & {
-  userName: string;
-  displayName: string;
-  email: string;
-  password: string;
-};
-
 export type RefreshRequest = BaseBB & {
   refreshToken: string;
 };

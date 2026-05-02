@@ -67,6 +67,8 @@ export type MigrateJobRequest = BaseBB & {
   smfDatabase: string;
   smfUser: string;
   smfPassword: string;
+  smfTablePrefix?: string;
+  smfLegacyHost?: string;
   attachmentsSourcePath?: string;
   attachmentsTargetPath?: string;
 };

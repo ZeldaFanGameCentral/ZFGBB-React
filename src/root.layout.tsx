@@ -39,7 +39,10 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
                 </p>
               </>
             ) : (
-              <span>Welcome, {displayName}!</span>
+              <>
+                <span>Welcome, {displayName}! </span>
+                <BBLink to="/user/auth/logout">Logout</BBLink>
+              </>
             )}
           </div>
         </header>

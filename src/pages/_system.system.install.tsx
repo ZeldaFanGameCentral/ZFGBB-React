@@ -1,44 +1,54 @@
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "@tanstack/react-form";
 import { Navigate } from "react-router";
-import type {
-  InstallRequest,
-  InstallResponse,
-  InstallStatusResponse,
-} from "@/types/system";
+import { InstallFormSchema, type InstallForm } from "@/schemas/system";
+import type { InstallResponse, InstallStatusResponse } from "@/types/system";
 
 export default function SystemInstall() {
   const { data: status, isLoading } = useBBQuery<InstallStatusResponse>(
     "/system/install/status",
   );
 
-  const [installToken, setInstallToken] = useState("");
-  const [adminUserName, setAdminUserName] = useState("");
-  const [adminDisplayName, setAdminDisplayName] = useState("");
-  const [adminEmail, setAdminEmail] = useState("");
-  const [adminPassword, setAdminPassword] = useState("");
-  const [siteName, setSiteName] = useState("ZFGBB");
-  const [applySampleData, setApplySampleData] = useState(false);
-
   const queryClient = useQueryClient();
 
-  const installMutation = useBBMutation<InstallRequest, InstallResponse>(
-    () => [
-      "/system/install",
-      {
-        adminUserName,
-        adminDisplayName,
-        adminEmail,
-        adminPassword,
-        siteName,
-        applySampleData,
-      },
-      { headers: { "X-Install-Token": installToken } },
-    ],
-    () => {
+  const installMutation = useMutation<InstallResponse, Error, InstallForm>({
+    mutationFn: async (values) => {
+      const { installToken, ...body } = values;
+      const response = await fetch(`${getApiBaseUrl()}/system/install`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Install-Token": installToken,
+        },
+        body: JSON.stringify(body),
+      });
+      return handleResponseWithJason<InstallResponse>(response);
+    },
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/system/install/status"] });
       queryClient.invalidateQueries({ queryKey: ["/users/loggedInUser"] });
     },
-  );
+  });
+
+  const form = useForm({
+    defaultValues: {
+      installToken: "",
+      adminUserName: "",
+      adminDisplayName: "",
+      adminEmail: "",
+      adminPassword: "",
+      siteName: "ZFGBB",
+      applySampleData: false,
+    } as InstallForm,
+    validators: {
+      onBlur: InstallFormSchema,
+      onSubmit: InstallFormSchema,
+    },
+    onSubmit: async ({ value }) => {
+      await installMutation.mutateAsync(value);
+    },
+  });
 
   if (isLoading) {
     return (
@@ -92,78 +102,26 @@ export default function SystemInstall() {
   return (
     <BBWidget widgetTitle="Forum Setup">
       <div className="p-4 space-y-4">
-        {installMutation.isError && (
-          <p className="text-highlighted">
-            Installation failed. Check your install token and try again.
-          </p>
-        )}
-        <BBForm>
-          <div className="space-y-3">
-            <BBInput
-              label="Install Token"
-              name="installToken"
-              type="password"
-              value={installToken}
-              onChange={(e) => setInstallToken(e.target.value)}
-            />
-            <BBInput
-              label="Admin Username"
-              name="adminUserName"
-              type="text"
-              value={adminUserName}
-              onChange={(e) => setAdminUserName(e.target.value)}
-            />
-            <BBInput
-              label="Admin Display Name"
-              name="adminDisplayName"
-              type="text"
-              value={adminDisplayName}
-              onChange={(e) => setAdminDisplayName(e.target.value)}
-            />
-            <BBInput
-              label="Admin Email"
-              name="adminEmail"
-              type="email"
-              value={adminEmail}
-              onChange={(e) => setAdminEmail(e.target.value)}
-            />
-            <BBInput
-              label="Admin Password"
-              name="adminPassword"
-              type="password"
-              value={adminPassword}
-              onChange={(e) => setAdminPassword(e.target.value)}
-            />
-            <BBInput
-              label="Site Name"
-              name="siteName"
-              type="text"
-              value={siteName}
-              onChange={(e) => setSiteName(e.target.value)}
-            />
-            <div className="flex items-center gap-2">
-              <input
-                id="applySampleData"
-                type="checkbox"
-                checked={applySampleData}
-                onChange={(e) => setApplySampleData(e.target.checked)}
-              />
-              <label
-                htmlFor="applySampleData"
-                className="text-sm font-medium text-muted"
-              >
-                Apply sample data
-              </label>
-            </div>
-            <button
-              type="button"
-              className="w-full p-2 bg-accented border border-default"
-              disabled={installMutation.isPending}
-              onClick={() => installMutation.mutate()}
-            >
-              {installMutation.isPending ? "Installing..." : "Install"}
-            </button>
-          </div>
+        <BBForm
+          form={form}
+          errorMessage={
+            installMutation.isError
+              ? "Installation failed. Check your install token and try again."
+              : null
+          }
+        >
+          <BBField label="Install Token" name="installToken" type="password" />
+          <BBField label="Admin Username" name="adminUserName" />
+          <BBField label="Admin Display Name" name="adminDisplayName" />
+          <BBField label="Admin Email" name="adminEmail" type="email" />
+          <BBField
+            label="Admin Password"
+            name="adminPassword"
+            type="password"
+          />
+          <BBField label="Site Name" name="siteName" />
+          <BBCheckboxField name="applySampleData" label="Apply sample data" />
+          <BBSubmit pendingChildren="Installing...">Install</BBSubmit>
         </BBForm>
       </div>
     </BBWidget>

@@ -1,22 +1,62 @@
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "@tanstack/react-form";
+import { MessageEditorSchema, type MessageEditor } from "@/schemas/forum";
 import type { Message } from "../../types/forum";
-import type { BaseBB } from "../../types/api";
 
 interface MessageEditorProps {
   threadId: number;
 }
 
 const MessageEditor: React.FC<MessageEditorProps> = ({ threadId }) => {
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const { data: currentMsg } = useBBQuery<Message>(
+  const { data: currentMsg, isLoading } = useBBQuery<Message>(
     `/message/template?threadId=${threadId}`,
   );
 
-  const cursorPosition = useRef<number | undefined>(0);
-  const buildMessagePost = () => {
-    return [`message/${threadId}`, currentMsg] as [string, BaseBB];
-  };
+  if (isLoading || !currentMsg) {
+    return null;
+  }
 
-  const newPostMutator = useBBMutation(buildMessagePost);
+  return <MessageEditorForm threadId={threadId} template={currentMsg} />;
+};
+
+function MessageEditorForm({
+  threadId,
+  template,
+}: {
+  threadId: number;
+  template: Message;
+}) {
+  const newPostMutator = useMutation<unknown, Error, MessageEditor>({
+    mutationFn: async (values) => {
+      const body: Message = {
+        ...template,
+        currentMessage: {
+          ...template.currentMessage,
+          unparsedText: values.body,
+        },
+      };
+      const response = await fetch(`${getApiBaseUrl()}/message/${threadId}`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      return handleResponseWithJason<unknown>(response);
+    },
+  });
+
+  const form = useForm({
+    defaultValues: {
+      body: template.currentMessage.unparsedText ?? "",
+    } as MessageEditor,
+    validators: {
+      onBlur: MessageEditorSchema,
+      onSubmit: MessageEditorSchema,
+    },
+    onSubmit: async ({ value }) => {
+      await newPostMutator.mutateAsync(value);
+    },
+  });
 
   return (
     <div className="mt-3">
@@ -25,7 +65,11 @@ const MessageEditor: React.FC<MessageEditorProps> = ({ threadId }) => {
         you're sure you want to reply, please consider starting a new topic.
       </div>
 
-      <form className="space-y-4">
+      <BBForm
+        form={form}
+        className="space-y-4"
+        errorMessage={newPostMutator.isError ? "Failed to post message." : null}
+      >
         <div className="flex gap-2">
           <button
             type="button"
@@ -53,31 +97,16 @@ const MessageEditor: React.FC<MessageEditorProps> = ({ threadId }) => {
           </button>
           <span className="text-muted">|</span>
         </div>
-        <div>
-          <textarea
-            ref={textAreaRef}
-            rows={15}
-            className="w-full p-3 bg-default border border-default  resize-y focus:outline-none focus:ring-2 focus:ring-accented"
-            onBlur={() =>
-              (cursorPosition.current = textAreaRef?.current?.selectionStart)
-            }
-            onChange={(e) => {
-              if (currentMsg) {
-                currentMsg.currentMessage.unparsedText = e.target.value;
-              }
-            }}
-          />
-        </div>
-        <button
-          type="button"
-          onClick={() => newPostMutator.mutate()}
-          className="px-4 py-2 bg-accented border border-default  hover:bg-elevated"
+        <BBTextareaField name="body" rows={15} />
+        <BBSubmit
+          pendingChildren="Posting..."
+          className="px-4 py-2 bg-accented border border-default hover:bg-elevated disabled:opacity-50"
         >
           Submit Post
-        </button>
-      </form>
+        </BBSubmit>
+      </BBForm>
     </div>
   );
-};
+}
 
 export default MessageEditor;
