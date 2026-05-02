@@ -14,25 +14,36 @@ export default function BBPaginator({
   className = "",
 }: BBPaginatorProps) {
   const maxPages = maxPageCount ?? 10;
+  const totalPages = Math.max(numPages, 1);
+  const current = Math.min(Math.max(currentPage, 1), totalPages);
 
   const maxToRender = useMemo(() => {
-    return numPages <= maxPages ? numPages : maxPages;
-  }, [numPages, maxPages]);
+    return totalPages <= maxPages ? totalPages : maxPages;
+  }, [totalPages, maxPages]);
+
+  const baseButtonClass =
+    "px-3 py-2 text-sm border border-default bg-muted hover:bg-elevated " +
+    "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-muted";
+
+  const isFirst = current <= 1;
+  const isLast = current >= totalPages;
 
   const pages = useMemo(() => {
     const pages: React.JSX.Element[] = [];
 
-    const startPage = Math.max(currentPage - Math.floor(maxToRender / 2), 1);
-    const endPage = Math.min(startPage + maxToRender - 1, numPages ?? 1);
+    const startPage = Math.max(current - Math.floor(maxToRender / 2), 1);
+    const endPage = Math.min(startPage + maxToRender - 1, totalPages);
 
     for (let i = startPage; i <= endPage; i++) {
+      const isCurrent = current === i;
       pages.push(
         <button
           key={i}
+          disabled={isCurrent}
           className={`px-3 py-2 text-sm border border-default ${
-            currentPage === i
-              ? "bg-elevated text-highlighted"
-              : "bg-muted  hover:bg-elevated"
+            isCurrent
+              ? "bg-elevated text-highlighted cursor-default"
+              : "bg-muted hover:bg-elevated"
           }`}
           onClick={() => onPageChange(i)}
         >
@@ -41,7 +52,7 @@ export default function BBPaginator({
       );
     }
 
-    if (startPage > 1 && numPages > maxToRender) {
+    if (startPage > 1 && totalPages > maxToRender) {
       pages.unshift(
         <span
           key="start-ellipsis"
@@ -51,7 +62,7 @@ export default function BBPaginator({
         </span>,
       );
     }
-    if (endPage < numPages) {
+    if (endPage < totalPages) {
       pages.push(
         <span
           key="end-ellipsis"
@@ -63,50 +74,50 @@ export default function BBPaginator({
     }
 
     return pages;
-  }, [numPages, currentPage, onPageChange, maxPages]);
+  }, [totalPages, current, onPageChange, maxToRender]);
 
   const shiftPage = useCallback(
     (inc: number) => {
-      onPageChange(currentPage + inc);
+      onPageChange(current + inc);
     },
-    [currentPage, onPageChange],
+    [current, onPageChange],
   );
 
   return (
     <div className={`overflow-x-auto scroll-smooth w-full ${className}`}>
       <div className="flex gap-1 mb-0">
         <button
-          className="px-3 py-2 text-sm border border-default bg-muted  hover:bg-elevated"
+          className={baseButtonClass}
+          disabled={isFirst}
           onClick={() => onPageChange(1)}
         >
           First
         </button>
-        {currentPage !== 1 && (
-          <button
-            className="px-3 py-2 text-sm border border-default bg-muted  hover:bg-elevated"
-            onClick={() => shiftPage(-1)}
-          >
-            Prev
-          </button>
-        )}
-        {pages}
-        {(!maxPageCount || currentPage !== numPages) && (
-          <button
-            className="px-3 py-2 text-sm border border-default bg-muted  hover:bg-elevated"
-            onClick={() => shiftPage(1)}
-          >
-            Next
-          </button>
-        )}
         <button
-          className="px-3 py-2 text-sm border border-default bg-muted  hover:bg-elevated"
-          onClick={() => onPageChange(numPages)}
+          className={baseButtonClass}
+          disabled={isFirst}
+          onClick={() => shiftPage(-1)}
+        >
+          Prev
+        </button>
+        {pages}
+        <button
+          className={baseButtonClass}
+          disabled={isLast}
+          onClick={() => shiftPage(1)}
+        >
+          Next
+        </button>
+        <button
+          className={baseButtonClass}
+          disabled={isLast}
+          onClick={() => onPageChange(totalPages)}
         >
           Last
         </button>
       </div>
       <div className="text-sm text-muted mt-2">
-        Page {currentPage} of {numPages}
+        Page {current} of {totalPages}
       </div>
     </div>
   );
