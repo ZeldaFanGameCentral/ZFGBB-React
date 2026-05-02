@@ -12,21 +12,17 @@ interface UserMessageProps {
 
 const PARSE_OPTIONS: HTMLReactParserOptions = {
   replace(node) {
-    const element = node as unknown as {
-      type?: string;
-      name?: string;
-      attribs?: Record<string, string>;
-      children?: DOMNode[];
-    };
+    const element = node;
     if (element.type !== "tag" || element.name !== "a") return;
-    const cls = element.attribs?.["class"] ?? "";
-    if (!cls.split(/\s+/).includes("bb-resource-link")) return;
+    const ass = element.attribs?.["class"] ?? "";
+    if (!ass.split(/\s+/).includes("bb-resource-link")) return;
     const href = element.attribs?.["href"];
     if (!href) return;
 
+    // FIXME: This is kind of a hack, we'll have to make this not suck Eggman's ass
     return (
-      <BBLink to={href as RoutePaths} className={cls}>
-        {domToReact(element.children ?? [], PARSE_OPTIONS)}
+      <BBLink to={href as RoutePaths} className={ass}>
+        {domToReact((element.children as DOMNode[]) ?? [], PARSE_OPTIONS)}
       </BBLink>
     );
   },
