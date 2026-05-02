@@ -12,6 +12,7 @@ export type InstallRequest = BaseBB & {
   adminPassword: string;
   siteName?: string;
   applySampleData?: boolean;
+  useTokens?: boolean;
 };
 
 export type InstallResponse = BaseBB & {
@@ -19,6 +20,8 @@ export type InstallResponse = BaseBB & {
   adminUserId: number;
   siteName: string;
   sampleDataApplied: boolean;
+  accessToken?: string | null;
+  refreshToken?: string | null;
 };
 
 export type JobType =

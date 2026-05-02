@@ -4,6 +4,19 @@ import QueryProvider, { getQueryClient } from "./providers/query/queryProvider";
 import RootLayout from "./root.layout";
 import { bbQueryOptions } from "./hooks/bbQueryOptions";
 import type { User } from "./types/user";
+import type { Route } from "./+types/root";
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const cookie = request.headers.get("Cookie") ?? "";
+  await getQueryClient().prefetchQuery(
+    bbQueryOptions<User>(
+      "/users/loggedInUser",
+      undefined,
+      cookie ? { Cookie: cookie } : undefined,
+    ),
+  );
+  return null;
+}
 
 export async function clientLoader() {
   await getQueryClient().prefetchQuery(

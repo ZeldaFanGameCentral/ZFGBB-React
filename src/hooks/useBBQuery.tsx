@@ -1,6 +1,6 @@
 import type { BaseBB } from "@/types/api";
 import { useQuery } from "@tanstack/react-query";
-import { getAuthHeaders } from "@/shared/auth/tokenStorage";
+import { getApiBaseUrl } from "@/shared/http/api";
 
 export const useBBQuery = <T extends BaseBB | BaseBB[]>(
   url: `/${string}`,
@@ -14,11 +14,11 @@ export const useBBQuery = <T extends BaseBB | BaseBB[]>(
   return useQuery({
     queryKey: [queryKey ? queryKey : url],
     queryFn: () =>
-      fetch(`${import.meta.env.REACT_ZFGBB_API_URL}${url ?? "/"}`, {
+      fetch(`${getApiBaseUrl()}${url ?? "/"}`, {
         method: "GET",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          ...getAuthHeaders(),
         },
       }).then((response) => handleResponseWithJason<T>(response)),
     retry,

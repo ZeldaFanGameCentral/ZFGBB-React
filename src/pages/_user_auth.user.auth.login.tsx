@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
-import type { AuthCredentials, LoginResponse } from "@/types/auth";
-import { setTokens } from "@/shared/auth/tokenStorage";
+import type { AuthCredentials } from "@/types/auth";
+import type { User } from "@/types/user";
 
 export default function UserLogin() {
   const queryClient = useQueryClient();
@@ -10,13 +10,12 @@ export default function UserLogin() {
   const [password, setPassword] = useState("");
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
 
-  const loginMutation = useBBMutation<AuthCredentials, LoginResponse>(
+  const loginMutation = useBBMutation<AuthCredentials, User>(
     () => [
       "/users/auth/login",
       { username, password, grant_type: "password", scope: "all" },
     ],
-    (data) => {
-      setTokens(data.accessToken, data.refreshToken);
+    () => {
       queryClient.invalidateQueries();
       navigate("/");
     },

@@ -1,17 +1,9 @@
 import { getQueryClient } from "@/providers/query/queryProvider";
-import { clearTokens, getRefreshToken } from "@/shared/auth/tokenStorage";
+import { logoutRequest } from "@/shared/http/auth";
 import type { Route } from "./+types/_user_auth.user.auth.logout";
 
 export async function clientLoader(_: Route.ClientLoaderArgs) {
-  const refreshToken = getRefreshToken();
-  if (refreshToken) {
-    await fetch(`${import.meta.env.REACT_ZFGBB_API_URL}/users/auth/logout`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ refreshToken }),
-    }).catch(() => {});
-  }
-  clearTokens();
+  await logoutRequest();
   await getQueryClient().invalidateQueries();
 }
 

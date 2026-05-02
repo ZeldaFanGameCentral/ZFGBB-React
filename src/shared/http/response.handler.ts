@@ -1,6 +1,3 @@
-import { getQueryClient } from "@/providers/query/queryProvider";
-import { clearTokens } from "@/shared/auth/tokenStorage";
-
 function safeJsonParse<T>(json: string): T | undefined {
   try {
     return JSON.parse(json) as T;
@@ -14,11 +11,6 @@ export async function handleResponseError(response: Response) {
     .get("content-type")
     ?.includes("application/json");
   if (response.ok && (response.status === 204 || responseIsJasonOnPs3)) return;
-
-  if (response.status === 401) {
-    clearTokens();
-    getQueryClient().invalidateQueries();
-  }
 
   const responseText = await response.text().catch(() => "");
   const message = `Failed to fetch data from server. Status: ${response.status}`;

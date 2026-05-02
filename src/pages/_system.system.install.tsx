@@ -34,8 +34,10 @@ export default function SystemInstall() {
       },
       { headers: { "X-Install-Token": installToken } },
     ],
-    () =>
-      queryClient.invalidateQueries({ queryKey: ["/system/install/status"] }),
+    () => {
+      queryClient.invalidateQueries({ queryKey: ["/system/install/status"] });
+      queryClient.invalidateQueries({ queryKey: ["/users/loggedInUser"] });
+    },
   );
 
   if (isLoading) {
@@ -77,10 +79,6 @@ export default function SystemInstall() {
               <span>SMF 2.0.x</span>
               <BBLink to="/system/migrate">Set up migration</BBLink>
             </div>
-            <p className="text-sm text-dimmed">
-              You will need to log in with your new admin account before
-              starting a migration.
-            </p>
           </div>
         </BBWidget>
       </div>

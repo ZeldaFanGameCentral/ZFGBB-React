@@ -103,7 +103,7 @@ function BoardTableComponent({
 
           <div className="block md:hidden text-sm text-dimmed">
             <span>Author: </span>
-            {thread.createdUserId > 0 ? (
+            {thread.createdUserId != null && thread.createdUserId > 0 ? (
               <BBLink
                 to={`/user/profile/${thread.createdUser?.id}`}
                 prefetch="intent"
@@ -139,7 +139,7 @@ function BoardTableComponent({
       hideOnMobile: true,
       hideOnTablet: true,
       render: (_, thread) =>
-        thread.createdUserId > 0 ? (
+        thread.createdUserId != null && thread.createdUserId > 0 ? (
           <BBLink
             to={`/user/profile/${thread.createdUser?.id}`}
             prefetch="intent"

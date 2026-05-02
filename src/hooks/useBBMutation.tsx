@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import type { BaseBB } from "../types/api";
-import { getAuthHeaders } from "../shared/auth/tokenStorage";
+import { getApiBaseUrl } from "../shared/http/api";
 
 type MutationOptions = {
   method?: string;
@@ -18,15 +18,15 @@ export const useBBMutation = <T extends BaseBB, U extends BaseBB = BaseBB>(
       const postBody = result[1];
       const options = result[2] as MutationOptions | undefined;
       const method = options?.method ?? "POST";
-      const headers = {
+      const headers: Record<string, string> = {
         "Content-Type": "application/json",
-        ...getAuthHeaders(),
         ...options?.headers,
       };
       const hasBody = method !== "DELETE" && method !== "GET";
       return await handleResponseWithJason<U>(
-        await fetch(`${import.meta.env.REACT_ZFGBB_API_URL}${url ?? "/"}`, {
+        await fetch(`${getApiBaseUrl()}${url ?? "/"}`, {
           method,
+          credentials: "include",
           headers,
           ...(hasBody ? { body: JSON.stringify(postBody) } : {}),
         }),

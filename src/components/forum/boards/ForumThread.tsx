@@ -110,7 +110,7 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                       className={`w-28 md:w-34 lg:w-64 shrink-0 border-r ${isEven ? "bg-elevated" : "bg-muted"} border-default`}
                     >
                       <UserLeftPane
-                        user={msg.createdUser}
+                        user={msg.createdUser ?? undefined}
                         backgrounds={{
                           profileInfoContainer: `${isEven ? "bg-elevated" : "bg-muted"}`,
                         }}
@@ -200,7 +200,10 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                         messageText={msg.currentMessage.messageText}
                         isEven={isEven}
                       />
-                      <UserSignature user={msg.createdUser} isEven={isEven} />
+                      <UserSignature
+                        user={msg.createdUser ?? undefined}
+                        isEven={isEven}
+                      />
                     </div>
                   </div>
                 </div>
