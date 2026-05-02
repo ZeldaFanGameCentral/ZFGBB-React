@@ -139,6 +139,7 @@ export default function SystemMigrate() {
         smfPassword: value.smfPassword,
         smfTablePrefix: value.smfTablePrefix || undefined,
         smfLegacyHost: value.smfLegacyHost || undefined,
+        appBaseUrl: window.location.origin,
         attachmentsSourcePath: value.attachmentsSourcePath || undefined,
         attachmentsTargetPath: value.attachmentsTargetPath || undefined,
         force: value.force || undefined,

@@ -106,16 +106,6 @@
     @apply bg-default/64;
   }
 
-  .bb-code-glow {
-    text-shadow:
-      0 0 0.25rem currentColor,
-      0 0 0.5rem currentColor;
-  }
-
-  .bb-code-shadow {
-    text-shadow: 0.15rem 0.15rem 0.25rem rgba(0, 0, 0, 0.7);
-  }
-
   .bb-code-spoiler {
     background-color: currentColor;
     color: currentColor;
