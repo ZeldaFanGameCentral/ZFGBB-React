@@ -10,7 +10,7 @@ RUN yarn prepare:prod
 
 FROM node:24-alpine AS build-env
 RUN corepack enable
-ARG REACT_ZFGBB_API_URL=https://api.bluedreamers.com/zfgbb
+ARG REACT_ZFGBB_API_URL=https://api.zfgc.com/zfgbb
 ARG REACT_ZFGBB_API_URL_INTERNAL=http://zfgbb.zfgbb.svc.cluster.local:8080/zfgbb
 ENV REACT_ZFGBB_API_URL=$REACT_ZFGBB_API_URL
 ENV REACT_ZFGBB_API_URL_INTERNAL=$REACT_ZFGBB_API_URL_INTERNAL
