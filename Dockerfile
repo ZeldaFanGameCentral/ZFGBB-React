@@ -21,8 +21,8 @@ RUN yarn build
 
 FROM node:24-alpine AS app
 RUN corepack enable
-COPY ./package.json yarn.lock /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/build /app/build
 WORKDIR /app
+
+COPY --from=production-dependencies-env /app /app
+COPY --from=build-env /app/build /app/build
 CMD ["yarn", "run", "start"]
