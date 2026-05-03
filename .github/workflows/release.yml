@@ -2,7 +2,7 @@ name: release
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, development ]
   workflow_dispatch:
     inputs:
       tag:
@@ -10,9 +10,13 @@ on:
         required: false
         default: ""
       api_url:
-        description: Browser-facing API URL baked into the build (REACT_ZFGBB_API_URL)
+        description: |
+          Browser-facing API URL baked into the build (REACT_ZFGBB_API_URL).
+          Leave blank on push events — derived from the branch:
+            main        → https://api.bluedreamers.com/zfgbb
+            development → https://api-dev.bluedreamers.com/zfgbb
         required: false
-        default: "https://api.bluedreamers.com/zfgbb"
+        default: ""
 
 permissions:
   contents: read
@@ -30,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Compute lowercase image ref + tag
+      - name: Compute lowercase image ref + tag + api_url
         id: meta
         run: |
           set -euo pipefail
@@ -41,6 +45,17 @@ jobs:
             tag="${GITHUB_SHA::12}"
           fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+          # Branch-aware API URL: explicit override wins, otherwise pick
+          # api.<base> for main and api-dev.<base> for development.
+          if [[ -n "${{ inputs.api_url }}" ]]; then
+            api_url="${{ inputs.api_url }}"
+          elif [[ "$GITHUB_REF_NAME" == "development" ]]; then
+            api_url="https://api-dev.bluedreamers.com/zfgbb"
+          else
+            api_url="https://api.bluedreamers.com/zfgbb"
+          fi
+          echo "api_url=$api_url" >> "$GITHUB_OUTPUT"
 
       - uses: docker/setup-buildx-action@v4
 
@@ -58,7 +73,7 @@ jobs:
           push: true
           provenance: false
           build-args: |
-            REACT_ZFGBB_API_URL=${{ inputs.api_url || 'https://api.bluedreamers.com/zfgbb' }}
+            REACT_ZFGBB_API_URL=${{ steps.meta.outputs.api_url }}
           tags: |
             ${{ env.IMAGE }}:${{ steps.meta.outputs.tag }}
             ${{ env.IMAGE }}:latest
@@ -67,13 +82,14 @@ jobs:
 
   bump-argo:
     needs: build-and-push
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/development')
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout argocd repo
+      - name: Checkout argocd repo on the same branch
         uses: actions/checkout@v6
         with:
           repository: ZeldaFanGameCentral/argocd.zfgc.com
+          ref: ${{ github.ref_name }}
           token: ${{ secrets.PR_BUMP_TOKEN }}
           path: argocd
 
@@ -113,7 +129,7 @@ jobs:
           git commit -m "$msg"
           git push -u origin "$branch"
           gh pr create \
-            --base main \
+            --base "$GITHUB_REF_NAME" \
             --head "$branch" \
             --title "Bump zfgbb-react image to $NEW_TAG" \
-            --body "Automated bump from \`$OLD_TAG\` to \`$NEW_TAG\` in \`charts/zfgbb-react/values.yaml\`. Built from $GITHUB_REPOSITORY@$GITHUB_SHA."
+            --body "Automated bump from \`$OLD_TAG\` to \`$NEW_TAG\` in \`charts/zfgbb-react/values.yaml\` on \`$GITHUB_REF_NAME\`. Built from $GITHUB_REPOSITORY@$GITHUB_SHA."
