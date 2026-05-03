@@ -88,7 +88,7 @@ jobs:
         id: app-token
         uses: actions/create-github-app-token@v3
         with:
-          client-id: ${{ secrets.BUMP_APP_CLIENT_ID }}
+          client-id: ${{ secrets.BUMP_APP_ID }}
           private-key: ${{ secrets.BUMP_APP_PRIVATE_KEY }}
           owner: ZeldaFanGameCentral
           repositories: argocd.zfgc.com
