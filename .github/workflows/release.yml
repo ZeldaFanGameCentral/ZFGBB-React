@@ -84,12 +84,21 @@ jobs:
       github.ref == 'refs/heads/development')
     runs-on: ubuntu-latest
     steps:
+      - name: Generate App installation token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.BUMP_APP_CLIENT_ID }}
+          private-key: ${{ secrets.BUMP_APP_PRIVATE_KEY }}
+          owner: ZeldaFanGameCentral
+          repositories: argocd.zfgc.com
+
       - name: Checkout argocd repo
         uses: actions/checkout@v6
         with:
           repository: ZeldaFanGameCentral/argocd.zfgc.com
           ref: main
-          token: ${{ secrets.PR_BUMP_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           path: argocd
 
       - name: Bump image.tag
@@ -121,7 +130,7 @@ jobs:
       - name: Open PR
         if: steps.bump.outputs.changed == 'true'
         env:
-          GH_TOKEN: ${{ secrets.PR_BUMP_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           NEW_TAG: ${{ needs.build-and-push.outputs.tag }}
           OLD_TAG: ${{ steps.bump.outputs.old_tag }}
           BUMP_FILE: ${{ steps.bump.outputs.file }}
@@ -130,8 +139,8 @@ jobs:
           set -euo pipefail
           cd argocd
           branch="bump/zfgbb-react-${ENV_LABEL}-$NEW_TAG"
-          git config user.name 'zfgbb-react-release-bot'
-          git config user.email 'zfgbb-react-release-bot@users.noreply.github.com'
+          git config user.name 'zfgbb-react-release-bot[bot]'
+          git config user.email 'zfgbb-react-release-bot[bot]@users.noreply.github.com'
           git checkout -b "$branch"
           git add "$BUMP_FILE"
           msg=$(printf 'Bump zfgbb-react (%s) image to %s\n\nFrom: %s\nTo:   %s\nFile: %s\n' "$ENV_LABEL" "$NEW_TAG" "$OLD_TAG" "$NEW_TAG" "$BUMP_FILE")
