@@ -54,11 +54,13 @@ export type Thread = BaseBB & {
   lockedFlag: boolean;
   pinnedFlag: boolean;
   boardId: number;
-  createdUserId: number;
-  createdUser: User;
+  boardName: string;
+  createdUserId: number | null;
+  createdUser?: User | null;
   postCount: number;
   viewCount: number;
   pageCount: number;
+  pollInfo?: PollInfo;
 
   messages: Message[];
   latestMessage?: LatestMessage;
@@ -76,11 +78,11 @@ export type LatestMessage = {
 };
 
 export type Message = BaseBB & {
-  ownerId: number;
+  ownerId: number | null;
   threadId: number;
   currentMessage: MessageHistory;
 
-  createdUser: User;
+  createdUser?: User | null;
   createdTsAsString: string;
 };
 
@@ -97,4 +99,35 @@ export type BBPermissionLabel = {
   label: string;
   callback: () => void;
   permissions: BBPermission[];
+};
+
+export type BBLookup = {
+  label: string;
+  value: number;
+};
+
+export type PollChoice = BaseBB & {
+  pollId?: number;
+  choiceText?: string;
+  activeFlag: boolean;
+  votes: number;
+  seqno: number;
+  percentage: number;
+};
+
+export type PollInfo = BaseBB & {
+  pollQuestion?: string;
+  threadId: number;
+  votingLockedFlag: boolean;
+  expireTimeAsString: string;
+  hideResultsFlag: boolean;
+  changeVoteFlag: boolean;
+  createdUserId: number;
+  guestVoteFlag: boolean;
+  guestVoteCount: number;
+  resetPoll: boolean;
+  maxVotes: number;
+  votes: number;
+
+  answers: PollChoice[];
 };

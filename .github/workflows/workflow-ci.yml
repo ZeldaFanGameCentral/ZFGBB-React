@@ -1,12 +1,12 @@
 name: CI
 # trigger on changes to package.json, yarn.lock, .nvmrc, or .github/workflows/*.yml or src/**/* files
 on:
-  push:
+  pull_request:
     paths:
       - "package.json"
       - "yarn.lock"
       - ".nvmrc"
-      - ".github/workflows/workflow-ci.yml"
+      - ".github/**/*"
       - "src/**/*"
 
 permissions:
@@ -16,11 +16,21 @@ env:
   CI: 1
 
 concurrency:
-  group: "ci-${{ github.head_ref }}"
+  group: "${{github.workflow}}-${{ github.head_ref }}"
   cancel-in-progress: true
 
 jobs:
   build:
-    uses: ZFGCCP/github-workflows/.github/workflows/workflow-reactjs-reusable-build.yml@main
+    uses: ZeldaFanGameCentral/github-common/.github/workflows/workflow-reactjs-reusable-build.yml@main
     with:
       environment: ${{ github.head_ref }}
+
+  dependabutt-check:
+    runs-on: ubuntu-latest
+    needs: [build]
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Check if run is triggered by dependabot
+        uses: ZeldaFanGameCentral/github-common/actions/auto-approve-dependabot@main

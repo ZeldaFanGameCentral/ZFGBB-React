@@ -1,22 +1,28 @@
-FROM node:22-alpine AS development-dependencies-env
+FROM node:24-alpine AS development-dependencies-env
+RUN corepack enable
 COPY . /app
 WORKDIR /app
-RUN npm ci
+RUN yarn install --immutable
 
-FROM node:22-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
+FROM development-dependencies-env AS production-dependencies-env
 WORKDIR /app
-RUN npm ci --omit=dev
+RUN yarn prepare:prod
 
-FROM node:22-alpine AS build-env
+FROM node:24-alpine AS build-env
+RUN corepack enable
+ARG REACT_ZFGBB_API_URL=https://api.zfgc.com/zfgbb
+ARG REACT_ZFGBB_API_URL_INTERNAL=http://zfgbb.zfgbb.svc.cluster.local:8080/zfgbb
+ENV REACT_ZFGBB_API_URL=$REACT_ZFGBB_API_URL
+ENV REACT_ZFGBB_API_URL_INTERNAL=$REACT_ZFGBB_API_URL_INTERNAL
 COPY . /app/
 COPY --from=development-dependencies-env /app/node_modules /app/node_modules
 WORKDIR /app
-RUN npm run build
+RUN yarn build
 
-FROM node:22-alpine
-COPY ./package.json package-lock.json /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/build /app/build
+FROM node:24-alpine AS app
+RUN corepack enable
 WORKDIR /app
-CMD ["npm", "run", "start"]
+
+COPY --from=production-dependencies-env /app /app
+COPY --from=build-env /app/build /app/build
+CMD ["yarn", "run", "start"]

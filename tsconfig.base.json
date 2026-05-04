@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "strict": true,
+    "alwaysStrict": true,
+    "isolatedDeclarations": false,
+    "allowJs": false,
+    "skipLibCheck": true,
+    "libReplacement": false,
+    "incremental": true,
+    "noUncheckedSideEffectImports": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+    "erasableSyntaxOnly": true,
+    "noImplicitAny": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "composite": true,
+    "jsx": "react-jsx",
+    "plugins": [{ "name": "@dxup/unimport" }]
+  },
+  "exclude": ["node_modules"]
+}

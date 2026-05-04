@@ -22,22 +22,17 @@ jobs:
       contents: read
       security-events: write
 
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [javascript-typescript, actions]
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
-          languages: ${{ matrix.language }}
+          languages: javascript-typescript, actions
 
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -46,7 +41,7 @@ jobs:
 
       - name: Use Node.js (yarn cache workaround) # FIXME: uncomment when https://github.com/actions/setup-node/issues/531 is closed.
         id: yarn-cache
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: yarn
@@ -57,5 +52,7 @@ jobs:
       - if: ${{ steps.yarn-cache.outputs.cache-hit == 'true' }}
         run: yarn install --immutable --immutable-cache
 
+      - run: yarn build
+
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4

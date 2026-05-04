@@ -1,3 +1,4 @@
+name: "[reusable]: Deploy ZFGC.com"
 on:
   workflow_call:
     inputs:
@@ -50,14 +51,14 @@ jobs:
       # For GitHub Pages, we only deploy from the development environment.
       - name: Setup Pages
         if: ${{ inputs.environment == 'development' }}
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
         with:
           enablement: true
 
       - name: Deploy to GitHub Pages
         if: ${{ inputs.environment == 'development' }}
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
         with:
           artifact_name: ${{ inputs.artifact_name != '' && inputs.artifact_name || format('{0}-build', inputs.environment) }}
           preview: ${{ inputs.environment != 'production' }}
@@ -85,7 +86,7 @@ jobs:
 
       - name: Download artifact
         if: ${{ inputs.environment == 'main' }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ inputs.artifact_name != '' && inputs.artifact_name || format('{0}-build', inputs.environment) }}
           path: build/artifact

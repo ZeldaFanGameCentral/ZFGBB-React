@@ -61,33 +61,6 @@
     },
 
     {
-      "name": "Preview Server (local)",
-      "type": "node",
-      "request": "launch",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "runtimeExecutable": "corepack",
-      "runtimeArgs": ["yarn", "preview:ssr", "--strictPort"],
-      "preLaunchTask": "yarn build",
-      "cascadeTerminateToConfigurations": [
-        "Browser Debug",
-        "Preview Server (local)"
-      ],
-      "smartStep": true,
-      "autoAttachChildProcesses": true,
-      "sourceMaps": true,
-      "skipFiles": [
-        "<node_internals>/**",
-        "**/node_modules/**",
-        "**/.yarn/**",
-        "**/.pnpm-store/**"
-      ],
-      "presentation": {
-        "hidden": true,
-        "group": "dev-server"
-      }
-    },
-    {
       "name": "Preview Server (Production)",
       "type": "node",
       "request": "launch",
@@ -139,26 +112,20 @@
 
   "compounds": [
     {
-      "name": "Debug zfgc.com (local/dev)",
-      "configurations": ["Dev Server: Local Environment", "Browser Debug"],
-      "stopAll": true,
-      "preLaunchTask": "yarn install"
-    },
-    {
-      "name": "Debug zfgc.com (live/dev)",
+      "name": "Debug zfgc.com (production)",
       "configurations": ["Dev Server: Live Environment", "Browser Debug"],
       "stopAll": true,
       "preLaunchTask": "yarn install"
     },
     {
-      "name": "Debug zfgc.com (local/production)",
-      "configurations": ["Preview Server (Production)", "Browser Debug"],
+      "name": "Debug zfgc.com (local)",
+      "configurations": ["Dev Server: Local Environment", "Browser Debug"],
       "stopAll": true,
       "preLaunchTask": "yarn install"
     },
     {
-      "name": "Preview zfgc.com in SSR Mode (local/dev)",
-      "configurations": ["Preview Server (local)", "Browser Debug"],
+      "name": "Preview zfgc.com (production)",
+      "configurations": ["Preview Server (Production)", "Browser Debug"],
       "stopAll": true,
       "preLaunchTask": "yarn install"
     }

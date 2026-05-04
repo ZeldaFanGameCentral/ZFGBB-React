@@ -5,6 +5,7 @@ export type User = BaseBB & {
   theme?: string;
 
   bioInfo?: UserBioInfo;
+  contactInfo?: UserContactInfo;
 
   permissions?: Permission[];
 };
@@ -14,7 +15,15 @@ export type UserBioInfo = BaseBB & {
   customTitle?: string;
   userId: number;
   signature?: string;
+  signatureParsed?: string;
   avatar?: Avatar;
+  birthDate?: string;
+  genderId?: number;
+  karmaGood?: number;
+  karmaBad?: number;
+  dateRegistered?: string;
+  hideEmailFlag?: boolean;
+  postCount?: number;
 };
 
 export type Avatar = BaseBB & {
@@ -28,4 +37,15 @@ export type Avatar = BaseBB & {
 export type Permission = BaseBB & {
   permissionCode: string;
   permissionName: BBPermission;
+};
+
+export type UserContactInfo = BaseBB & {
+  emailAddress: EmailAddress;
+  allowEmailFlag: boolean;
+  allowPmFlag: boolean;
+};
+
+export type EmailAddress = BaseBB & {
+  emailAddress?: string;
+  spammerFlag: boolean;
 };

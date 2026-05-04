@@ -1,6 +1,3 @@
-import type React from "react";
-import { createContext, useState } from "react";
-import { useBBQuery } from "../../hooks/useBBQuery";
 import type { User } from "../../types/user";
 
 const emptyUser = {
@@ -77,7 +74,8 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     <UserContext.Provider value={user ? user : emptyUser}>
       <div id="root" className={currentTheme}>
         {children}
-        {import.meta.env.DEV ? (
+        {import.meta.env.DEV ||
+        import.meta.env.REACT_ZFGBB_FEATURE_FLAG_ENABLE_THEME_PICKER ? (
           <FloatingThemeSwitcher
             theme={currentTheme}
             setCurrentTheme={setCurrentTheme}

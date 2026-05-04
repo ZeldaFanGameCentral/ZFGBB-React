@@ -4,8 +4,8 @@
 html,
 body,
 #root {
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   background-color: var(--background-color-default);
   color: var(--text-color-default);
   font-family: var(--font-sans);
@@ -54,4 +54,8 @@ a:hover {
       var(--background-color-default) 50%,
       var(--text-color-muted)
     );
+}
+input:disabled {
+  background-color: transparent;
+  border: none;
 }

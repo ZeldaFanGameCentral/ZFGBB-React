@@ -1,32 +1,19 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "strict": true,
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-    "noEmit": true,
-    "erasableSyntaxOnly": true,
-    "noImplicitAny": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "composite": true,
-    "jsx": "react-jsx",
-    "baseUrl": ".",
     "rootDirs": [".", "./.react-router/types"],
     "paths": {
-      "@/*": ["./src/*"],
-      "~/*": ["./src/*"],
-      "$/*": ["./.react-router/types/src/+types/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src", "build/types", "./.react-router/types/**/*"],
-  "exclude": ["node_modules", "build"]
+  "exclude": ["node_modules"],
+  "references": [
+    {
+      "path": "./core"
+    },
+    {
+      "path": "./tsconfig.config.json"
+    }
+  ]
 }

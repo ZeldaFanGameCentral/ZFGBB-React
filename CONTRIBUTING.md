@@ -11,9 +11,10 @@ TBD. We could use some help writing this out.
 
 - [Contributing](#contributing)
   - [Table of Contents](#table-of-contents)
+  - [Setup](#setup)
+    - [Quick Start](#quick-start)
+    - [Quick Start (With VSCode Dev Container)](#quick-start-with-vscode-dev-container)
   - [Development](#development)
-    - [Downloading the Project](#downloading-the-project)
-      - [package.json - Usage (Quick Start)](#packagejson---usage-quick-start)
     - [Workflow - Typical Development Workflow](#workflow---typical-development-workflow)
     - [package.json - Provided package.json scripts](#packagejson---provided-packagejson-scripts)
       - [`yarn dev`: Starts the development server](#yarn-dev-starts-the-development-server)
@@ -21,48 +22,52 @@ TBD. We could use some help writing this out.
         - [Packaging for Production](#packaging-for-production)
       - [`yarn check`: Runs type checking, linting, and formatting checks](#yarn-check-runs-type-checking-linting-and-formatting-checks)
       - [`yarn format`: Formats the code using Prettier](#yarn-format-formats-the-code-using-prettier)
-      - [`yarn preview`: Runs the application in the production mode (SPA Mode)](#yarn-preview-runs-the-application-in-the-production-mode-spa-mode)
-      - [`yarn preview:ssr`: Runs the application in the production mode with server-side rendering (Unsupported/Do not use)](#yarn-previewssr-runs-the-application-in-the-production-mode-with-server-side-rendering-unsupporteddo-not-use)
-        - [Troubleshooting](#troubleshooting)
-          - [Why is the forum not loading?](#why-is-the-forum-not-loading)
-      - [VSCode - Usage](#vscode---usage)
-        - [VSCode - Recommended Extensions](#vscode---recommended-extensions)
-        - [VSCode - Typescript Workspace Version](#vscode---typescript-workspace-version)
-        - [VSCode - Running the application (Launch Tasks)](#vscode---running-the-application-launch-tasks)
-        - [VSCode - Using the devcontainer (optional)](#vscode---using-the-devcontainer-optional)
+      - [`yarn preview`: Runs the application in the production mode](#yarn-preview-runs-the-application-in-the-production-mode)
+    - [VSCode - Usage](#vscode---usage)
+      - [VSCode - Recommended Extensions](#vscode---recommended-extensions)
+      - [VSCode - Typescript Workspace Version](#vscode---typescript-workspace-version)
+      - [VSCode - Running the application (Launch Tasks)](#vscode---running-the-application-launch-tasks)
+    - [Troubleshooting](#troubleshooting)
+      - [Why is the forum not loading?](#why-is-the-forum-not-loading)
+      - [Why does the `yarn check` command fail for Icon Components?](#why-does-the-yarn-check-command-fail-for-icon-components)
   - [CI/CD \[WIP\]](#cicd-wip)
     - [.github/workflows/workflows-ci.yml](#githubworkflowsworkflows-ciyml)
     - [./github/workflows/workflow-deploy-frontend.yml](#githubworkflowsworkflow-deploy-frontendyml)
 
-## Development
+## Setup
 
-We recommend using [VSCode](#vscode---usage) for development. If you are not using [VSCode](#vscode---usage), you can use the provided package.json scripts to get started. To begin, you will need to download the project.
-
-### Downloading the Project
+Follow the steps below to get started with the project.
 
 1. Make sure you have [Node.js](https://nodejs.org/en/download/) installed. (We recommend using the current LTS version).
    1. If you are using [nvm (optional)](https://github.com/nvm-sh/nvm), you can use `nvm use` to switch to the correct version.
    2. We provide a configuration for [VSCode](https://code.visualstudio.com/), and is recommended for development.
 2. Make sure you have [Git](https://git-scm.com/downloads) installed.
    1. We recommend using [GitHub Desktop (optional)](https://desktop.github.com/) or [GitHub CLI (optional)](https://cli.github.com/), if you are new to Git.
+   2. For Nix Users ONLY, you can also install [Nix (optional)](https://nixos.org/download.html) and [direnv (optional)](https://direnv.net/), for the [flake.nix](./flake.nix) file in the repository. The [devcontainer](./.devcontainer/README.md) also uses this to set up the environment.
 3. Clone the repository
 
    ```bash
-   git clone https://github.com/ZFGCCP/ZFGCBB-React.git
+   git clone https://github.com/ZeldaFanGameCentral/ZFGBB-React.git
    ```
 
-If you are not using VSCode, you can use the provided package.json scripts to get started.
+4. Now, you can either continue with [Quick Start (With VSCode Dev Container)](#quick-start-with-vscode-dev-container) or [Quick Start](#quick-start), if you prefer to use your local machine for development.
+5. Happy hacking! Hack the planet!
 
-#### [package.json](package.json) - Usage (Quick Start)
+### Quick Start
 
-1. Configure the project (Have the prequisites installed - see [Downloading the Project](#downloading-the-project))
+Follow the steps below to get started with the project, if you are setting up the development environment on your local machine, and are
+not using the provided dev container from [Quick Start (With VSCode Dev Container)](#quick-start-with-vscode-dev-container).
+
+**_NOTE: If you are using [VSCode](#vscode---usage), you can use the `Debug zfgc.com (production)` or `Debug zfgc.com (local)` launch task to do the next steps for you. After cloning the repository and installing NodeJS, open the directory in VSCode. This will also let you set breakpoints and debug your code in VSCode, rather than in the browser._**
+
+If you are not using VScode, then continue reading.
+
+1. Configure the project (Have the prequisites installed - see [Setup](#setup)) We use [corepack](https://nodejs.org/api/corepack.html) to manage the package manager, so make sure to run the following command to enable it. This is a one time setup.
 
    ```bash
-   npm install -g corepack@latest
-   corepack enable
+   # Make sure you are in the project directory that you cloned.
+   npx corepack enable
    ```
-
-   **_NOTE: If you are using [VSCode](#vscode---usage), you can use the `Debug zfgc.com (local/dev)` launch task to do this for you. This will also let you set breakpoints and debug your code in VSCode._**
 
 2. Install the dependencies
 
@@ -78,16 +83,41 @@ If you are not using VSCode, you can use the provided package.json scripts to ge
 
 4. Open your browser and navigate to <http://localhost:5173>.
 5. You can now proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information for contributing to the project.
-   1. Otherwise, we recommend continuing to the [VSCode - Usage](#vscode---usage) section for more information on how to use the `Debug zfgc.com (live/dev)` task for easy setup.
+   1. Otherwise, we recommend continuing to the [VSCode - Usage](#vscode---usage) section for more information on how to use the `Debug zfgc.com (production)` or `Debug zfgc.com (local)` task for easy setup.
+   2. Feel free to check out the [package.json](#packagejson---provided-packagejson-scripts) section for more development information.
+   3. If you have any issues, please refer to the [Troubleshooting](#troubleshooting) section.
+
+### Quick Start (With VSCode Dev Container)
+
+There is a [dev container](./.devcontainer/README.md) for ZFGBB-React. It is currently the easiest way to get started, so you can ignore the rest of this document if you just want to get started quickly.
+
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [VS Code Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
+2. Open the repository in VS Code.
+3. Open the Command Palette (Ctrl+Shift+P).
+4. Type in `Dev Containers: Reopen in Container`.
+   1. Select "Dev Containers: Reopen in Container".
+5. Wait for the container to start.
+6. That's it, you can now start coding! \o/
+7. You can now proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information for contributing to the project.
+   1. Feel free to check out the [package.json](#packagejson---provided-packagejson-scripts) section for more development information.
+   2. If you have any issues, please refer to the [Troubleshooting](#troubleshooting) section.
+
+## Development
+
+We recommend using [VSCode](#vscode---usage) for development. If you are not using [VSCode](#vscode---usage), you can use the provided package.json scripts to get started.
 
 ### Workflow - Typical Development Workflow
 
 If this is your first time contributing to this project, or cloning the repository, we recommend following the steps below. It will guide you through the process of creating a new branch, making changes, and submitting a pull request.
 
 1. Read the [Code of Conduct](CODE_OF_CONDUCT.md).
-2. If you are not part of the ZFGCCP organization, you will need to fork this repository.
-3. Make sure you are on the `development` branch. `git switch development && git pull`.
-4. Make a new branch for your changes. `git switch -c my-new-branch`.
+   1. If you do not agree with the Code of Conduct, please do not contribute to this project. Feel free to fork the repository and create your own version of the project.
+   2. Check the [Projects Board](https://github.com/users/ZeldaFanGameCentral/projects/4) for open issues that you can help with.
+2. If you are not part of the ZeldaFanGameCentral organization, you will need to fork this repository.
+3. When making commits, please sign your commits with `git commit -s`, to certify that you have the rights to submit the work under the [Developer Certificate of Origin](https://developercertificate.org/).
+   1. GitHub has a decent [help article](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits) on signing commits. You can use this to help you sign your commits.
+4. Make sure you are on the `development` branch. `git switch development && git pull`.
+5. Make a new branch for your changes. `git switch -c my-new-branch`.
    1. How do I name my branch? See the next section, we have some recommendations, but we don't have any official rules so you can use whatever naming convention you prefer for your branch.
    2. Branch Naming Conventions (General Recommendations)
       1. If you are working on a new feature, you can name your branch `feature/my-new-feature`.
@@ -95,26 +125,31 @@ If this is your first time contributing to this project, or cloning the reposito
       3. If you are working on a documentation change, you can name your branch `docs/my-docs-change`.
       4. If you are working on a refactor, you can name your branch `refactor/my-refactor`.
       5. If you are working on a test, you can name your branch `test/my-test`.
-      6. You are ready to start working on your branch!
+      6. As an optional convention, you can prefix your branch name with your username, e.g., `vashsbutthole/feature/my-new-feature`.
+      7. You are ready to start working on your branch!
    3. Create the branch on GitHub. (If you are just simply trying to run the project locally, you can skip this step! Proceed to `Step 5 - Working on your changes`)
       1. If you are not a team member, you will need to fork the repository to create a branch.
          1. To fork the repository, click the "Fork" button in the top right corner of the repository page.
          2. Once you have forked the repository, if you created the branch locally, you can push the branch to your forked repository by creating the origin remote and pushing the branch.
-            1. `git remote add origin https://github.com/your-username/ZFGCBB-React.git`
+            1. `git remote add origin https://github.com/your-username/ZFGBB-React.git` just make sure to replace `your-username` with your GitHub username.
    4. If you are a team member, you can create the branch directly on GitHub.
-5. Working on your changes: Use your IDE of choice to edit files and save changes. We recommend using [VSCode](#vscode---usage) for development.
+6. Working on your changes: Use your IDE of choice to edit files and save changes. We recommend using [VSCode](#vscode---usage) for development.
    1. Make sure to run `yarn install` every time you check out a branch.
       1. To understand the commands, see the [package.json](#packagejson---provided-packagejson-scripts) provided scripts section. But for now, we recommend just continuing through the guide.
-   2. Use the `yarn dev` command to start the development server. But before you do, continue reading until you reach `Step 5.3 - Use the "yarn format" command to format the code using Prettier`, due to a current limitation with running the development server in local only mode.
-      1. If you are using VSCode, you can use the `Launch zfgc.com` launch task to do this for you.
-      2. For now, if cloning the [backend](https://github.com/ZFGCCP/ZFGCBB) is too much of a hassle, you can use the `yarn dev --mode=production` command to start the development server on `zfgc.com` or `Debug zfgc.com (live/dev)` in VSCode. See the VSCode usage [reference](#vscode---usage) for more information on how to use the `Launch zfgc.com (live/dev)` task. <!-- FIXME: remove this note when we have a container that can be pulled down and run locally -->
+   2. Use the `yarn dev` command to start the development server. But before you do, continue reading until you reach `Step 6.iii - Use the "yarn format" command to format the code using Prettier`, due to a current limitation with running the development server in local only mode. `yarn` dev by itself will expect you to be running the [backend](https://github.com/ZeldaFanGameCentral/ZFGBB) locally. If you are not, please read the next steps.
+      1. For now, if cloning the [backend](https://github.com/ZeldaFanGameCentral/ZFGBB) is too much of a hassle, you can use the following to instead use the production instance.
+         1. In command line, run `yarn dev --mode=production` command to start the development server on `zfgc.com` or `Debug zfgc.com (local)` in VSCode.
+         2. In VSCode, you can use `Debug zfgc.com (production)`. See the VSCode usage [reference](#vscode---usage) for more information on how to use VS Code.
    3. Use the `yarn format` command to format the code using Prettier.
-   4. Use the `yarn check` command to run type checking, linting, and formatting checks.
-   5. Repeat steps 1-3 as needed until `yarn check` passes.
+   4. Use the `yarn build` command to build the application for production.
+   5. Use the `yarn check` command to run type checking, linting, and formatting checks.
+      1. Note: The `yarn check` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn check` at least once.
+   6. Repeat `yarn check` as needed until you every file is fixed, and the check passes.
       1. Feel free to reach out on Discord if you have any questions.
-   6. Stage and commit your changes.
-   7. Push your changes to your branch on GitHub.
-6. [Create a new pull request](https://github.com/ZFGCCP/ZFGCBB-React/compare) and request a review from one of the maintainers.
+      2. Consult the [package.json](#packagejson---provided-packagejson-scripts) section for more development information, and help.
+   7. Stage and commit your changes.
+   8. Push your changes to your branch on GitHub.
+7. [Create a new pull request](https://github.com/ZeldaFanGameCentral/ZFGBB-React/compare) and request a review from one of the maintainers.
    1. Add a bullet point list of changes you made.
    2. Mention the issue number you are working on.
       1. If there is no issue, you can create one.
@@ -122,8 +157,10 @@ If this is your first time contributing to this project, or cloning the reposito
       1. Example: `feat: add new feature`
       2. See: <https://www.conventionalcommits.org/en/v1.0.0/>
    4. For the duration of your pull request, please keep your branch up to date with the `development` branch.
-   5. Your PR must pass all checks before it can be merged or requested for review.
-7. As Sonic the Hedgehog says, "Gotta go fast!". And you went fast! Congratulations on making a contribution to the project!
+      1. It is RECOMMENDED that you use `git pull --rebase` to keep your branch up to date with the `development` branch.
+   5. Please squash your commits into a single commit, if possible. We prefer using `git rebase` in favor of `git merge`.
+   6. Your PR must pass all checks before it can be merged or requested for review.
+8. As Sonic the Hedgehog says, "Gotta go fast!". And you went fast! Congratulations on making a contribution to the project!
 
 ### [package.json](package.json) - Provided package.json scripts
 
@@ -147,40 +184,11 @@ This command starts the development server, using [react-router/dev](https://rea
 
 Since `yarn dev` forwards to `react-router dev`, the arguments for `react-router` can be forwarded to `yarn dev` as well.
 
-```text
-  `dev` Options:
-    --clearScreen       Allow/disable clear screen when logging (boolean)
-    --config, -c        Use specified config file (string)
-    --cors              Enable CORS (boolean)
-    --force             Force the optimizer to ignore the cache and re-bundle (boolean)
-    --host              Specify hostname (string)
-    --logLevel, -l      Info | warn | error | silent (string)
-    --mode, -m          Set env mode (string)
-    --open              Open browser on startup (boolean | string)
-    --port              Specify port (number)
-    --profile           Start built-in Node.js inspector
-    --strictPort        Exit if specified port is already in use (boolean)
-```
-
 #### `yarn build`: Builds the application for production
 
 This command builds the application for production, using [react-router](https://reactrouter.com/tutorials/quickstart#build-and-run).
 
 Since `yarn build` forwards to `react-router build`, the arguments for `react-router` can be forwarded to `yarn build` as well.
-
-```text
-  `build` Options:
-    --assetsInlineLimit Static asset base64 inline threshold in bytes (default: 4096) (number)
-    --clearScreen       Allow/disable clear screen when logging (boolean)
-    --config, -c        Use specified config file (string)
-    --emptyOutDir       Force empty outDir when it's outside of root (boolean)
-    --logLevel, -l      Info | warn | error | silent (string)
-    --minify            Enable/disable minification, or specify minifier to use (default: "esbuild") (boolean | "terser" | "esbuild")
-    --mode, -m          Set env mode (string)
-    --profile           Start built-in Node.js inspector
-    --sourcemapClient   Output source maps for client build (default: false) (boolean | "inline" | "hidden")
-    --sourcemapServer   Output source maps for server build (default: false) (boolean | "inline" | "hidden")
-```
 
 ##### Packaging for Production
 
@@ -202,36 +210,27 @@ rm -f build.zip && zip -rj build.zip build/client/
 
 This commands runs type checking, linting, and formatting checks using [TypeScript](https://www.typescriptlang.org/) and [Prettier](https://prettier.io/), and [react-router](https://reactrouter.com/tutorials/quickstart#build-and-run)'s typegen command. It will throw an error if any of the checks fail.
 
+Note: The `yarn check` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn check` at least once.
+
 #### `yarn format`: Formats the code using Prettier
 
 This command formats the code using [Prettier](https://prettier.io/).
 
-#### `yarn preview`: Runs the application in the production mode (SPA Mode)
+#### `yarn preview`: Runs the application in the production mode
 
-This project supports both SPA Mode and SSR Mode. This command runs the application in [SPA Mode](https://reactrouter.com/how-to/spa), using [vite](https://vitejs.dev/).
-
-SPA Mode is the default mode for this project.
-
-#### `yarn preview:ssr`: Runs the application in the production mode with server-side rendering (Unsupported/Do not use)
-
-**NOTE:** This command is not currently supported, and should not be used for now. Use the [yarn preview](#yarn-preview-runs-the-application-in-the-production-mode-spa-mode) command instead if testing preview of a production build.
+This command runs the react-router-serve server, using [react-router](https://reactrouter.com/tutorials/quickstart#build-and-run). It is used to run a production build of the application locally, pointed to `zfgc.com`.
 
 This command runs the application in SSR Mode, using [react-router](https://reactrouter.com/tutorials/quickstart#build-and-run). See also documentation for [react-router SPA Mode](https://reactrouter.com/how-to/spa) for more context over the differences between SPA Mode and SSR Mode.
 
-<!-- - `yarn preview:ssr`: Runs the application in the production mode with server-side rendering
-- `yarn start`: Runs the application in production mode with server-side rendering -->
+Note: The `yarn preview` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn preview` at least once.
 
-##### Troubleshooting
+If you are using SPA mode(achieved by setting VITE_ENABLE_SSR=false in the `.env`. files), you can use `npx serve build/client` to run the application in SPA mode.
 
-###### Why is the forum not loading?
-
-The default value is pointing to your local machine. While we do have dockerfiles for the backend, we haven't gotten around to streamlining using the backend in a development setting for the frontend. To run the frontend locally, pointed to `zfgc.com`, run `yarn dev --mode=production`, and that will point to the production environment. This will get you up and running! \o/ Sometimes this issue may come up because you closed the server in the background, and the app is working off of cache state.
-
-#### VSCode - Usage
+### VSCode - Usage
 
 VSCode is our preferred IDE for development. To get the best experience, try installing the recommended extensions. The provided launch tasks will automatically configure the project for you and allow you to set breakpoints and debug your code. Continue to [VSCode - Recommended Extensions](#vscode---recommended-extensions) for more information.
 
-##### VSCode - Recommended Extensions
+#### VSCode - Recommended Extensions
 
 This project provides [extension recommendations](./.vscode/extensions.json) for VSCode. Press `(CRTL/CMD + SHIFT + X)` to open the Extensions panel on the sidebar. You can use the `@recommended` tag to only install extensions that are recommended by this project. See <https://code.visualstudio.com/docs/configure/extensions/extension-marketplace#_recommended-extensions> for more information.
 
@@ -239,7 +238,7 @@ This project provides [extension recommendations](./.vscode/extensions.json) for
 
 If the sidebar looks like this, then you can install the recommended extensions if the option is available. After you've installed the recommended extensions, you can continue to [VSCode - Typescript Workspace Version](#vscode---typescript-workspace-version) for more information.
 
-##### VSCode - Typescript Workspace Version
+#### VSCode - Typescript Workspace Version
 
 Please be sure to allow the [Typescript Workspace Version](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-the-workspace-version) to be enabled. This will allow you to get type checking and intellisense for the entire project.
 
@@ -257,7 +256,7 @@ Then you should be prompted to select a version. Select `Use Workspace Version`.
 
 If a notification pops up, you will need to press `Allow`. After you've pressed `Allow`, you can proceed to [VSCode - Running the application (Launch Tasks)](#vscode---running-the-application-launch-tasks) for more information.
 
-##### VSCode - Running the application (Launch Tasks)
+#### VSCode - Running the application (Launch Tasks)
 
 The VSCode project is setup with two [launch tasks](./.vscode/launch.json):
 
@@ -267,21 +266,35 @@ Find the launch tasks by navigating to the `Run and Debug` section `(CRTL/CMD + 
 
 Each of these launch tasks will `corepack enable` and `yarn install` before running the application, so you do not need to worry about that. See [.vscode/tasks.json](./.vscode/tasks.json) if you would like to see how these tasks run those commands.
 
-- `Debug zfgc.com (local/dev)`: Runs the application in development mode with the API calls pointed to <http://localhost:8080/zfgbb> or the value of `REACT_ZFGBB_API_URL` in [.env.local](.env.local). This uses the `development` build of the application, by calling [yarn dev](#yarn-dev-starts-the-development-server).
-- `Debug zfgc.com (live/dev)`: Runs the application in production mode with the API calls pointed to `zfgc.com` for the backend, using the value of `REACT_ZFGBB_API_URL` in [.env.production](.env.production). This uses the `development` build of the application with variables loaded from [.env.production](.env.production), by calling [yarn build --mode=production](#yarn-build-builds-the-application-for-production).
-- `Debug zfgc.com (local/production)`: Runs the application in production mode with the API calls pointed to `zfgc.com` for the backend, using the value of `REACT_ZFGBB_API_URL` in [.env.production](.env.production). This uses the `production` build of the application with variables loaded from [.env.production](.env.production), by calling `yarn build --mode=production`. The server is provided by [yarn preview](#yarn-preview-runs-the-application-in-the-production-mode-spa-mode).
+- `Debug zfgc.com (production)`: Runs the application in production mode with the API calls pointed to `zfgc.com` for the backend, using the value of `REACT_ZFGBB_API_URL` in [.env.production](.env.production). This uses the `development` build of the application with variables loaded from [.env.production](.env.production), by calling [yarn build --mode=production](#yarn-build-builds-the-application-for-production).
+- `Debug zfgc.com (local)`: Runs the application in development mode with the API calls pointed to <http://localhost:8080/zfgbb> or the value of `REACT_ZFGBB_API_URL` in [.env.local](.env.local). This uses the `development` build of the application, by calling [yarn dev](#yarn-dev-starts-the-development-server).
+- `Preview zfgc.com (production)`: Runs the application in production mode with the API calls pointed to `zfgc.com` for the backend, using the value of `REACT_ZFGBB_API_URL` in [.env.production](.env.production). This uses the `production` build of the application with variables loaded from [.env.production](.env.production), by calling `yarn build --mode=production`. The server is provided by [yarn preview](#yarn-preview-runs-the-application-in-the-production-mode).
 
 Now that you are ready, you can proceed to [Workflow - Typical Development Workflow](#workflow---typical-development-workflow) for more information.
 
-##### VSCode - Using the devcontainer (optional)
+### Troubleshooting
 
-If you would like to avoid having to setup a development environment on your actual machine. This repository implements a VS Code Dev Container, which can give you a simple way to get started developing! To learn more about the VS Code Dev Containers, check out the [documentation](https://code.visualstudio.com/docs/devcontainers/containers).
+#### Why is the forum not loading?
 
-1. Install the [Remote - Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) in VSCode.
-2. Open the project in VSCode.
-3. Press `CRTL + P` and type `Remote-Containers: Reopen in Container`.
-4. Wait for the container to start.
-5. Open your browser and navigate to <http://localhost:5173>.
+If you ran `yarn dev`, or in VSCode ran `Debug zfgc.com (local)`, and the forum index is not loading, then the issue is that you are not running the backend on your machine. While we do have dockerfiles for the backend, we haven't gotten around to streamlining using the backend in a development setting for the frontend. To run the frontend locally, pointed to `zfgc.com`, run `yarn dev --mode=production`, and that will point to the production environment. Or if you're using VSCode, use the `Debug zfgc.com (production)` launch task to achieve the same thing. This will get you up and running! \o/
+
+Sometimes this issue may come up because you closed the server in the background, and the app is working off of cache state. Double check that you are running `vite`.
+
+#### Why does the `yarn check` command fail for Icon Components?
+
+If you get an error like this:
+
+```text
+src/root.layout.tsx:70:14 - error TS2304: Cannot find name 'Fa6SolidBars'.
+
+               <Fa6SolidBars />
+                ~~~~~~~~~~~~
+
+
+Found 10 errors in 4 files.
+```
+
+This is likely due to the fact that the `yarn check` command requires types to be generated from the `yarn build` command, so make sure to run `yarn build` before running `yarn check` at least once.
 
 ## CI/CD [WIP]
 
