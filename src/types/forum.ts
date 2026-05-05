@@ -77,10 +77,20 @@ export type LatestMessage = {
   lastPostTsAsString: string;
 };
 
+export type FileAttachment = BaseBB & {
+  fileAttachmentId: number;
+  contentResourceId: number;
+  filename: string;
+  mimeType: string;
+  fileSize: number;
+  downloads: number;
+};
+
 export type Message = BaseBB & {
   ownerId: number | null;
   threadId: number;
   currentMessage: MessageHistory;
+  fileAttachments?: FileAttachment[];
 
   createdUser?: User | null;
   createdTsAsString: string;

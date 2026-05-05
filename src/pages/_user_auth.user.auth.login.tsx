@@ -16,6 +16,7 @@ export default function UserLogin() {
         body: JSON.stringify({
           username: values.username,
           password: values.password,
+          stayLoggedIn: values.stayLoggedIn,
           grant_type: "password",
           scope: "all",
         }),

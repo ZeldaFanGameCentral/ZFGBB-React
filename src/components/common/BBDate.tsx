@@ -1,4 +1,13 @@
-import { Intl, Temporal } from "@js-temporal/polyfill";
+// import { Intl, Temporal } from "@js-temporal/polyfill";
+
+const { Intl, Temporal } = (
+  !!globalThis.Temporal && !!globalThis.Intl?.DateTimeFormat
+    ? globalThis
+    : await import("@js-temporal/polyfill")
+) as {
+  Intl: typeof globalThis.Intl;
+  Temporal: typeof globalThis.Temporal;
+};
 
 interface BBDateProps {
   dateStr: string | null | undefined;

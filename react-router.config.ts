@@ -13,9 +13,26 @@ const { mode } = parseArgs({
 }).values;
 
 const env = loadEnv(`${mode}`, process.cwd(), ["REACT_", "VITE_"]);
+const ssrEnabled = env["VITE_ENABLE_SSR"] === "true";
+
 export default {
   appDirectory: "src",
-  prerender: true, // ["/", "/forum", "/user/auth/registration"],
+  prerender: ssrEnabled
+    ? true
+    : [
+        // routes actually prerendered for static hosting
+        "/",
+        "/forum",
+        "/healthz",
+        "/user/auth/login",
+        "/user/auth/registration",
+        // placeholders for dynamic-param routes; no real users hit these paths
+        "/forum/board/0/1",
+        "/forum/thread/0/1",
+        "/user/profile/0",
+        "/forum/memberList/0",
+        "/search/_",
+      ],
   basename: env["VITE_BASE"] ?? "/",
-  presets: [env["VITE_ENABLE_SSR"] === "true" ? presetSsr() : presetSpa()],
+  presets: [ssrEnabled ? presetSsr() : presetSpa()],
 } satisfies Config;

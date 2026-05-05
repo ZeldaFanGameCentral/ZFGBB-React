@@ -1,23 +1,15 @@
-import {
-  QueryClient,
-  dehydrate,
-  HydrationBoundary,
-} from "@tanstack/react-query";
+import { HydrationBoundary } from "@tanstack/react-query";
 import type { Forum } from "@/types/forum";
 import type { Route } from "./+types/forum._index";
 import { getQueryClient } from "@/providers/query/queryProvider";
 import { useForumIndex } from "@/hooks/useForumIndex";
+import { prefetchQueryDehydrated } from "@/shared/http/ssrPrefetch";
 
-const forumQuery = bbQueryOptions<Forum>("/board/forum");
-
-export async function loader(_: Route.LoaderArgs) {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(forumQuery);
-  return { dehydratedState: dehydrate(queryClient) };
-}
+export const loader = ({ request }: Route.LoaderArgs) =>
+  prefetchQueryDehydrated<Forum>(request, "/board/forum");
 
 export async function clientLoader(_: Route.ClientLoaderArgs) {
-  await getQueryClient().prefetchQuery(forumQuery);
+  await getQueryClient().prefetchQuery(bbQueryOptions<Forum>("/board/forum"));
 }
 
 export function HydrateFallback() {
