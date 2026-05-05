@@ -203,6 +203,10 @@ const ForumThread: React.FC<ForumThreadProps> = ({
                         messageText={msg.currentMessage.messageText}
                         isEven={isEven}
                       />
+                      <MessageAttachments
+                        attachments={msg.fileAttachments ?? []}
+                        isEven={isEven}
+                      />
                       <UserSignature
                         user={msg.createdUser ?? undefined}
                         isEven={isEven}
