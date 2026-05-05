@@ -26,7 +26,7 @@ export const useBBQuery = <T,>(
     gcTime = 300000,
     staleTime = 100000,
     enabled = true,
-    throwOnError = (error: Error) => getResponseStatus(error) !== 401,
+    throwOnError = (error: Error) => getResponseStatus(error) === 403,
     ...rest
   } = options;
 
