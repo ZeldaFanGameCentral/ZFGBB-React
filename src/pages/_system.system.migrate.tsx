@@ -8,6 +8,7 @@ import {
   type Job,
   type MigrateJobForm,
   type MigrateJobRequest,
+  type MigrateUploadResponse,
 } from "@/schemas/system";
 import type { BaseBB } from "@/types/api";
 
@@ -87,6 +88,8 @@ export default function SystemMigrate() {
   );
 
   const [pollJobs, setPollJobs] = useState(false);
+  const [uploadResult, setUploadResult] =
+    useState<MigrateUploadResponse | null>(null);
 
   const { data: jobs, refetch } = useBBQuery<Job[]>("/system/migrate/jobs", {
     retry: 0,
@@ -96,6 +99,20 @@ export default function SystemMigrate() {
     refetchInterval: 2000,
     enabled: isSiteAdmin && pollJobs,
     schema: JobListSchema,
+  });
+
+  const uploadMutation = useMutation<MigrateUploadResponse, Error, File>({
+    mutationFn: async (file) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      const response = await fetch(`${getApiBaseUrl()}/system/migrate/upload`, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
+      return handleResponseWithJason<MigrateUploadResponse>(response);
+    },
+    onSuccess: (data) => setUploadResult(data),
   });
 
   const startJobMutation = useMutation<unknown, Error, MigrateJobRequest>({
@@ -140,8 +157,12 @@ export default function SystemMigrate() {
         smfTablePrefix: value.smfTablePrefix || undefined,
         smfLegacyHost: value.smfLegacyHost || undefined,
         appBaseUrl: window.location.origin,
-        attachmentsSourcePath: value.attachmentsSourcePath || undefined,
+        attachmentsSourcePath:
+          uploadResult?.attachmentsSourcePath ||
+          value.attachmentsSourcePath ||
+          undefined,
         attachmentsTargetPath: value.attachmentsTargetPath || undefined,
+        avatarsSourcePath: uploadResult?.avatarsSourcePath || undefined,
         force: value.force || undefined,
       };
       await startJobMutation.mutateAsync(body);
@@ -193,18 +214,58 @@ export default function SystemMigrate() {
             </div>
             <div className="space-y-3 pt-2 border-t border-default">
               <p className="text-xs text-dimmed">
-                Attachment paths are server filesystem paths. Leave blank if not
-                migrating attachments.
+                Upload a zip containing{" "}
+                <code className="text-highlighted">attachments/</code> and/or{" "}
+                <code className="text-highlighted">avatars/</code> directories.
+                Leave empty to skip attachment migration.
               </p>
-              <BBField
-                label="Attachments source path"
-                name="attachmentsSourcePath"
-                placeholder="/path/to/smf/attachments"
-              />
+              <div className="flex items-center gap-3">
+                <input
+                  type="file"
+                  accept=".zip"
+                  className="text-sm"
+                  disabled={uploadMutation.isPending}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) uploadMutation.mutate(file);
+                  }}
+                />
+                {uploadMutation.isPending && (
+                  <span className="text-sm text-dimmed">Uploading...</span>
+                )}
+              </div>
+              {uploadResult && (
+                <div className="text-xs space-y-1 bg-default p-2 rounded border border-default">
+                  <p>
+                    Attachments:{" "}
+                    <span className="text-highlighted">
+                      {uploadResult.attachmentsSourcePath ?? "not found in zip"}
+                    </span>
+                  </p>
+                  <p>
+                    Avatars:{" "}
+                    <span className="text-highlighted">
+                      {uploadResult.avatarsSourcePath ?? "not found in zip"}
+                    </span>
+                  </p>
+                </div>
+              )}
+              {uploadMutation.isError && (
+                <p className="text-sm text-highlighted">
+                  Upload failed: {uploadMutation.error?.message}
+                </p>
+              )}
               <BBField
                 label="Attachments target path"
                 name="attachmentsTargetPath"
                 placeholder="/path/to/zfgbb/attachments"
+                helperText="Server path where migrated files are written. Required if a zip was uploaded."
+              />
+              <BBField
+                label="Attachments source path (manual override)"
+                name="attachmentsSourcePath"
+                placeholder="/path/to/smf/attachments"
+                helperText="Only needed if not using zip upload. Overrides the zip's extracted path."
               />
             </div>
           </div>

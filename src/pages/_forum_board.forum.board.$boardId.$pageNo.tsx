@@ -1,21 +1,16 @@
-import {
-  QueryClient,
-  dehydrate,
-  HydrationBoundary,
-} from "@tanstack/react-query";
+import { HydrationBoundary } from "@tanstack/react-query";
 import type { BBTableColumn } from "@/components/common/layout/BBTable";
 import type { Board, Thread } from "../types/forum";
 import type { Route } from "./+types/_forum_board.forum.board.$boardId.$pageNo";
 import { getQueryClient } from "@/providers/query/queryProvider";
 import { useForumIndex } from "@/hooks/useForumIndex";
+import { prefetchQueryDehydrated } from "@/shared/http/ssrPrefetch";
 
-export async function loader({ params }: Route.LoaderArgs) {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(
-    bbQueryOptions<Board>(`/board/${params.boardId}?pageNo=${params.pageNo}`),
+export const loader = ({ request, params }: Route.LoaderArgs) =>
+  prefetchQueryDehydrated<Board>(
+    request,
+    `/board/${params.boardId}?pageNo=${params.pageNo}`,
   );
-  return { dehydratedState: dehydrate(queryClient) };
-}
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
   await getQueryClient().prefetchQuery(

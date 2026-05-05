@@ -4,6 +4,7 @@ import {
   type UseQueryOptions,
 } from "@tanstack/react-query";
 import { getApiBaseUrl } from "@/shared/http/api";
+import { getResponseStatus } from "@/shared/http/response.handler";
 import * as v from "valibot";
 
 export type UseBBQueryOptions<T> = Omit<
@@ -25,6 +26,7 @@ export const useBBQuery = <T,>(
     gcTime = 300000,
     staleTime = 100000,
     enabled = true,
+    throwOnError = (error: Error) => getResponseStatus(error) === 403,
     ...rest
   } = options;
 
@@ -45,6 +47,7 @@ export const useBBQuery = <T,>(
     gcTime,
     staleTime,
     enabled,
+    throwOnError,
     ...rest,
   });
 };

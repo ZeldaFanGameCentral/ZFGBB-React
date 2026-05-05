@@ -67,21 +67,19 @@ interface UserProviderProps {
 }
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const { data: user } = useBBQuery<User>("/users/loggedInUser");
-  const themeClassName = user?.theme ? `theme-${user.theme}` : "theme-midnight";
-  const [currentTheme, setCurrentTheme] = useState(themeClassName);
+  const initialTheme = user?.theme ? `theme-${user.theme}` : "theme-midnight";
+  const [currentTheme, setCurrentTheme] = useState(initialTheme);
 
   return (
     <UserContext.Provider value={user ? user : emptyUser}>
-      <div id="root" className={currentTheme}>
-        {children}
-        {import.meta.env.DEV ||
-        import.meta.env.REACT_ZFGBB_FEATURE_FLAG_ENABLE_THEME_PICKER ? (
-          <FloatingThemeSwitcher
-            theme={currentTheme}
-            setCurrentTheme={setCurrentTheme}
-          />
-        ) : null}
-      </div>
+      {children}
+      {import.meta.env.DEV ||
+      import.meta.env.REACT_ZFGBB_FEATURE_FLAG_ENABLE_THEME_PICKER ? (
+        <FloatingThemeSwitcher
+          theme={currentTheme}
+          setCurrentTheme={setCurrentTheme}
+        />
+      ) : null}
     </UserContext.Provider>
   );
 };

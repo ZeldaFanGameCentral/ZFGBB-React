@@ -1,30 +1,39 @@
 import "./assets/App.css";
 import UserProvider from "./providers/user/userProvider";
-import QueryProvider, { getQueryClient } from "./providers/query/queryProvider";
+import QueryProvider from "./providers/query/queryProvider";
 import RootLayout from "./root.layout";
+import {
+  isRouteErrorResponse,
+  useRouteError,
+  useRouteLoaderData,
+} from "react-router";
+import { getResponseStatus } from "./shared/http/response.handler";
 import { bbQueryOptions } from "./hooks/bbQueryOptions";
+import BBForbidden from "./components/common/BBForbidden";
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
 import type { User } from "./types/user";
 import type { Route } from "./+types/root";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const cookie = request.headers.get("Cookie") ?? "";
-  await getQueryClient().prefetchQuery(
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(
     bbQueryOptions<User>(
       "/users/loggedInUser",
       undefined,
       cookie ? { Cookie: cookie } : undefined,
     ),
   );
-  return null;
+  const user = queryClient.getQueryData<User>(["/users/loggedInUser"]);
+  return {
+    dehydratedState: dehydrate(queryClient),
+    theme: user?.theme ?? "midnight",
+  };
 }
-
-export async function clientLoader() {
-  await getQueryClient().prefetchQuery(
-    bbQueryOptions<User>("/users/loggedInUser"),
-  );
-}
-
-clientLoader.hydrate = true as const;
 
 const TanStackQueryDevtools = import.meta.env.DEV
   ? lazy(() =>
@@ -35,12 +44,20 @@ const TanStackQueryDevtools = import.meta.env.DEV
   : null;
 
 export function HydrateFallback() {
-  return <></>;
+  return (
+    <QueryProvider>
+      <UserProvider>
+        <RootLayout>{null}</RootLayout>
+      </UserProvider>
+    </QueryProvider>
+  );
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useRouteLoaderData("root") as { theme?: string } | undefined;
+  const themeClass = `theme-${data?.theme ?? "midnight"}`;
   return (
-    <html lang="en">
+    <html lang="en" className={themeClass}>
       <head>
         <base href={import.meta.env.VITE_BASE ?? "/"} />
         <meta charSet="UTF-8" />
@@ -60,23 +77,38 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+export default function App({ loaderData }: Route.ComponentProps) {
   return (
     <QueryProvider>
-      <UserProvider>
-        <RootLayout children={<Outlet />} />
-      </UserProvider>
-      {import.meta.env.DEV && TanStackQueryDevtools ? (
-        <Suspense fallback={null}>
-          <TanStackQueryDevtools buttonPosition="top-left" />
-        </Suspense>
-      ) : null}
-      <BBReloadPrompt />
+      <HydrationBoundary state={loaderData?.dehydratedState}>
+        <UserProvider>
+          <RootLayout children={<Outlet />} />
+        </UserProvider>
+        {import.meta.env.DEV && TanStackQueryDevtools ? (
+          <Suspense fallback={null}>
+            <TanStackQueryDevtools buttonPosition="top-left" />
+          </Suspense>
+        ) : null}
+        <BBReloadPrompt />
+      </HydrationBoundary>
     </QueryProvider>
   );
 }
 
 export function ErrorBoundary() {
+  const error = useRouteError();
+  const status = isRouteErrorResponse(error)
+    ? error.status
+    : getResponseStatus(error);
+
+  if (status === 403) {
+    return (
+      <main>
+        <BBForbidden />
+      </main>
+    );
+  }
+
   return (
     <main>
       <p>Something went wrong. Please try again later.</p>

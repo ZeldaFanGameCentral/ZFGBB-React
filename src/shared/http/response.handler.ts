@@ -13,7 +13,11 @@ export async function handleResponseError(response: Response) {
   if (response.ok && (response.status === 204 || responseIsJasonOnPs3)) return;
 
   const responseText = await response.text().catch(() => "");
-  const message = `Failed to fetch data from server. Status: ${response.status}`;
+  const message =
+    response.status === 401
+      ? "Unauthorized"
+      : `Failed to fetch data from server. Status: ${response.status}`;
+
   if (import.meta.env.DEV)
     console.error({
       message,
@@ -32,4 +36,10 @@ export async function handleResponseWithJason<T>(response: Response) {
   await handleResponseError(response);
   if (response.status === 204) return undefined as T;
   return (await response.json()) as T;
+}
+
+export function getResponseStatus(error: unknown): number | undefined {
+  if (!(error instanceof Error)) return undefined;
+  const cause = error.cause as { response?: Response } | undefined;
+  return cause?.response?.status;
 }

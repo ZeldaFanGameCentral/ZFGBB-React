@@ -21,7 +21,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
       <main className="overflow-auto bg-default min-h-0 size-full scrollbar-color-default scrollbar-gutter-stable px-1.5 mr-1">
         <header className="hidden md:flex justify-between items-end border-b-2 border-default bg-default px-2">
           <div className="z-10">
-            <div className="relative -z-10 md:-mb-6 min-h-[100px] min-w-[480px]">
+            <div className="relative -z-10 md:-mb-6 min-h-25 min-w-120">
               <BBImage src="images/logo.png" alt="Logo" loading="eager" />
             </div>
             <HeaderNavigation />
@@ -77,6 +77,32 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
                 <span className="text-sm">Admin Dashboard</span>
               </BBLink>
             </BBHasPermission>
+            {Number(id) <= 0 ? (
+              <>
+                <BBLink
+                  to="/user/auth/login"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center px-4 py-3 hover:bg-muted transition-colors border-b border-default"
+                >
+                  <span className="text-sm">Login</span>
+                </BBLink>
+                <BBLink
+                  to="/user/auth/registration"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center px-4 py-3 hover:bg-muted transition-colors border-b border-default"
+                >
+                  <span className="text-sm">Register</span>
+                </BBLink>
+              </>
+            ) : (
+              <BBLink
+                to="/user/auth/logout"
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center px-4 py-3 hover:bg-muted transition-colors border-b border-default"
+              >
+                <span className="text-sm">Logout</span>
+              </BBLink>
+            )}
           </nav>
         </>
       )}
