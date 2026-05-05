@@ -95,7 +95,14 @@ export type MigrateJobRequest = {
   appBaseUrl?: string;
   attachmentsSourcePath?: string;
   attachmentsTargetPath?: string;
+  avatarsSourcePath?: string;
   force?: boolean;
+};
+
+export type MigrateUploadResponse = {
+  uploadId: string;
+  attachmentsSourcePath: string | null;
+  avatarsSourcePath: string | null;
 };
 
 export const InstallFormSchema = v.object({
