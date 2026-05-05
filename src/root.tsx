@@ -2,16 +2,38 @@ import "./assets/App.css";
 import UserProvider from "./providers/user/userProvider";
 import QueryProvider from "./providers/query/queryProvider";
 import RootLayout from "./root.layout";
-import { isRouteErrorResponse, useRouteError } from "react-router";
+import {
+  isRouteErrorResponse,
+  useRouteError,
+  useRouteLoaderData,
+} from "react-router";
 import { getResponseStatus } from "./shared/http/response.handler";
-import { prefetchQueryDehydrated } from "./shared/http/ssrPrefetch";
+import { bbQueryOptions } from "./hooks/bbQueryOptions";
 import BBForbidden from "./components/common/BBForbidden";
-import { HydrationBoundary } from "@tanstack/react-query";
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
 import type { User } from "./types/user";
 import type { Route } from "./+types/root";
 
-export const loader = ({ request }: Route.LoaderArgs) =>
-  prefetchQueryDehydrated<User>(request, "/users/loggedInUser");
+export async function loader({ request }: Route.LoaderArgs) {
+  const cookie = request.headers.get("Cookie") ?? "";
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(
+    bbQueryOptions<User>(
+      "/users/loggedInUser",
+      undefined,
+      cookie ? { Cookie: cookie } : undefined,
+    ),
+  );
+  const user = queryClient.getQueryData<User>(["/users/loggedInUser"]);
+  return {
+    dehydratedState: dehydrate(queryClient),
+    theme: user?.theme ?? "midnight",
+  };
+}
 
 const TanStackQueryDevtools = import.meta.env.DEV
   ? lazy(() =>
@@ -32,8 +54,10 @@ export function HydrateFallback() {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useRouteLoaderData("root") as { theme?: string } | undefined;
+  const themeClass = `theme-${data?.theme ?? "midnight"}`;
   return (
-    <html lang="en">
+    <html lang="en" className={themeClass}>
       <head>
         <base href={import.meta.env.VITE_BASE ?? "/"} />
         <meta charSet="UTF-8" />

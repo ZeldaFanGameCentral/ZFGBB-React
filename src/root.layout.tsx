@@ -77,6 +77,32 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
                 <span className="text-sm">Admin Dashboard</span>
               </BBLink>
             </BBHasPermission>
+            {Number(id) <= 0 ? (
+              <>
+                <BBLink
+                  to="/user/auth/login"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center px-4 py-3 hover:bg-muted transition-colors border-b border-default"
+                >
+                  <span className="text-sm">Login</span>
+                </BBLink>
+                <BBLink
+                  to="/user/auth/registration"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center px-4 py-3 hover:bg-muted transition-colors border-b border-default"
+                >
+                  <span className="text-sm">Register</span>
+                </BBLink>
+              </>
+            ) : (
+              <BBLink
+                to="/user/auth/logout"
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center px-4 py-3 hover:bg-muted transition-colors border-b border-default"
+              >
+                <span className="text-sm">Logout</span>
+              </BBLink>
+            )}
           </nav>
         </>
       )}
