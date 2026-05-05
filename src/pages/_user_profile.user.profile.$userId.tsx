@@ -1,19 +1,11 @@
-import {
-  QueryClient,
-  dehydrate,
-  HydrationBoundary,
-} from "@tanstack/react-query";
+import { HydrationBoundary } from "@tanstack/react-query";
 import type { User } from "../types/user";
 import type { Route } from "./+types/_user_profile.user.profile.$userId";
 import { getQueryClient } from "@/providers/query/queryProvider";
+import { prefetchQueryDehydrated } from "@/shared/http/ssrPrefetch";
 
-export async function loader({ params }: Route.LoaderArgs) {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(
-    bbQueryOptions<User>(`/user-profile/${params.userId}`),
-  );
-  return { dehydratedState: dehydrate(queryClient) };
-}
+export const loader = ({ request, params }: Route.LoaderArgs) =>
+  prefetchQueryDehydrated<User>(request, `/user-profile/${params.userId}`);
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
   await getQueryClient().prefetchQuery(

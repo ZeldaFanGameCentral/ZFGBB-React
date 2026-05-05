@@ -1,4 +1,4 @@
-import type { ReactElement, ComponentType, JSX, FC } from "react";
+import type { ReactElement, ComponentType, JSX } from "react";
 
 type ImageProps = JSX.IntrinsicElements["img"];
 type AsComponent = ("img" | "image") | ComponentType<Partial<ImageProps>>;
@@ -12,13 +12,7 @@ export type BBImageProps = Partial<ImageProps> & {
   fallback?: ReactElement;
   as?: AsComponent;
 };
-type BBImageComponentType = FC<BBImageProps>;
-type BBImageLazyComponentType = ReturnType<typeof lazy>;
 
-// FIXME: remove this lazy cache, since we can avoid doing this with better utilization of lazy.
-const lazyImageComponentCache = import.meta.env.SSR
-  ? undefined
-  : new Map<string, BBImageLazyComponentType>();
 /**
  * Resolves a path or URL into a usable image source.
  * @param path - Relative path or full URL to the image.
@@ -26,78 +20,16 @@ const lazyImageComponentCache = import.meta.env.SSR
  */
 function resolveSrc(path: string) {
   if (URL.canParse(path)) return path;
-  else if (path) return path.startsWith("/") ? path : `/${path}`;
+  if (path) return path.startsWith("/") ? path : `/${path}`;
   if (import.meta.env.DEV)
     console.warn(`Image not found: ${path}. Rendering nothing.`);
   return undefined;
 }
 
 /**
- * Lazily creates a component that renders the resolved image.
- * This uses lazy to defer image resolution and component rendering until needed.
- *
- * @param src - The image path or URL to preload.
- * @param ass - The component type to render (e.g., "img").
- */
-function lazyImageLoader(src: SrcPath, ass: AsComponent = "img") {
-  const resolvedSrc = resolveSrc(src);
-  const key = `${resolvedSrc}::${typeof ass === "string" ? ass : (ass.name ?? "custom")}`;
-
-  if (
-    !import.meta.env.SSR &&
-    resolvedSrc &&
-    lazyImageComponentCache &&
-    lazyImageComponentCache.has(key)
-  )
-    return lazyImageComponentCache.get(key)!;
-
-  const ImageComponent: BBImageComponentType = (
-    componentProps: BBImageProps,
-  ) => {
-    if (!resolvedSrc) return null;
-
-    const Component = ass;
-    const props: BBImageProps =
-      Component === "img"
-        ? {
-            decoding: "async",
-            loading: "lazy",
-            fetchPriority: "high",
-            crossOrigin: "anonymous",
-            ...componentProps,
-          }
-        : componentProps;
-
-    // FIXME: Move the link preload to an earlier stage of the render lifecycle, so that we can better utilize caching.
-    return (
-      <>
-        {/* {props.loading === "eager" ? (
-          <link
-            rel="preload"
-            href={resolvedSrc}
-            crossOrigin="anonymous"
-            as="image"
-          />
-        ) : null} */}
-        <Component {...(props as object)} src={resolvedSrc} />
-      </>
-    );
-  };
-
-  if (import.meta.env.SSR || !lazyImageComponentCache) return ImageComponent;
-  else {
-    const lazyComponent = lazy(async () => {
-      return { default: ImageComponent };
-    });
-
-    lazyImageComponentCache.set(key, lazyComponent);
-    return lazyComponent;
-  }
-}
-
-/**
  * The main exported BBImage component.
- * Dynamically resolves images via `preloadImage` and renders them through a lazily loaded component.
+ * Resolves the given src and renders an `<img>` (or a custom component via `as`)
+ * with sensible defaults for `loading`, `decoding`, `fetchPriority`, and `crossOrigin`.
  *
  * Example usage:
  * ```tsx
@@ -106,25 +38,35 @@ function lazyImageLoader(src: SrcPath, ass: AsComponent = "img") {
  * ```
  *
  * @param src - The image path or URL to load.
- * @param fallback - Optional fallback to render during loading.
+ * @param fallback - Optional fallback to render when the path can't be resolved.
  * @param as - Optional component type to render (defaults to `<img>`).
  * @param rest - Other props passed to the rendered component.
  */
-export default function BBImage({ src, fallback, as, ...rest }: BBImageProps) {
+export default function BBImage({
+  src,
+  fallback,
+  as: ass = "img",
+  ...rest
+}: BBImageProps) {
   if (import.meta.env.DEV && !("alt" in rest))
     console.warn(
       `BBImage component for ${src} is missing an alt prop. This will cause a11y issue.`,
     );
 
-  const LazyImage = lazyImageLoader(src, as ?? "img");
-  const MyAss = fallback ?? <BBSkeleton />;
+  const resolvedSrc = resolveSrc(src);
+  if (!resolvedSrc) return fallback ?? null;
 
-  return (
-    <Suspense fallback={MyAss}>
-      <LazyImage {...rest} src={src} key={`${src}::${as ?? "img"}`} />
-    </Suspense>
-  );
+  const props: Partial<ImageProps> =
+    ass === "img"
+      ? {
+          decoding: "async",
+          loading: "lazy",
+          fetchPriority: "high",
+          crossOrigin: "anonymous",
+          ...rest,
+        }
+      : rest;
+
+  const Component = ass;
+  return <Component {...(props as object)} src={resolvedSrc} />;
 }
-
-if (!import.meta.env.SSR && import.meta.hot && lazyImageComponentCache)
-  import.meta.hot.dispose(() => lazyImageComponentCache.clear());

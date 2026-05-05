@@ -13,7 +13,7 @@ export const bbQueryOptions = <T extends BaseBB | BaseBB[]>(
     queryKey: [url],
     queryFn: () =>
       fetch(`${getApiBaseUrl()}${url}`, {
-        credentials: "include",
+        credentials: import.meta.env.SSR ? "omit" : "include",
         headers: {
           "Content-Type": "application/json",
           ...requestHeaders,

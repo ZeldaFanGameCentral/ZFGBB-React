@@ -1,30 +1,17 @@
 import "./assets/App.css";
 import UserProvider from "./providers/user/userProvider";
-import QueryProvider, { getQueryClient } from "./providers/query/queryProvider";
+import QueryProvider from "./providers/query/queryProvider";
 import RootLayout from "./root.layout";
-import { bbQueryOptions } from "./hooks/bbQueryOptions";
+import { isRouteErrorResponse, useRouteError } from "react-router";
+import { getResponseStatus } from "./shared/http/response.handler";
+import { prefetchQueryDehydrated } from "./shared/http/ssrPrefetch";
+import BBForbidden from "./components/common/BBForbidden";
+import { HydrationBoundary } from "@tanstack/react-query";
 import type { User } from "./types/user";
 import type { Route } from "./+types/root";
 
-export async function loader({ request }: Route.LoaderArgs) {
-  const cookie = request.headers.get("Cookie") ?? "";
-  await getQueryClient().prefetchQuery(
-    bbQueryOptions<User>(
-      "/users/loggedInUser",
-      undefined,
-      cookie ? { Cookie: cookie } : undefined,
-    ),
-  );
-  return null;
-}
-
-export async function clientLoader() {
-  await getQueryClient().prefetchQuery(
-    bbQueryOptions<User>("/users/loggedInUser"),
-  );
-}
-
-clientLoader.hydrate = true as const;
+export const loader = ({ request }: Route.LoaderArgs) =>
+  prefetchQueryDehydrated<User>(request, "/users/loggedInUser");
 
 const TanStackQueryDevtools = import.meta.env.DEV
   ? lazy(() =>
@@ -35,7 +22,13 @@ const TanStackQueryDevtools = import.meta.env.DEV
   : null;
 
 export function HydrateFallback() {
-  return <></>;
+  return (
+    <QueryProvider>
+      <UserProvider>
+        <RootLayout>{null}</RootLayout>
+      </UserProvider>
+    </QueryProvider>
+  );
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -60,23 +53,38 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+export default function App({ loaderData }: Route.ComponentProps) {
   return (
     <QueryProvider>
-      <UserProvider>
-        <RootLayout children={<Outlet />} />
-      </UserProvider>
-      {import.meta.env.DEV && TanStackQueryDevtools ? (
-        <Suspense fallback={null}>
-          <TanStackQueryDevtools buttonPosition="top-left" />
-        </Suspense>
-      ) : null}
-      <BBReloadPrompt />
+      <HydrationBoundary state={loaderData?.dehydratedState}>
+        <UserProvider>
+          <RootLayout children={<Outlet />} />
+        </UserProvider>
+        {import.meta.env.DEV && TanStackQueryDevtools ? (
+          <Suspense fallback={null}>
+            <TanStackQueryDevtools buttonPosition="top-left" />
+          </Suspense>
+        ) : null}
+        <BBReloadPrompt />
+      </HydrationBoundary>
     </QueryProvider>
   );
 }
 
 export function ErrorBoundary() {
+  const error = useRouteError();
+  const status = isRouteErrorResponse(error)
+    ? error.status
+    : getResponseStatus(error);
+
+  if (status === 403) {
+    return (
+      <main>
+        <BBForbidden />
+      </main>
+    );
+  }
+
   return (
     <main>
       <p>Something went wrong. Please try again later.</p>
