@@ -1,4 +1,5 @@
 import type { User } from "../../types/user";
+import { getPublicApiBaseUrl } from "@/shared/http/api";
 
 interface UserLeftPaneProps {
   user?: User;
@@ -23,10 +24,10 @@ const UserLeftPane: React.FC<UserLeftPaneProps> = ({
     if (user?.bioInfo?.avatar) {
       return user.bioInfo?.avatar?.url && user.bioInfo?.avatar?.url?.trim()
         ? user.bioInfo.avatar.url
-        : (`${import.meta.env.REACT_ZFGBB_API_URL}/content/image/${user.bioInfo.avatar.contentResourceId}` as `${string}://${string}/${string}`);
+        : (`${getPublicApiBaseUrl()}/content/image/${user.bioInfo.avatar.contentResourceId}` as `${string}://${string}/${string}`);
     }
 
-    return `${import.meta.env.REACT_ZFGBB_API_URL}/content/image/3` as `${string}://${string}/${string}`;
+    return `${getPublicApiBaseUrl()}/content/image/3` as `${string}://${string}/${string}`;
   }, [user]);
 
   return (
