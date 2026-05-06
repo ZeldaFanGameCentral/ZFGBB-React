@@ -10,7 +10,7 @@ export function presetSsr(): Preset {
       subResourceIntegrity: true,
       future: {
         unstable_optimizeDeps: true,
-        v8_splitRouteModules: true,
+        v8_splitRouteModules: false,
         v8_viteEnvironmentApi: true,
         v8_middleware: true,
       },
