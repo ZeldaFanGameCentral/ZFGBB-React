@@ -1,5 +1,5 @@
 import type { FileAttachment } from "@/types/forum";
-import { getApiBaseUrl } from "@/shared/http/api";
+import { getPublicApiBaseUrl } from "@/shared/http/api";
 
 interface MessageAttachmentsProps {
   attachments: FileAttachment[];
@@ -13,7 +13,7 @@ function formatFileSize(bytes: number): string {
 }
 
 function contentUrl(contentResourceId: number): string {
-  return `${getApiBaseUrl()}/content/image/${contentResourceId}`;
+  return `${getPublicApiBaseUrl()}/content/image/${contentResourceId}`;
 }
 
 export default function MessageAttachments({
