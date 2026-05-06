@@ -1,0 +1,37 @@
+name: Preview
+
+on:
+  pull_request:
+    paths:
+      - "package.json"
+      - "yarn.lock"
+      - ".nvmrc"
+      - ".github/**/*"
+      - "src/**/*"
+
+concurrency:
+  group: preview-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAGES: "true"
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ZeldaFanGameCentral/github-common/actions/setup-node-yarn@main
+      - run: rm -rf build
+      - run: yarn build --mode=github-pages
+      - run: yarn check
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          name: preview-build
+          path: build/client
+          retention-days: 1
+
+  deploy:
+    needs: build
+    uses: ZeldaFanGameCentral/github-common/.github/workflows/reusable-deploy-pages.yml@main
+    with:
+      artifact_name: preview-build
