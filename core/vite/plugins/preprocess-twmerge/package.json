@@ -28,12 +28,12 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "vite": "^8.0.10"
+    "vite": "^8.0.12"
   },
   "devDependencies": {
-    "oxc-parser": "^0.129.0",
-    "oxc-transform": "^0.129.0",
-    "tailwind-merge": "^3.5.0"
+    "oxc-parser": "^0.130.0",
+    "oxc-transform": "^0.130.0",
+    "tailwind-merge": "^3.6.0"
   },
   "engines": {
     "node": ">=22"
