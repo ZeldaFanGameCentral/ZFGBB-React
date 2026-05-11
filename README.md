@@ -29,6 +29,9 @@ If you are looking for an old man with a sword, then you may want to check out <
 
 After installing Node.js, you can use the provided package.json scripts to get started. Refer to the quick start section in the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
 
+By the way, this project provides a [Nix Flake](https://wiki.nixos.org/wiki/Flakes)
+for providing a local development environment for OS's that support Nix Flakes.
+
 ## Architecture
 
 ZFGBB is a [React](https://reactjs.org/) application, built using [Vite](https://vitejs.dev/), and [TypeScript](https://www.typescriptlang.org/). Routing is handled by [react-router](https://reactrouter.com/), with file-based routing. Styling is handled by [Tailwind CSS](https://tailwindcss.com/).
