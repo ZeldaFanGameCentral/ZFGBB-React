@@ -68,7 +68,7 @@
     "brace-expansion@npm:^5.0.2": "^5.0.5",
     "glob": "^13.0.6",
     "picomatch": "^4.0.4",
-    "serialize-javascript": "^7.0.5",
+    "serialize-javascript": "^7.1.4",
     "source-map": "^0.7.6",
     "sourcemap-codec": "npm:@jridgewell/sourcemap-codec@^1.5.5",
     "vite-node/vite": "^7.3.2"
